@@ -109,10 +109,18 @@ function Reveal({ children, delay = 0, style = {} }) {
 // Floating testimonials component
 function FloatingTestimonials() {
   const scrollRef = useRef(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   useEffect(() => {
     const el = scrollRef.current;
-    if (!el) return;
+    if (!el || isMobile) return; // Disable auto-scroll on mobile
     let animId;
     let pos = 0;
     const speed = 0.5;
@@ -129,16 +137,16 @@ function FloatingTestimonials() {
     el.addEventListener("mouseenter", pause);
     el.addEventListener("mouseleave", resume);
     return () => { cancelAnimationFrame(animId); el.removeEventListener("mouseenter", pause); el.removeEventListener("mouseleave", resume); };
-  }, []);
+  }, [isMobile]);
 
   const cards = [...testimonials, ...testimonials];
 
   return (
-    <div ref={scrollRef} style={{ display: "flex", gap: "1.5rem", overflow: "hidden", paddingBottom: "1rem", cursor: "grab" }}>
+    <div ref={scrollRef} className="testimonials-scroll" style={{ display: "flex", gap: "1.5rem", overflow: isMobile ? "auto" : "hidden", paddingBottom: "1rem", cursor: isMobile ? "default" : "grab", scrollSnapType: isMobile ? "x mandatory" : "none", WebkitOverflowScrolling: "touch" }}>
       {cards.map((t, i) => (
-        <div key={i} style={{ minWidth: 340, maxWidth: 340, background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 20, padding: "1.75rem", flexShrink: 0, transition: "background 0.4s, transform 0.4s" }}
-          onMouseEnter={e => { e.currentTarget.style.background = "rgba(255,255,255,0.1)"; e.currentTarget.style.transform = "translateY(-4px)"; }}
-          onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.05)"; e.currentTarget.style.transform = "translateY(0)"; }}>
+        <div key={i} className="testimonial-card" style={{ minWidth: isMobile ? "85%" : 340, maxWidth: isMobile ? "85%" : 340, background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 20, padding: "1.75rem", flexShrink: 0, transition: "background 0.4s, transform 0.4s", scrollSnapAlign: isMobile ? "center" : "none" }}
+          onMouseEnter={e => { if (!isMobile) { e.currentTarget.style.background = "rgba(255,255,255,0.1)"; e.currentTarget.style.transform = "translateY(-4px)"; } }}
+          onMouseLeave={e => { if (!isMobile) { e.currentTarget.style.background = "rgba(255,255,255,0.05)"; e.currentTarget.style.transform = "translateY(0)"; } }}>
           <div style={{ color: "#E8C06A", fontSize: "0.85rem", letterSpacing: 2, marginBottom: "0.75rem" }}>★★★★★</div>
           <p style={{ fontSize: "0.92rem", lineHeight: 1.75, color: "rgba(250,248,245,0.8)", marginBottom: "1.25rem", fontStyle: "italic" }}>"{t.text}"</p>
           <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
@@ -208,6 +216,9 @@ export default function UnfoldSite() {
         .footer-links { display: flex; gap: 4rem; }
         .hero-stats { display: flex; align-items: center; justify-content: center; gap: 2rem; flex-wrap: wrap; }
 
+        .testimonials-scroll::-webkit-scrollbar { display: none; }
+        .testimonials-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+
         @media (min-width: 769px) {
           .mobile-nav-links { display: flex; }
         }
@@ -239,6 +250,10 @@ export default function UnfoldSite() {
           .grid-2-col > div:last-child { order: 1; }
           .footer-main { flex-direction: column; gap: 2rem; }
           .footer-links { flex-direction: column; gap: 2rem; }
+          .testimonials-scroll {
+            padding: 0 7.5% !important;
+            gap: 1rem !important;
+          }
           .hero-stats {
             display: flex !important;
             gap: 0 !important;
