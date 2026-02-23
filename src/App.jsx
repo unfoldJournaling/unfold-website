@@ -287,7 +287,7 @@ export default function UnfoldSite() {
       `}</style>
 
       {/* NAV */}
-      <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, padding: "1rem 2rem", display: "flex", alignItems: "center", justifyContent: "space-between", transition: "all 0.4s", background: scrolled ? "rgba(255,255,255,0.92)" : "transparent", backdropFilter: scrolled ? "blur(20px)" : "none", boxShadow: scrolled ? "0 1px 20px rgba(0,0,0,0.06)" : "none" }}>
+      <nav style={{ padding: "1rem 2rem", display: "flex", alignItems: "center", justifyContent: "space-between", transition: "all 0.4s", background: s.cream }}>
         <a href="#" style={{ textDecoration: "none", display: "flex", alignItems: "center", zIndex: 101 }}>
           <img src={LOGO_SRC} alt="Unfold" style={{ height: 36 }} />
         </a>
