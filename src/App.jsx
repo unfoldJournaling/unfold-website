@@ -159,6 +159,7 @@ function FloatingTestimonials() {
 export default function UnfoldSite() {
   const [scrolled, setScrolled] = useState(false);
   const [billing, setBilling] = useState("monthly");
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [heroRef, heroOffset] = useParallax(0.15);
   const [featRef, featOffset] = useParallax(0.08);
 
@@ -197,20 +198,122 @@ export default function UnfoldSite() {
         @keyframes breathe { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.85)} }
         @keyframes float { 0%,100%{transform:translate(0,0)} 50%{transform:translate(30px,-30px)} }
         @keyframes meterPulse { 0%,100%{width:32%} 50%{width:38%} }
+
+        .mobile-menu-button { display: none; }
+
+        .grid-3-col { display: grid; grid-template-columns: repeat(3, 1fr); }
+        .grid-2-col { display: grid; grid-template-columns: 1fr 1fr; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; }
+        .footer-main { display: flex; justify-content: space-between; align-items: flex-start; }
+        .footer-links { display: flex; gap: 4rem; }
+        .hero-stats { display: flex; align-items: center; justify-content: center; gap: 2rem; flex-wrap: wrap; }
+
+        @media (min-width: 769px) {
+          .mobile-nav-links { display: flex; }
+        }
+
+        @media (max-width: 768px) {
+          .mobile-nav-links {
+            display: none !important;
+          }
+          .mobile-nav-links.active {
+            display: flex !important;
+            flex-direction: column;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: rgba(255,255,255,0.98);
+            backdrop-filter: blur(20px);
+            padding: 1rem 2rem;
+            gap: 1rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+          }
+          .mobile-menu-button { display: block; }
+          .grid-3-col { grid-template-columns: 1fr; gap: 2rem; }
+          .grid-2-col {
+            grid-template-columns: 1fr;
+            gap: 2rem;
+          }
+          .grid-2-col > div:first-child { order: 2; }
+          .grid-2-col > div:last-child { order: 1; }
+          .footer-main { flex-direction: column; gap: 2rem; }
+          .footer-links { flex-direction: column; gap: 2rem; }
+          .hero-stats {
+            display: flex !important;
+            gap: 0 !important;
+            flex-wrap: nowrap !important;
+            justify-content: space-between !important;
+            width: 100% !important;
+            padding: 0 !important;
+            margin-top: 2rem !important;
+          }
+          .hero-stats > div {
+            display: flex !important;
+            gap: 0 !important;
+            flex: 0 0 33.333% !important;
+            width: 33.333% !important;
+            max-width: 33.333% !important;
+            min-width: 0 !important;
+            justify-content: center !important;
+          }
+          .hero-stats > div > div:last-child {
+            display: none !important;
+          }
+          .hero-stats > div > div:first-child {
+            text-align: center !important;
+            width: 100% !important;
+          }
+          .hero-stats > div > div:first-child > div:first-child {
+            font-size: 0.75rem !important;
+            font-weight: 700 !important;
+            white-space: nowrap !important;
+            line-height: 1.1 !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+          }
+          .hero-stats > div > div:first-child > div:last-child {
+            font-size: 0.5rem !important;
+            white-space: nowrap !important;
+            line-height: 1.2 !important;
+            margin-top: 0.2rem !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+          }
+
+          section { padding: 3rem 1.5rem !important; }
+          nav { padding: 1rem 1.5rem !important; }
+        }
       `}</style>
 
       {/* NAV */}
       <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, padding: "1rem 2rem", display: "flex", alignItems: "center", justifyContent: "space-between", transition: "all 0.4s", background: scrolled ? "rgba(255,255,255,0.92)" : "transparent", backdropFilter: scrolled ? "blur(20px)" : "none", boxShadow: scrolled ? "0 1px 20px rgba(0,0,0,0.06)" : "none" }}>
-        <a href="#" style={{ textDecoration: "none", display: "flex", alignItems: "center" }}>
+        <a href="#" style={{ textDecoration: "none", display: "flex", alignItems: "center", zIndex: 101 }}>
           <img src={LOGO_SRC} alt="Unfold" style={{ height: 36 }} />
         </a>
-        <div style={{ display: "flex", gap: "2.5rem", alignItems: "center" }}>
+        <button className="mobile-menu-button" onClick={() => setMobileMenuOpen(!mobileMenuOpen)} style={{ background: "none", border: "none", cursor: "pointer", padding: "0.5rem", zIndex: 101 }}>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={s.bark} strokeWidth="2" strokeLinecap="round">
+            {mobileMenuOpen ? (
+              <>
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </>
+            ) : (
+              <>
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+              </>
+            )}
+          </svg>
+        </button>
+        <div className={`mobile-nav-links ${mobileMenuOpen ? 'active' : ''}`} style={{ display: "flex", gap: "2.5rem", alignItems: "center" }}>
           {["Features", "How It Works", "Testimonials", "Pricing"].map(l => (
-            <a key={l} href={`#${l.toLowerCase().replace(/ /g, "-")}`} style={{ textDecoration: "none", color: s.barkLight, fontSize: "0.9rem", fontWeight: 500, transition: "color 0.3s" }}
+            <a key={l} href={`#${l.toLowerCase().replace(/ /g, "-")}`} onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: "none", color: s.barkLight, fontSize: "0.9rem", fontWeight: 500, transition: "color 0.3s" }}
               onMouseEnter={e => e.target.style.color = s.sageDeep}
               onMouseLeave={e => e.target.style.color = s.barkLight}>{l}</a>
           ))}
-          <a href="https://apps.apple.com/us/app/unfold-journal-mood-tracker/id6743553743" style={{ textDecoration: "none", background: s.bark, color: s.cream, padding: "0.65rem 1.5rem", borderRadius: 100, fontWeight: 600, fontSize: "0.9rem", transition: "all 0.3s", display: "inline-flex", alignItems: "center", gap: "0.4rem" }}
+          <a href="https://apps.apple.com/us/app/unfold-journal-mood-tracker/id6743553743" onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: "none", background: s.bark, color: s.cream, padding: "0.65rem 1.5rem", borderRadius: 100, fontWeight: 600, fontSize: "0.9rem", transition: "all 0.3s", display: "inline-flex", alignItems: "center", gap: "0.4rem" }}
             onMouseEnter={e => { e.target.style.background = s.moss; e.target.style.transform = "translateY(-1px)"; }}
             onMouseLeave={e => { e.target.style.background = s.bark; e.target.style.transform = "translateY(0)"; }}>
             <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
@@ -259,19 +362,20 @@ export default function UnfoldSite() {
               </a>
             </div>
           </Reveal>
-          <Reveal delay={0.4}>
-            <div style={{ marginTop: "3.5rem", display: "flex", alignItems: "center", justifyContent: "center", gap: "2rem", flexWrap: "wrap" }}>
-              {[{ num: "24–48 hrs", label: "Early warning" }, { num: "92%", label: "Prediction accuracy" }, { num: "CBT-Based", label: "Interventions" }].map((stat, i) => (
-                <div key={i} style={{ display: "flex", alignItems: "center", gap: "2rem" }}>
-                  <div style={{ textAlign: "center" }}>
-                    <div style={{ fontFamily: fontDisplay, fontSize: "1.5rem", fontWeight: 600, color: s.sageDeep }}>{stat.num}</div>
-                    <div style={{ fontSize: "0.78rem", color: s.barkLight, marginTop: "0.15rem" }}>{stat.label}</div>
-                  </div>
-                  {i < 2 && <div style={{ width: 1, height: 36, background: s.sand }} />}
-                </div>
-              ))}
+          <div style={{ display: 'flex', width: '100%', marginTop: '3.5rem' }}>
+            <div style={{ flex: 1, textAlign: 'center' }}>
+              <div style={{ fontFamily: fontDisplay, fontSize: 'clamp(1rem, 4vw, 1.5rem)', fontWeight: 600, color: s.sageDeep }}>24–48 hrs</div>
+              <div style={{ fontSize: 'clamp(0.6rem, 2.5vw, 0.78rem)', color: s.barkLight, marginTop: '0.15rem' }}>Early warning</div>
             </div>
-          </Reveal>
+            <div style={{ flex: 1, textAlign: 'center', borderLeft: `1px solid ${s.sand}`, borderRight: `1px solid ${s.sand}` }}>
+              <div style={{ fontFamily: fontDisplay, fontSize: 'clamp(1rem, 4vw, 1.5rem)', fontWeight: 600, color: s.sageDeep }}>92%</div>
+              <div style={{ fontSize: 'clamp(0.6rem, 2.5vw, 0.78rem)', color: s.barkLight, marginTop: '0.15rem' }}>Prediction accuracy</div>
+            </div>
+            <div style={{ flex: 1, textAlign: 'center' }}>
+              <div style={{ fontFamily: fontDisplay, fontSize: 'clamp(1rem, 4vw, 1.5rem)', fontWeight: 600, color: s.sageDeep }}>CBT-Based</div>
+              <div style={{ fontSize: 'clamp(0.6rem, 2.5vw, 0.78rem)', color: s.barkLight, marginTop: '0.15rem' }}>Interventions</div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -310,7 +414,7 @@ export default function UnfoldSite() {
 
           {/* Feature 1 */}
           <Reveal>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4rem", alignItems: "center", marginBottom: "5rem" }}>
+            <div className="grid-2-col" style={{ gap: "4rem", alignItems: "center", marginBottom: "5rem" }}>
               <div style={{ background: `linear-gradient(145deg, ${s.warmWhite}, rgba(56,44,190,0.04))`, border: `1px solid rgba(56,44,190,0.1)`, borderRadius: 24, padding: "3rem", aspectRatio: "4/3", display: "flex", alignItems: "center", justifyContent: "center", position: "relative", overflow: "hidden", transform: `translateY(${featOffset * 0.5}px)`, transition: "transform 0.1s linear" }}>
                 <div style={{ position: "relative", zIndex: 1, width: "100%", maxWidth: 260 }}>
                   <div style={{ background: s.bark, borderRadius: 32, padding: 12, boxShadow: "0 20px 60px rgba(0,0,0,0.15)" }}>
@@ -353,7 +457,7 @@ export default function UnfoldSite() {
 
           {/* Feature 2 */}
           <Reveal>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4rem", alignItems: "center", marginBottom: "5rem" }}>
+            <div className="grid-2-col" style={{ gap: "4rem", alignItems: "center", marginBottom: "5rem" }}>
               <div style={{ order: 2 }}>
                 <div style={{ background: `linear-gradient(145deg, ${s.warmWhite}, rgba(56,44,190,0.04))`, border: `1px solid rgba(56,44,190,0.1)`, borderRadius: 24, padding: "3rem", aspectRatio: "4/3", display: "flex", alignItems: "center", justifyContent: "center", position: "relative", overflow: "hidden" }}>
                   <div style={{ position: "relative", zIndex: 1, width: "100%", maxWidth: 260 }}>
@@ -394,7 +498,7 @@ export default function UnfoldSite() {
 
           {/* Feature 3 */}
           <Reveal>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4rem", alignItems: "center" }}>
+            <div className="grid-2-col" style={{ gap: "4rem", alignItems: "center" }}>
               <div style={{ background: `linear-gradient(145deg, ${s.warmWhite}, rgba(56,44,190,0.04))`, border: `1px solid rgba(56,44,190,0.1)`, borderRadius: 24, padding: "3rem", aspectRatio: "4/3", display: "flex", alignItems: "center", justifyContent: "center", position: "relative", overflow: "hidden" }}>
                 <div style={{ position: "relative", zIndex: 1, width: "100%", maxWidth: 260 }}>
                   <div style={{ background: s.bark, borderRadius: 32, padding: 12, boxShadow: "0 20px 60px rgba(0,0,0,0.15)" }}>
@@ -444,7 +548,7 @@ export default function UnfoldSite() {
             </div>
           </Reveal>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "2.5rem", position: "relative" }}>
+          <div className="grid-3-col" style={{ gap: "2.5rem", position: "relative" }}>
             {[
               { icon: "⌚", num: "Step One", title: "Wear & Sync", desc: "Connect your Apple Watch and let Unfold passively track heart rate variability, sleep patterns, and activity — no extra effort needed." },
               { icon: "✍️", num: "Step Two", title: "Journal & Reflect", desc: "Spend 2 minutes on AI-guided prompts that help Unfold understand your emotional landscape and map your personal stress triggers." },
@@ -514,7 +618,7 @@ export default function UnfoldSite() {
             </div>
           </Reveal>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1.5rem", alignItems: "start" }}>
+          <div className="grid-3-col" style={{ gap: "1.5rem", alignItems: "start" }}>
             {plans.map((plan, i) => (
               <Reveal key={plan.name} delay={i * 0.1}>
                 <div style={{ background: plan.featured ? s.bark : s.cream, color: plan.featured ? "#FAF8F5" : s.bark, border: `1.5px solid ${plan.featured ? s.bark : s.sand}`, borderRadius: 20, padding: "2.5rem 2rem", transition: "all 0.4s", position: "relative", transform: plan.featured ? "scale(1.03)" : "scale(1)" }}
@@ -590,7 +694,7 @@ export default function UnfoldSite() {
       {/* FOOTER */}
       <footer style={{ background: s.bark, color: "rgba(250,248,245,0.6)", padding: "4rem 2rem 2rem" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "3rem" }}>
+          <div className="footer-main" style={{ marginBottom: "3rem" }}>
             <div style={{ maxWidth: 320 }}>
               <div style={{ marginBottom: "1rem" }}>
                 <img src="/logo_white.png" alt="Unfold" style={{ height: 30 }} />
@@ -613,7 +717,7 @@ export default function UnfoldSite() {
                 </a>
               </div>
             </div>
-            <div style={{ display: "flex", gap: "4rem" }}>
+            <div className="footer-links">
               <div>
                 <h4 style={{ color: "#FAF8F5", fontSize: "0.82rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: "1rem" }}>Resources</h4>
                 <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
