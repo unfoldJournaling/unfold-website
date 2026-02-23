@@ -742,7 +742,7 @@ export default function UnfoldSite() {
                   <a href="#" style={{ color: "rgba(250,248,245,0.5)", textDecoration: "none", fontSize: "0.85rem", transition: "color 0.3s" }}
                     onMouseEnter={e => e.target.style.color = s.sageLight}
                     onMouseLeave={e => e.target.style.color = "rgba(250,248,245,0.5)"}>FAQ</a>
-                  <a href="#" style={{ color: "rgba(250,248,245,0.5)", textDecoration: "none", fontSize: "0.85rem", transition: "color 0.3s" }}
+                  <a href="https://unfold.canny.io/feature-requests" style={{ color: "rgba(250,248,245,0.5)", textDecoration: "none", fontSize: "0.85rem", transition: "color 0.3s" }}
                     onMouseEnter={e => e.target.style.color = s.sageLight}
                     onMouseLeave={e => e.target.style.color = "rgba(250,248,245,0.5)"}>Request a Feature</a>
                 </div>
