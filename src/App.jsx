@@ -234,11 +234,13 @@ export default function UnfoldSite() {
             top: 100%;
             left: 0;
             right: 0;
-            background: rgba(255,255,255,0.98);
+            background: #FFFFFF;
             backdrop-filter: blur(20px);
-            padding: 1rem 2rem;
-            gap: 1rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            padding: 1.5rem 2rem;
+            gap: 1.25rem;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+            border-bottom: 1px solid #E5E5E5;
+            z-index: 1000;
           }
           .mobile-menu-button { display: block; }
           .grid-3-col { grid-template-columns: 1fr; gap: 2rem; }
