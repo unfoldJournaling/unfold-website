@@ -302,7 +302,7 @@ export default function UnfoldSite() {
       `}</style>
 
       {/* NAV */}
-      <nav style={{ padding: "1rem 2rem", display: "flex", alignItems: "center", justifyContent: "space-between", transition: "all 0.4s", background: s.cream }}>
+      <nav style={{ position: "relative", padding: "1rem 2rem", display: "flex", alignItems: "center", justifyContent: "space-between", transition: "all 0.4s", background: s.cream }}>
         <a href="#" style={{ textDecoration: "none", display: "flex", alignItems: "center", zIndex: 101 }}>
           <img src={LOGO_SRC} alt="Unfold" style={{ height: 36 }} />
         </a>
