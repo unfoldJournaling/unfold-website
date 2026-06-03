@@ -53,6 +53,46 @@ const testimonials = [
   { text: "After my burnout last year, Unfold has been essential to my recovery. It's like having a therapist who's always watching your vitals.", name: "Marcus J.", role: "Startup Founder", color: "#B5B8EE" },
 ];
 
+const faqGroups = [
+  {
+    title: "Product & how it works",
+    items: [
+      { q: "How does Unfold predict stress 24–48 hours in advance?", a: "Unfold's model combines passive biometrics from your Apple Watch — heart rate variability (HRV), resting heart rate, sleep stages, and activity — with patterns from your daily AI-guided journal entries. After a short calibration period (typically 7–10 days), the model learns your personal stress signature and forecasts elevated-stress windows before they arrive." },
+      { q: "What does the 92% prediction accuracy actually mean?", a: "It's the rate at which our model correctly forecasts a user's self-reported high-stress episodes within a 48-hour window, measured across our calibrated user cohort. Accuracy is per-user once your baseline is established — predictions are weaker in the first week while the model learns you." },
+      { q: "Do I need an Apple Watch to use Unfold?", a: "You can use the Free plan for journaling and basic mood tracking without a watch. Predictive features require an Apple Watch Series 4 or later running watchOS 9+. Android and Wear OS support is on the roadmap — join the waitlist in the app." },
+      { q: "What is a \"stress personality\" and how is mine determined?", a: "Your stress personality (e.g., Simmerer, Spike, Drift) describes the pattern your nervous system tends to follow under load. It's inferred from 2–3 weeks of biometric and journaling data and updates as your patterns shift. It's used to tailor which CBT micro-interventions you're offered and when." },
+      { q: "Will it interrupt me with notifications all day?", a: "No. Unfold sends at most one predictive alert per day by default, timed to an optimal intervention moment. You can tighten or loosen that cadence — or set quiet hours and focus windows — in Settings → Notifications." },
+    ],
+  },
+  {
+    title: "Privacy & data",
+    items: [
+      { q: "Where is my biometric and journal data stored?", a: "Biometrics stay on-device whenever possible and are processed in a secure enclave when cloud inference is required. Journal entries are encrypted at rest (AES-256) and in transit (TLS 1.3), stored in U.S.-based SOC 2 infrastructure, and keyed per-user so they can be cryptographically erased on request." },
+      { q: "Is my data ever used to train models or sold to third parties?", a: "Never sold. Your data is used only to power your personal predictions. We do not use individual journal content to train shared models. Aggregate, de-identified statistics may inform model improvements — you can opt out of even that in Settings → Privacy." },
+      { q: "Is Unfold HIPAA-compliant?", a: "Unfold is a wellness product, not a covered entity under HIPAA. That said, we follow HIPAA-equivalent administrative, physical, and technical safeguards. Teams customers on healthcare contracts can request a BAA — contact kings@tryunfold.ai." },
+      { q: "What does my manager see on the Teams plan?", a: "Managers only ever see aggregated, anonymized signals across a team of 5+ — never individual entries, predictions, or biometrics. If a team drops below 5 active members, aggregate views are paused automatically to prevent re-identification." },
+      { q: "How do I delete my account and data?", a: (
+        <>
+          You can delete your Unfold account and all associated data at any time. Visit our dedicated{" "}
+          <Link to="/delete-account" style={{ color: "#382CBE", fontWeight: 600, textDecoration: "underline" }}>
+            Delete Account page
+          </Link>
+          {" "}for the full process — in-app and email options, what gets deleted, what we may retain (and why), our 7-day confirmation / 30-day completion timeline, and your GDPR / CCPA rights.
+        </>
+      ) },
+    ],
+  },
+  {
+    title: "Clinical & safety",
+    items: [
+      { q: "Is Unfold a medical device or a replacement for therapy?", a: "No. Unfold is a wellness tool, not an FDA-cleared medical device, and it does not diagnose or treat any condition. It's designed to complement — not replace — care from a licensed mental health professional. If you're in active treatment, share Unfold's insights with your therapist; many find them useful in session." },
+      { q: "What CBT techniques does Unfold use?", a: "Our micro-interventions are drawn from evidence-based protocols: cognitive reframing, behavioral activation, 4-7-8 and box breathing, progressive muscle relaxation, urge-surfing, and brief values-based exercises. Each is adapted for 2–5 minute delivery and selected based on your current physiological state." },
+      { q: "What if I'm in crisis?", a: "Unfold is not a crisis service. If you're having thoughts of self-harm or are in immediate danger, please contact emergency services or a crisis line right away — in the U.S., call or text 988 (Suicide & Crisis Lifeline); in the U.K., call 116 123 (Samaritans); elsewhere, see findahelpline.com. The app surfaces these resources whenever crisis-related language is detected." },
+      { q: "Can I use Unfold if I'm pregnant, have a heart condition, or take medications that affect HRV?", a: "Yes — Unfold is safe to use, but predictions may be less accurate while your baseline physiology is changing (pregnancy, new medication, recovery from illness). Flag these in Settings → Health Context so the model weights biometrics appropriately and leans more on journaling signals." },
+    ],
+  },
+];
+
 const pricingPlans = {
   monthly: [
     { name: "Free", desc: "Get started with the basics", price: 0, period: "/month", features: ["Basic mood tracking", "Daily journal prompts", "Weekly stress summary", "3 CBT exercises"], cta: "Get Started Free", featured: false },
@@ -160,6 +200,65 @@ function FloatingTestimonials() {
           </div>
         </div>
       ))}
+    </div>
+  );
+}
+
+// Single FAQ item with accordion behavior
+function FAQItem({ q, a, tokens }) {
+  const [open, setOpen] = useState(false);
+  const s = tokens;
+  return (
+    <div style={{ borderBottom: `1px solid ${s.sand}` }}>
+      <button
+        onClick={() => setOpen(o => !o)}
+        aria-expanded={open}
+        style={{
+          width: "100%",
+          background: "transparent",
+          border: "none",
+          textAlign: "left",
+          cursor: "pointer",
+          padding: "1.25rem 2.5rem 1.25rem 0",
+          fontFamily: "'Plus Jakarta Sans', sans-serif",
+          fontSize: "1rem",
+          fontWeight: 600,
+          color: s.bark,
+          lineHeight: 1.45,
+          position: "relative",
+          transition: "color 0.2s",
+        }}
+        onMouseEnter={e => (e.currentTarget.style.color = s.sageDeep)}
+        onMouseLeave={e => (e.currentTarget.style.color = s.bark)}
+      >
+        {q}
+        <span
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            right: "0.5rem",
+            top: "50%",
+            width: 10,
+            height: 10,
+            borderRight: `2px solid currentColor`,
+            borderBottom: `2px solid currentColor`,
+            transform: open ? "translateY(-25%) rotate(-135deg)" : "translateY(-75%) rotate(45deg)",
+            transition: "transform 0.25s ease",
+          }}
+        />
+      </button>
+      <div
+        style={{
+          maxHeight: open ? 600 : 0,
+          opacity: open ? 1 : 0,
+          overflow: "hidden",
+          transition: "max-height 0.3s ease, opacity 0.3s ease",
+        }}
+      >
+        <p style={{ padding: "0 0 1.5rem", color: s.barkLight, fontSize: "0.95rem", lineHeight: 1.75 }}>
+          {a}
+        </p>
+      </div>
     </div>
   );
 }
@@ -689,6 +788,46 @@ export default function UnfoldSite() {
         </div>
       </section>
 
+      {/* FAQ */}
+      <section id="faq" style={{ padding: "7rem 2rem", background: s.cream }}>
+        <div style={{ maxWidth: 880, margin: "0 auto" }}>
+          <Reveal>
+            <div style={{ textAlign: "center", marginBottom: "4rem" }}>
+              <div style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontSize: "0.78rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: s.sageDeep, marginBottom: "1.25rem" }}>
+                <span style={{ width: 20, height: 2, background: s.sage, borderRadius: 2 }} /> FAQ
+              </div>
+              <h2 style={{ fontFamily: fontDisplay, fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 400, lineHeight: 1.2, color: s.bark, letterSpacing: "-0.02em" }}>Questions, answered</h2>
+              <p style={{ fontSize: "1.05rem", color: s.barkLight, maxWidth: 520, margin: "1rem auto 0", lineHeight: 1.8 }}>Everything you need to know about how Unfold predicts stress, protects your data, and fits into your routine.</p>
+            </div>
+          </Reveal>
+
+          {faqGroups.map((group, gi) => (
+            <Reveal key={group.title} delay={gi * 0.05}>
+              <div style={{ marginBottom: "3rem" }}>
+                <h3 style={{ fontFamily: fontDisplay, fontSize: "1.35rem", fontWeight: 500, color: s.bark, marginBottom: "0.75rem", paddingBottom: "0.75rem", borderBottom: `1.5px solid ${s.sand}` }}>
+                  {group.title}
+                </h3>
+                {group.items.map((item, i) => (
+                  <FAQItem key={i} q={item.q} a={item.a} tokens={s} />
+                ))}
+              </div>
+            </Reveal>
+          ))}
+
+          <Reveal>
+            <p style={{ textAlign: "center", marginTop: "2rem", paddingTop: "2rem", borderTop: `1px solid ${s.sand}`, color: s.barkLight, fontSize: "0.92rem", lineHeight: 1.7 }}>
+              Still have a question? Email{" "}
+              <a href="mailto:kings@tryunfold.ai" style={{ color: s.sageDeep, fontWeight: 600, textDecoration: "none" }}
+                onMouseEnter={e => (e.currentTarget.style.textDecoration = "underline")}
+                onMouseLeave={e => (e.currentTarget.style.textDecoration = "none")}>
+                kings@tryunfold.ai
+              </a>
+              {" "}— we usually reply within a business day.
+            </p>
+          </Reveal>
+        </div>
+      </section>
+
       {/* CTA */}
       <section id="cta" style={{ background: s.cream, padding: "8rem 2rem" }}>
         <Reveal>
@@ -741,7 +880,7 @@ export default function UnfoldSite() {
                   <a href="#" style={{ color: "rgba(250,248,245,0.5)", textDecoration: "none", fontSize: "0.85rem", transition: "color 0.3s" }}
                     onMouseEnter={e => e.target.style.color = s.sageLight}
                     onMouseLeave={e => e.target.style.color = "rgba(250,248,245,0.5)"}>Getting Started</a>
-                  <a href="#" style={{ color: "rgba(250,248,245,0.5)", textDecoration: "none", fontSize: "0.85rem", transition: "color 0.3s" }}
+                  <a href="/#faq" style={{ color: "rgba(250,248,245,0.5)", textDecoration: "none", fontSize: "0.85rem", transition: "color 0.3s" }}
                     onMouseEnter={e => e.target.style.color = s.sageLight}
                     onMouseLeave={e => e.target.style.color = "rgba(250,248,245,0.5)"}>FAQ</a>
                   <a href="https://unfold.canny.io/feature-requests" style={{ color: "rgba(250,248,245,0.5)", textDecoration: "none", fontSize: "0.85rem", transition: "color 0.3s" }}
@@ -769,6 +908,9 @@ export default function UnfoldSite() {
                   <Link to="/terms" style={{ color: "rgba(250,248,245,0.5)", textDecoration: "none", fontSize: "0.85rem", transition: "color 0.3s" }}
                     onMouseEnter={e => e.target.style.color = s.sageLight}
                     onMouseLeave={e => e.target.style.color = "rgba(250,248,245,0.5)"}>Terms of Service</Link>
+                  <Link to="/delete-account" style={{ color: "rgba(250,248,245,0.5)", textDecoration: "none", fontSize: "0.85rem", transition: "color 0.3s" }}
+                    onMouseEnter={e => e.target.style.color = s.sageLight}
+                    onMouseLeave={e => e.target.style.color = "rgba(250,248,245,0.5)"}>Delete Account</Link>
                 </div>
               </div>
             </div>
