@@ -3,6 +3,22 @@ import { Link } from "react-router-dom";
 
 const LOGO_SRC = "/logo.png";
 
+// App store URLs
+export const APP_STORE_URL = "https://apps.apple.com/us/app/unfold-journal-mood-tracker/id6743553743";
+export const PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=com.unfold.mobile.production&hl=en_US";
+
+// Detects whether the visitor is on iOS, Android, or desktop.
+// iPadOS 13+ reports as Mac, so we also check for touch points.
+export function detectPlatform() {
+  if (typeof navigator === "undefined") return "desktop";
+  const ua = navigator.userAgent || "";
+  const isIOS = /iPad|iPhone|iPod/.test(ua) || (ua.includes("Mac") && navigator.maxTouchPoints > 1);
+  const isAndroid = /Android/.test(ua);
+  if (isIOS) return "ios";
+  if (isAndroid) return "android";
+  return "desktop";
+}
+
 // Company logos as SVG components
 const CompanyLogos = {
   Google: () => (
@@ -263,10 +279,163 @@ function FAQItem({ q, a, tokens }) {
   );
 }
 
+// Download modal: shown when desktop users click "Download App"
+function DownloadModal({ open, onClose, tokens, fontDisplay }) {
+  const s = tokens;
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e) => { if (e.key === "Escape") onClose(); };
+    document.addEventListener("keydown", onKey);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [open, onClose]);
+
+  if (!open) return null;
+
+  return (
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-label="Download Unfold"
+      onClick={onClose}
+      style={{
+        position: "fixed", inset: 0, background: "rgba(0,0,0,0.55)",
+        display: "flex", alignItems: "center", justifyContent: "center",
+        zIndex: 9999, padding: "1rem", backdropFilter: "blur(4px)",
+        animation: "ufFadeIn 0.2s ease",
+      }}
+    >
+      <style>{`
+        @keyframes ufFadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes ufModalIn { from { opacity: 0; transform: translateY(12px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+      `}</style>
+      <div
+        onClick={e => e.stopPropagation()}
+        style={{
+          background: s.cream, borderRadius: 24, maxWidth: 440, width: "100%",
+          padding: "2.5rem 2rem", textAlign: "center", position: "relative",
+          boxShadow: "0 24px 80px rgba(0,0,0,0.25)",
+          animation: "ufModalIn 0.25s ease",
+        }}
+      >
+        <button
+          onClick={onClose}
+          aria-label="Close"
+          style={{
+            position: "absolute", top: 14, right: 14,
+            background: "none", border: "none", cursor: "pointer",
+            color: s.barkLight, padding: 8, lineHeight: 0, borderRadius: 8,
+            transition: "color 0.2s, background 0.2s",
+          }}
+          onMouseEnter={e => { e.currentTarget.style.color = s.bark; e.currentTarget.style.background = s.sand; }}
+          onMouseLeave={e => { e.currentTarget.style.color = s.barkLight; e.currentTarget.style.background = "transparent"; }}
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+
+        <h3 style={{ fontFamily: fontDisplay, fontSize: "1.75rem", fontWeight: 400, color: s.bark, marginBottom: "0.4rem", letterSpacing: "-0.01em" }}>
+          Get Unfold
+        </h3>
+        <p style={{ color: s.barkLight, fontSize: "0.95rem", marginBottom: "1.75rem", lineHeight: 1.5 }}>
+          Download for your phone
+        </p>
+
+        <div style={{ display: "flex", flexDirection: "column", gap: "0.65rem", marginBottom: "1.5rem" }}>
+          <a
+            href={APP_STORE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              background: s.bark, color: s.cream, padding: "0.9rem 1.5rem",
+              borderRadius: 100, textDecoration: "none", fontWeight: 600, fontSize: "0.95rem",
+              display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "0.55rem",
+              transition: "background 0.25s, transform 0.25s",
+            }}
+            onMouseEnter={e => { e.currentTarget.style.background = s.moss; e.currentTarget.style.transform = "translateY(-1px)"; }}
+            onMouseLeave={e => { e.currentTarget.style.background = s.bark; e.currentTarget.style.transform = "translateY(0)"; }}
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z" />
+            </svg>
+            Download on the App Store
+          </a>
+          <a
+            href={PLAY_STORE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              background: "transparent", color: s.bark, padding: "0.85rem 1.5rem",
+              borderRadius: 100, textDecoration: "none", fontWeight: 600, fontSize: "0.95rem",
+              border: `1.5px solid ${s.sand}`,
+              display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "0.55rem",
+              transition: "border-color 0.25s, background 0.25s, transform 0.25s",
+            }}
+            onMouseEnter={e => { e.currentTarget.style.borderColor = s.sage; e.currentTarget.style.background = "rgba(56,44,190,0.04)"; e.currentTarget.style.transform = "translateY(-1px)"; }}
+            onMouseLeave={e => { e.currentTarget.style.borderColor = s.sand; e.currentTarget.style.background = "transparent"; e.currentTarget.style.transform = "translateY(0)"; }}
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 01-.61-.92V2.734a1 1 0 01.609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.198l2.807 1.626a1 1 0 010 1.73l-2.808 1.626L15.119 12l2.579-2.491zM5.864 2.658L16.802 8.99l-2.302 2.303-8.636-8.635z" />
+            </svg>
+            Get it on Google Play
+          </a>
+        </div>
+
+        <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", margin: "1.25rem 0 1.25rem" }}>
+          <div style={{ flex: 1, height: 1, background: s.sand }} />
+          <span style={{ fontSize: "0.7rem", color: s.barkLight, letterSpacing: "0.1em", fontWeight: 600 }}>OR SCAN</span>
+          <div style={{ flex: 1, height: 1, background: s.sand }} />
+        </div>
+
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.75rem" }}>
+          <div style={{ padding: 10, background: s.cream, borderRadius: 14, border: `1px solid ${s.sand}` }}>
+            <img
+              src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&margin=0&data=https%3A%2F%2Ftryunfold.ai%2Fget-app"
+              alt="Scan with your phone camera to download Unfold"
+              width="160"
+              height="160"
+              style={{ display: "block", borderRadius: 6 }}
+            />
+          </div>
+          <p style={{ fontSize: "0.8rem", color: s.barkLight, margin: 0 }}>
+            Scan with your phone camera
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function UnfoldSite() {
   const [scrolled, setScrolled] = useState(false);
   const [billing, setBilling] = useState("monthly");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [downloadOpen, setDownloadOpen] = useState(false);
+
+  // Routes to the correct store on mobile, or opens the chooser modal on desktop.
+  const handleDownloadClick = (e) => {
+    const platform = detectPlatform();
+    if (platform === "ios") {
+      // Let the native link work (href is the App Store URL) — no special handling
+      return;
+    }
+    if (platform === "android") {
+      e.preventDefault();
+      window.location.href = PLAY_STORE_URL;
+      return;
+    }
+    // Desktop — show modal
+    e.preventDefault();
+    setMobileMenuOpen(false);
+    setDownloadOpen(true);
+  };
   const [heroRef, heroOffset] = useParallax(0.15);
   const [featRef, featOffset] = useParallax(0.08);
 
@@ -429,7 +598,7 @@ export default function UnfoldSite() {
               onMouseEnter={e => e.target.style.color = s.sageDeep}
               onMouseLeave={e => e.target.style.color = s.barkLight}>{l}</a>
           ))}
-          <a href="https://apps.apple.com/us/app/unfold-journal-mood-tracker/id6743553743" onClick={() => setMobileMenuOpen(false)} style={{ textDecoration: "none", background: s.bark, color: s.cream, padding: "0.65rem 1.5rem", borderRadius: 100, fontWeight: 600, fontSize: "0.9rem", transition: "all 0.3s", display: "inline-flex", alignItems: "center", gap: "0.4rem" }}
+          <a href={APP_STORE_URL} onClick={(e) => { setMobileMenuOpen(false); handleDownloadClick(e); }} style={{ textDecoration: "none", background: s.bark, color: s.cream, padding: "0.65rem 1.5rem", borderRadius: 100, fontWeight: 600, fontSize: "0.9rem", transition: "all 0.3s", display: "inline-flex", alignItems: "center", gap: "0.4rem" }}
             onMouseEnter={e => { e.target.style.background = s.moss; e.target.style.transform = "translateY(-1px)"; }}
             onMouseLeave={e => { e.target.style.background = s.bark; e.target.style.transform = "translateY(0)"; }}>
             <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
@@ -465,7 +634,7 @@ export default function UnfoldSite() {
           </Reveal>
           <Reveal delay={0.3}>
             <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
-              <a href="https://apps.apple.com/us/app/unfold-journal-mood-tracker/id6743553743" style={{ background: s.bark, color: s.cream, padding: "1rem 2.25rem", borderRadius: 100, textDecoration: "none", fontWeight: 600, fontSize: "0.95rem", transition: "all 0.35s", display: "inline-flex", alignItems: "center", gap: "0.5rem" }}
+              <a href={APP_STORE_URL} onClick={handleDownloadClick} style={{ background: s.bark, color: s.cream, padding: "1rem 2.25rem", borderRadius: 100, textDecoration: "none", fontWeight: 600, fontSize: "0.95rem", transition: "all 0.35s", display: "inline-flex", alignItems: "center", gap: "0.5rem", cursor: "pointer" }}
                 onMouseEnter={e => { e.currentTarget.style.background = s.moss; e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = `0 8px 30px rgba(56,44,190,0.25)`; }}
                 onMouseLeave={e => { e.currentTarget.style.background = s.bark; e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "none"; }}>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
@@ -756,14 +925,14 @@ export default function UnfoldSite() {
                     ))}
                   </div>
                   {plan.cta === "Download App" ? (
-                    <a href="https://apps.apple.com/us/app/unfold-journal-mood-tracker/id6743553743" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.5rem", width: "100%", padding: "0.9rem", borderRadius: 100, fontWeight: 600, fontSize: "0.9rem", transition: "all 0.3s", cursor: "pointer", fontFamily: fontBody, border: plan.featured ? "none" : `1.5px solid ${s.sand}`, background: plan.featured ? s.sage : "transparent", color: plan.featured ? "white" : s.bark, textDecoration: "none" }}
+                    <a href={APP_STORE_URL} onClick={handleDownloadClick} style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.5rem", width: "100%", padding: "0.9rem", borderRadius: 100, fontWeight: 600, fontSize: "0.9rem", transition: "all 0.3s", cursor: "pointer", fontFamily: fontBody, border: plan.featured ? "none" : `1.5px solid ${s.sand}`, background: plan.featured ? s.sage : "transparent", color: plan.featured ? "white" : s.bark, textDecoration: "none" }}
                       onMouseEnter={e => { e.target.style.borderColor = plan.featured ? s.sageDeep : s.sage; e.target.style.background = plan.featured ? s.sageDeep : "rgba(56,44,190,0.04)"; }}
                       onMouseLeave={e => { e.target.style.borderColor = plan.featured ? "transparent" : s.sand; e.target.style.background = plan.featured ? s.sage : "transparent"; }}>
                       <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
                       {plan.cta}
                     </a>
                   ) : plan.cta === "Get Started Free" ? (
-                    <a href="https://apps.apple.com/us/app/unfold-journal-mood-tracker/id6743553743" style={{ display: "block", width: "100%", textAlign: "center", padding: "0.9rem", borderRadius: 100, fontWeight: 600, fontSize: "0.9rem", transition: "all 0.3s", cursor: "pointer", fontFamily: fontBody, border: plan.featured ? "none" : `1.5px solid ${s.sand}`, background: plan.featured ? s.sage : "transparent", color: plan.featured ? "white" : s.bark, textDecoration: "none" }}
+                    <a href={APP_STORE_URL} onClick={handleDownloadClick} style={{ display: "block", width: "100%", textAlign: "center", padding: "0.9rem", borderRadius: 100, fontWeight: 600, fontSize: "0.9rem", transition: "all 0.3s", cursor: "pointer", fontFamily: fontBody, border: plan.featured ? "none" : `1.5px solid ${s.sand}`, background: plan.featured ? s.sage : "transparent", color: plan.featured ? "white" : s.bark, textDecoration: "none" }}
                       onMouseEnter={e => { e.target.style.borderColor = plan.featured ? s.sageDeep : s.sage; e.target.style.background = plan.featured ? s.sageDeep : "rgba(56,44,190,0.04)"; }}
                       onMouseLeave={e => { e.target.style.borderColor = plan.featured ? "transparent" : s.sand; e.target.style.background = plan.featured ? s.sage : "transparent"; }}>
                       {plan.cta}
@@ -837,7 +1006,7 @@ export default function UnfoldSite() {
             </div>
             <h2 style={{ fontFamily: fontDisplay, fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 400, lineHeight: 1.2, color: s.bark, maxWidth: 500, margin: "0 auto 1rem", letterSpacing: "-0.02em" }}>Ready to unfold a calmer you?</h2>
             <p style={{ fontSize: "1.05rem", color: s.barkLight, maxWidth: 520, margin: "0 auto 2.5rem", lineHeight: 1.8 }}>Join thousands of professionals who are staying ahead of stress instead of recovering from it.</p>
-            <a href="https://apps.apple.com/us/app/unfold-journal-mood-tracker/id6743553743" style={{ background: s.bark, color: s.cream, padding: "1rem 2.25rem", borderRadius: 100, textDecoration: "none", fontWeight: 600, fontSize: "0.95rem", transition: "all 0.35s", display: "inline-flex", alignItems: "center", gap: "0.5rem" }}
+            <a href={APP_STORE_URL} onClick={handleDownloadClick} style={{ background: s.bark, color: s.cream, padding: "1rem 2.25rem", borderRadius: 100, textDecoration: "none", fontWeight: 600, fontSize: "0.95rem", transition: "all 0.35s", display: "inline-flex", alignItems: "center", gap: "0.5rem", cursor: "pointer" }}
               onMouseEnter={e => { e.currentTarget.style.background = s.moss; e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = `0 8px 30px rgba(56,44,190,0.25)`; }}
               onMouseLeave={e => { e.currentTarget.style.background = s.bark; e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "none"; }}>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
@@ -920,6 +1089,13 @@ export default function UnfoldSite() {
           </div>
         </div>
       </footer>
+
+      <DownloadModal
+        open={downloadOpen}
+        onClose={() => setDownloadOpen(false)}
+        tokens={s}
+        fontDisplay={fontDisplay}
+      />
     </div>
   );
 }
