@@ -1,24 +1,16 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import App from './App.jsx'
-import Privacy from './Privacy.jsx'
-import Terms from './Terms.jsx'
-import DeleteAccount from './DeleteAccount.jsx'
-import GetApp from './GetApp.jsx'
-import ScrollToTop from './ScrollToTop.jsx'
+import React from "react";
+import { createRoot, hydrateRoot } from "react-dom/client";
+import { BrowserRouter } from "react-router-dom";
+import SiteRoutes from "./Routes.jsx";
+import "./styles.css";
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+const root = document.getElementById("root");
+const app = (
   <React.StrictMode>
     <BrowserRouter>
-      <ScrollToTop />
-      <Routes>
-        <Route path="/" element={<App />} />
-        <Route path="/privacy" element={<Privacy />} />
-        <Route path="/terms" element={<Terms />} />
-        <Route path="/delete-account" element={<DeleteAccount />} />
-        <Route path="/get-app" element={<GetApp />} />
-      </Routes>
+      <SiteRoutes />
     </BrowserRouter>
-  </React.StrictMode>,
-)
+  </React.StrictMode>
+);
+if (root.dataset.prerendered === "true") hydrateRoot(root, app);
+else createRoot(root).render(app);

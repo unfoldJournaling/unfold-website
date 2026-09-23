@@ -11,14 +11,11 @@ export default function DeleteAccount() {
     barkLight: "#666666",
   };
 
-  const fontDisplay = "'Fraunces', serif";
-  const fontBody = "'Plus Jakarta Sans', sans-serif";
+  const fontDisplay = "var(--font-body)";
+  const fontBody = "var(--font-body)";
 
   return (
     <div style={{ fontFamily: fontBody, background: s.cream, color: s.bark, minHeight: "100vh", padding: "4rem 2rem" }}>
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
-      `}</style>
 
       <div style={{ maxWidth: 800, margin: "0 auto" }}>
         <Link to="/" style={{ display: "inline-block", color: s.barkLight, textDecoration: "none", fontSize: "0.95rem", marginBottom: "3rem", transition: "color 0.3s" }}

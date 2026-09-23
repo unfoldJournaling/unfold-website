@@ -11,8 +11,8 @@ export default function Privacy() {
     barkLight: "#666666",
   };
 
-  const fontDisplay = "'Fraunces', serif";
-  const fontBody = "'Plus Jakarta Sans', sans-serif";
+  const fontDisplay = "var(--font-body)";
+  const fontBody = "var(--font-body)";
 
   const secS = { marginBottom: "2.5rem" };
   const h2S = { fontFamily: fontDisplay, fontSize: "1.75rem", fontWeight: 500, marginBottom: "1rem", color: s.bark };
@@ -25,9 +25,6 @@ export default function Privacy() {
 
   return (
     <div style={{ fontFamily: fontBody, background: s.cream, color: s.bark, minHeight: "100vh", padding: "4rem 2rem" }}>
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
-      `}</style>
 
       <div style={{ maxWidth: 800, margin: "0 auto" }}>
         <Link to="/" style={{ display: "inline-block", color: s.barkLight, textDecoration: "none", fontSize: "0.95rem", marginBottom: "3rem", transition: "color 0.3s" }}
@@ -44,6 +41,62 @@ export default function Privacy() {
             <strong>Last updated:</strong> July 13, 2026
           </p>
 
+          <nav className="privacy-toc" aria-label="Privacy policy contents">
+              <h2>Find what you need</h2>
+              <ol>
+              <li>
+              <a href="#privacy-section-1">Our privacy commitments</a>
+              </li>
+              <li>
+              <a href="#privacy-section-2">Information we collect</a>
+              </li>
+              <li>
+              <a href="#privacy-section-3">Where information comes from</a>
+              </li>
+              <li>
+              <a href="#privacy-section-4">How we use information</a>
+              </li>
+              <li>
+              <a href="#privacy-section-5">Artificial intelligence and voice features</a>
+              </li>
+              <li>
+              <a href="#privacy-section-6">How we disclose information</a>
+              </li>
+              <li>
+              <a href="#privacy-section-7">What we do not do</a>
+              </li>
+              <li>
+              <a href="#privacy-section-8">How long we retain information</a>
+              </li>
+              <li>
+              <a href="#privacy-section-9">Consumer Health Data Privacy Notice</a>
+              </li>
+              <li>
+              <a href="#privacy-section-10">Your privacy rights and choices</a>
+              </li>
+              <li>
+              <a href="#privacy-section-11">Information security</a>
+              </li>
+              <li>
+              <a href="#privacy-section-12">International data transfers</a>
+              </li>
+              <li>
+              <a href="#privacy-section-13">Children</a>
+              </li>
+              <li>
+              <a href="#privacy-section-14">Website cookies and similar technologies</a>
+              </li>
+              <li>
+              <a href="#privacy-section-15">Third-party links and services</a>
+              </li>
+              <li>
+              <a href="#privacy-section-16">Changes to this policy</a>
+              </li>
+              <li>
+              <a href="#privacy-section-17">Contact us</a>
+              </li>
+              </ol>
+              </nav>
           <section style={secS}>
             <p style={pS}>Unfold Labs, Inc., a Delaware corporation ("Unfold," "we," "us," or "our"), provides the Unfold mobile application, the website located at tryunfold.ai, and related features and services together referred to as the "Services."</p>
             <p style={pS}>Unfold combines journaling, artificial intelligence, and information from wearable devices to help people better understand patterns in their mental and physical well-being.</p>
@@ -60,7 +113,7 @@ export default function Privacy() {
           </section>
 
           <section style={secS}>
-            <h2 style={h2S}>1. Our privacy commitments</h2>
+            <h2 id="privacy-section-1" style={h2S}>1. Our privacy commitments</h2>
             <p style={pS}>Journal entries, voice recordings, emotional reflections, and health information can be deeply personal. We design Unfold around the following commitments:</p>
             <ul style={ulS}>
               <li>We do not sell your personal information.</li>
@@ -76,7 +129,7 @@ export default function Privacy() {
           </section>
 
           <section style={secS}>
-            <h2 style={h2S}>2. Information we collect</h2>
+            <h2 id="privacy-section-2" style={h2S}>2. Information we collect</h2>
             <p style={pS}>The information we collect depends on which Unfold features you use and which permissions you grant.</p>
 
             <h3 style={h3S}>2.1 Account and profile information</h3>
@@ -211,7 +264,7 @@ export default function Privacy() {
           </section>
 
           <section style={secS}>
-            <h2 style={h2S}>3. Where information comes from</h2>
+            <h2 id="privacy-section-3" style={h2S}>3. Where information comes from</h2>
             <p style={pS}>We obtain information from the following categories of sources:</p>
             <ul style={ulS}>
               <li>Directly from you</li>
@@ -228,7 +281,7 @@ export default function Privacy() {
           </section>
 
           <section style={secS}>
-            <h2 style={h2S}>4. How we use information</h2>
+            <h2 id="privacy-section-4" style={h2S}>4. How we use information</h2>
             <p style={pS}>We use personal information for the following purposes.</p>
 
             <h3 style={h3S}>4.1 Providing the Services</h3>
@@ -304,7 +357,7 @@ export default function Privacy() {
           </section>
 
           <section style={secS}>
-            <h2 style={h2S}>5. Artificial intelligence and voice features</h2>
+            <h2 id="privacy-section-5" style={h2S}>5. Artificial intelligence and voice features</h2>
 
             <h3 style={h3S}>5.1 Luma</h3>
             <p style={pS}>Luma is Unfold's AI journaling and wellness assistant. You can interact with Luma in writing or through spoken voice conversations.</p>
@@ -364,7 +417,7 @@ export default function Privacy() {
           </section>
 
           <section style={secS}>
-            <h2 style={h2S}>6. How we disclose information</h2>
+            <h2 id="privacy-section-6" style={h2S}>6. How we disclose information</h2>
             <p style={pS}>We disclose information only as described below.</p>
 
             <h3 style={h3S}>6.1 Service providers</h3>
@@ -453,7 +506,7 @@ export default function Privacy() {
           </section>
 
           <section style={secS}>
-            <h2 style={h2S}>7. What we do not do</h2>
+            <h2 id="privacy-section-7" style={h2S}>7. What we do not do</h2>
             <p style={pS}>Unfold does not:</p>
             <ul style={ulS}>
               <li>Sell personal information</li>
@@ -471,7 +524,7 @@ export default function Privacy() {
           </section>
 
           <section style={secS}>
-            <h2 style={h2S}>8. How long we retain information</h2>
+            <h2 id="privacy-section-8" style={h2S}>8. How long we retain information</h2>
             <p style={pS}>We retain personal information only for as long as reasonably necessary to provide the Services, fulfill the purposes described in this policy, comply with legal obligations, resolve disputes, enforce agreements, and protect the integrity and security of Unfold.</p>
 
             <h3 style={h3S}>8.1 Journal and health information</h3>
@@ -516,7 +569,7 @@ export default function Privacy() {
           </section>
 
           <section style={secS}>
-            <h2 style={h2S}>9. Consumer Health Data Privacy Notice</h2>
+            <h2 id="privacy-section-9" style={h2S}>9. Consumer Health Data Privacy Notice</h2>
             <p style={pS}>This section applies to consumer health data governed by Washington's My Health My Data Act and Nevada's consumer-health-data law.</p>
             <p style={pS}>Washington law requires covered businesses to clearly disclose the categories, sources, purposes, and recipients of consumer health data and explain how consumers may exercise their rights.</p>
 
@@ -617,7 +670,7 @@ export default function Privacy() {
           </section>
 
           <section style={secS}>
-            <h2 style={h2S}>10. Your privacy rights and choices</h2>
+            <h2 id="privacy-section-10" style={h2S}>10. Your privacy rights and choices</h2>
 
             <h3 style={h3S}>10.1 Rights available to everyone</h3>
             <p style={pS}>Regardless of where you live, you may ask us to:</p>
@@ -680,7 +733,7 @@ export default function Privacy() {
           </section>
 
           <section style={secS}>
-            <h2 style={h2S}>11. Information security</h2>
+            <h2 id="privacy-section-11" style={h2S}>11. Information security</h2>
             <p style={pS}>We use administrative, technical, and organizational safeguards designed to protect personal information.</p>
             <p style={pS}>These measures may include:</p>
             <ul style={ulS}>
@@ -702,7 +755,7 @@ export default function Privacy() {
           </section>
 
           <section style={secS}>
-            <h2 style={h2S}>12. International data transfers</h2>
+            <h2 id="privacy-section-12" style={h2S}>12. International data transfers</h2>
             <p style={pS}>Unfold is operated from the United States. Personal information may be stored and processed in the United States and other countries where Unfold or its service providers operate.</p>
             <p style={pS}>These countries may have privacy laws different from those in your country.</p>
             <p style={pS}>Where required for transfers from the EEA, United Kingdom, or Switzerland, we use recognized safeguards, which may include:</p>
@@ -715,7 +768,7 @@ export default function Privacy() {
           </section>
 
           <section style={secS}>
-            <h2 style={h2S}>13. Children</h2>
+            <h2 id="privacy-section-13" style={h2S}>13. Children</h2>
             <p style={pS}>Unfold is intended for users aged 13 and older. In jurisdictions where applicable law requires a higher minimum age to use the Services without parental or guardian consent, you must meet that higher age. Unfold does not currently provide a parental-consent process.</p>
             <p style={pS}>We do not knowingly collect personal information from a child below the applicable minimum age.</p>
             <p style={pS}>If you believe a child has provided information to Unfold in violation of this section, contact <a href="mailto:kings@tryunfold.ai" style={linkS}>kings@tryunfold.ai</a>. We will investigate and take appropriate steps, which may include deleting the account and associated information.</p>
@@ -723,7 +776,7 @@ export default function Privacy() {
           </section>
 
           <section style={secS}>
-            <h2 style={h2S}>14. Website cookies and similar technologies</h2>
+            <h2 id="privacy-section-14" style={h2S}>14. Website cookies and similar technologies</h2>
             <p style={pS}>The Unfold mobile application does not rely on browser cookies in the same way as a website. It may, however, use software-development kits and similar technologies for authentication, subscriptions, diagnostics, security, and product operation.</p>
             <p style={pS}>Our website may use:</p>
             <ul style={ulS}>
@@ -738,14 +791,14 @@ export default function Privacy() {
           </section>
 
           <section style={secS}>
-            <h2 style={h2S}>15. Third-party links and services</h2>
+            <h2 id="privacy-section-15" style={h2S}>15. Third-party links and services</h2>
             <p style={pS}>The Services may contain links to websites or services that Unfold does not operate.</p>
             <p style={pS}>This Privacy Policy does not govern those third parties. Review their privacy policies before providing information to them.</p>
             <p>Connecting Apple Health, Health Connect, the App Store, Google Play, or another third-party service is also subject to that provider's terms and privacy practices.</p>
           </section>
 
           <section style={secS}>
-            <h2 style={h2S}>16. Changes to this policy</h2>
+            <h2 id="privacy-section-16" style={h2S}>16. Changes to this policy</h2>
             <p style={pS}>We may update this Privacy Policy as our Services, technology, providers, and legal obligations evolve.</p>
             <p style={pS}>The effective date at the top indicates when the current version took effect.</p>
             <p style={pS}>If we make a material change, we will provide notice through an appropriate method, such as:</p>
@@ -759,7 +812,7 @@ export default function Privacy() {
           </section>
 
           <section style={secS}>
-            <h2 style={h2S}>17. Contact us</h2>
+            <h2 id="privacy-section-17" style={h2S}>17. Contact us</h2>
             <p style={pS}>Questions, concerns, complaints, appeals, and privacy requests may be directed to:</p>
             <p style={pS}>
               <strong>Unfold Labs, Inc.</strong><br />
