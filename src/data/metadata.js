@@ -7,6 +7,7 @@ export const staticRoutes = [
   "/prompts",
   "/help",
   "/about",
+  "/careers",
   "/plans",
   "/get-app",
   "/privacy",
@@ -30,6 +31,10 @@ const pageData = {
   "/about": [
     "About Unfold — Space for everyday reflection",
     "Learn what guides Unfold: thoughtful journaling, curiosity, clear choices, and space to understand your own experience.",
+  ],
+  "/careers": [
+    "Careers at Unfold — Build space for reflection",
+    "Explore careers at Unfold, the principles behind our journaling and mood check-in experience, and how to ask about future opportunities.",
   ],
   "/plans": [
     "Unfold Subscriptions — Billing & subscription guidance",

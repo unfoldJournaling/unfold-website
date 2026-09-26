@@ -122,6 +122,7 @@ function Footer() {
           <div>
             <h2>Say hello</h2>
             <Link to="/about">About Unfold</Link>
+            <Link to="/careers">Careers</Link>
             <a href={`mailto:${CONTACT_EMAIL}`}>Contact us</a>
             <a
               href="https://unfold.canny.io/feature-requests"

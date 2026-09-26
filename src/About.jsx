@@ -110,6 +110,10 @@ export default function About() {
               Find an answer
               <Icon />
             </Link>
+            <Link className="text-link" to="/careers">
+              Explore careers
+              <Icon />
+            </Link>
           </div>
         </div>
       </section>

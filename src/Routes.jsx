@@ -15,6 +15,7 @@ import Prompts from "./Prompts.jsx";
 import Help from "./Help.jsx";
 import About from "./About.jsx";
 import Plans from "./Plans.jsx";
+import Careers from "./Careers.jsx";
 export default function SiteRoutes() {
   return (
     <>
@@ -27,6 +28,7 @@ export default function SiteRoutes() {
           <Route path="/prompts" element={<Prompts />} />
           <Route path="/help" element={<Help />} />
           <Route path="/about" element={<About />} />
+          <Route path="/careers" element={<Careers />} />
           <Route path="/plans" element={<Plans />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<Article />} />
