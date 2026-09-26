@@ -3,12 +3,12 @@ import { articles, getArticle, readingTime } from "./data/articles.js";
 import ArticleCard, { ArticleCover } from "./components/ArticleCard.jsx";
 import Icon from "./components/Icon.jsx";
 import { DownloadCta } from "./components/SiteLayout.jsx";
-import NotFound from "./NotFound.jsx";
+import PublishedArticle from "./PublishedArticle.jsx";
 
 export default function Article() {
   const { slug } = useParams();
   const article = getArticle(slug);
-  if (!article) return <NotFound />;
+  if (!article) return <PublishedArticle slug={slug} />;
   const related = articles
     .filter((item) => item.slug !== slug)
     .sort(

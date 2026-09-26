@@ -16,6 +16,11 @@ import Help from "./Help.jsx";
 import About from "./About.jsx";
 import Plans from "./Plans.jsx";
 import Careers from "./Careers.jsx";
+import Releases from "./Releases.jsx";
+import FeatureRequest from "./FeatureRequest.jsx";
+import Roadmap from "./Roadmap.jsx";
+import KnowledgeBase from "./KnowledgeBase.jsx";
+import ReportBug from "./ReportBug.jsx";
 export default function SiteRoutes() {
   return (
     <>
@@ -27,8 +32,14 @@ export default function SiteRoutes() {
           <Route path="/features" element={<Features />} />
           <Route path="/prompts" element={<Prompts />} />
           <Route path="/help" element={<Help />} />
+          <Route path="/faq" element={<Help />} />
+          <Route path="/knowledge-base" element={<KnowledgeBase />} />
+          <Route path="/feature-request" element={<FeatureRequest />} />
+          <Route path="/roadmap" element={<Roadmap />} />
+          <Route path="/report-bug" element={<ReportBug />} />
           <Route path="/about" element={<About />} />
           <Route path="/careers" element={<Careers />} />
+          <Route path="/releases" element={<Releases />} />
           <Route path="/plans" element={<Plans />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<Article />} />

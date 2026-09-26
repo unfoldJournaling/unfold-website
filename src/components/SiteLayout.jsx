@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 import Icon from "./Icon.jsx";
 import { CONTACT_EMAIL } from "../data/site.js";
+import PlatformDownloadLink from "./PlatformDownloadLink.jsx";
 
 export function Brand({ light = false }) {
   return (
@@ -87,9 +88,7 @@ export function DownloadCta() {
           <p>Write, reflect, and return when you’re ready.</p>
         </div>
         <div className="download-actions">
-          <Link className="button button-light" to="/get-app">
-            Get Unfold <Icon />
-          </Link>
+          <PlatformDownloadLink light />
           <span>Available on iOS and Android</span>
         </div>
       </div>
@@ -111,51 +110,38 @@ function Footer() {
             </p>
           </div>
           <div>
-            <h2>Explore</h2>
+            <h2>Company</h2>
+            <Link to="/about">About Unfold</Link>
+            <Link to="/careers">Careers</Link>
+            <Link to="/blog">The Journal</Link>
+          </div>
+          <div>
+            <h2>Product</h2>
             <Link to="/features">Features</Link>
             <Link to="/prompts">Prompt library</Link>
-            <Link to="/plans">Subscriptions & billing</Link>
-            <Link to="/#how-it-works">How it works</Link>
-            <Link to="/blog">The Journal</Link>
+            <Link to="/plans">Subscriptions</Link>
+            <Link to="/releases">Release notes</Link>
+            <Link to="/roadmap">Roadmap</Link>
             <Link to="/get-app">Get the app</Link>
           </div>
           <div>
-            <h2>Say hello</h2>
-            <Link to="/about">About Unfold</Link>
-            <Link to="/careers">Careers</Link>
+            <h2>Support</h2>
+            <Link to="/help">Help & FAQs</Link>
+            <Link to="/knowledge-base">Knowledge base</Link>
+            <Link to="/faq">FAQs</Link>
             <a href={`mailto:${CONTACT_EMAIL}`}>Contact us</a>
-            <a
-              href="https://unfold.canny.io/feature-requests"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Request a feature
-            </a>
-            <a
-              href="https://www.instagram.com/try_unfold/"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Instagram
-            </a>
-            <a
-              href="https://www.linkedin.com/company/tryunfold"
-              target="_blank"
-              rel="noreferrer"
-            >
-              LinkedIn
-            </a>
+            <Link to="/feature-request">Request a feature</Link>
+            <Link to="/report-bug">Report a bug</Link>
           </div>
           <div>
-            <h2>The important things</h2>
+            <h2>Legal</h2>
             <Link to="/privacy">Privacy & your data</Link>
             <Link to="/terms">Terms of use</Link>
             <Link to="/delete-account">Delete your account</Link>
-            <Link to="/help">Help & FAQs</Link>
           </div>
         </div>
         <div className="footer-bottom">
-          <span>© {new Date().getFullYear()} Unfold. All rights reserved.</span>
+          <div className="footer-signoff"><span>© {new Date().getFullYear()} Unfold. All rights reserved.</span><span><a href="https://www.instagram.com/try_unfold/" target="_blank" rel="noreferrer">Instagram</a><a href="https://www.linkedin.com/company/tryunfold" target="_blank" rel="noreferrer">LinkedIn</a></span></div>
           <p>
             Made for everyday reflection. Unfold is a wellness tool, not a
             medical device or a substitute for professional care.

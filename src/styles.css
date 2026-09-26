@@ -1073,6 +1073,7 @@ main:focus {
 .store-link:hover {
   background: var(--primary);
 }
+.store-link.is-preferred { background: var(--primary); box-shadow: 0 8px 24px #382cbe28; }
 .store-link small {
   display: block;
   font-size: 0.62rem;
@@ -2146,6 +2147,51 @@ main:focus {
   color: var(--muted);
   margin-block: 18px;
 }
+.support-contact-form {
+  display: grid;
+  gap: 10px;
+}
+.support-contact-form label {
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+.support-contact-form input,
+.support-contact-form select,
+.support-contact-form textarea {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fff;
+  color: var(--ink);
+  font: inherit;
+}
+.support-contact-form textarea { resize: vertical; }
+.support-contact-form button {
+  min-height: 48px;
+  margin-top: 8px;
+  padding: 10px 18px;
+  border: 0;
+  border-radius: 14px;
+  background: #382cbe;
+  color: #fff;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+.support-contact-form button:disabled { opacity: .6; cursor: wait; }
+.support-contact-form :is(input, select, textarea, button):focus-visible {
+  outline: 3px solid #9188e8;
+  outline-offset: 2px;
+}
+.support-contact-form .support-form-error { color: #ad263a; }
+.support-contact-form .support-form-success { color: #21694f; }
+.support-contact-form .support-form-error,
+.support-contact-form .support-form-success { margin: 4px 0; }
+.support-form-trap { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.support-contact .support-contact-alternative { font-size: .9rem; }
+.support-contact-alternative a { text-decoration: underline; text-underline-offset: 3px; }
 .support-layout .faq-answer p {
   margin-top: 0;
 }

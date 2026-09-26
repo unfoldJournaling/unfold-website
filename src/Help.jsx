@@ -7,7 +7,7 @@ import {
 } from "./components/ResourceBrowser.jsx";
 import Icon from "./components/Icon.jsx";
 import { helpItems, filterResources } from "./data/resources.js";
-import { CONTACT_EMAIL } from "./data/site.js";
+import SupportContactForm from "./components/SupportContactForm.jsx";
 export default function Help() {
   const { query, setQuery, category, setCategory, reset } = useResourceQuery("All");
   const visible = filterResources(helpItems, query, category);
@@ -45,7 +45,7 @@ export default function Help() {
           {visible.length ? (
             <div className="faq-list">
               {visible.map((item) => (
-                <details key={item.q}>
+                <details key={item.q} open={query === item.q || undefined}>
                   <summary>
                     {item.q}
                     <Icon name="plus" size={21} />
@@ -84,17 +84,7 @@ export default function Help() {
           <Link to="/delete-account">
             Delete your account <Icon />
           </Link>
-          <div className="support-contact">
-            <h2>Still have a question?</h2>
-            <p>
-              Tell us your device, app version, and what happened. Please leave
-              out private journal entries and passwords.
-            </p>
-            <a className="text-link" href={`mailto:${CONTACT_EMAIL}`}>
-              Email the team
-              <Icon size={18} />
-            </a>
-          </div>
+          <SupportContactForm />
         </aside>
       </section>
     </>

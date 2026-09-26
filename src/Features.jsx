@@ -11,8 +11,8 @@ const chapters = [
     text: "Some days the words flow. Other days, one sentence is enough. Write or speak about what’s on your mind, with guided prompts when you want somewhere to begin.",
     detail:
       "Luma can offer a follow-up question or a new angle. AI-guided reflection is optional; you decide what feels useful and what to leave behind.",
-    image: 3,
-    alt: "Unfold guided journal with reflection questions",
+    image: 7,
+    alt: "Unfold journal history with a recent reflection entry",
     to: "/prompts",
     link: "Try a journaling prompt",
   },
@@ -23,8 +23,8 @@ const chapters = [
     text: "Check in with your mood and add context to your days. On supported Apple devices, optional Apple Health connections bring sleep and activity into the picture.",
     detail:
       "Look for observations that invite curiosity. An association is not a cause, a diagnosis, or a prediction. Your lived experience matters more than any single score.",
-    image: 4,
-    alt: "Unfold wellness screen showing heart rate variability context",
+    image: 5,
+    alt: "Unfold mood tracker with recent check-ins",
     to: "/blog/mood-tracking-with-curiosity",
     link: "A curious approach to mood tracking",
   },
@@ -35,10 +35,21 @@ const chapters = [
     text: "Personal trends offer a way to revisit your days. Notice what kept coming up, what changed, and what you would like to carry forward.",
     detail:
       "You don’t need to turn reflection into another performance goal. Use the overview as a starting point for a gentler check-in with yourself.",
-    image: 4,
-    alt: "Unfold health view with heart rate variability across seven days",
+    image: 6,
+    alt: "Unfold recovery trends across a week",
     to: "/blog/a-weekly-reflection-ritual",
     link: "Try a weekly reflection",
+  },
+  {
+    id: "wellness",
+    label: "04 / Read your day in context",
+    title: "Wellness trends, with room for nuance.",
+    text: "Explore general wellness estimates for stress, recovery, and sleep when supported data is available. See the sources and explanations behind the numbers inside the app.",
+    detail: "These views are informational, can be incomplete, and do not diagnose or predict a condition. You decide how much health context to connect and when to pause.",
+    image: 9,
+    alt: "Unfold stress view showing a daily estimate and trend chart",
+    to: "/privacy",
+    link: "Understand your data choices",
   },
 ];
 export default function Features() {
@@ -61,6 +72,7 @@ export default function Features() {
         <a href="#journal">Journal your way</a>
         <a href="#patterns">Notice your patterns</a>
         <a href="#reflect">Look back</a>
+        <a href="#wellness">Wellness context</a>
         <a href="#pause">Take a pause</a>
       </nav>
       <div className="container feature-chapters">
@@ -83,7 +95,7 @@ export default function Features() {
             </div>
             <figure className="chapter-screen">
               <ProductScreenshot image={item.image} alt={item.alt} />
-              <figcaption>Shown on iOS. Features vary by platform.</figcaption>
+              <figcaption>iOS App Store imagery. Screens and features may vary by version and platform.</figcaption>
             </figure>
           </section>
         ))}
@@ -95,7 +107,7 @@ export default function Features() {
       >
         <div className="container split-editorial">
           <div>
-            <p className="eyebrow">04 / Between the words</p>
+            <p className="eyebrow">05 / Between the words</p>
             <h2 id="pause-title">
               A moment to pause is part of the picture, too.
             </h2>

@@ -97,15 +97,10 @@ export default function About() {
               Say hello
               <Icon />
             </a>
-            <a
-              className="text-link"
-              href="https://unfold.canny.io/feature-requests"
-              target="_blank"
-              rel="noreferrer"
-            >
+            <Link className="text-link" to="/feature-request">
               Share a feature idea
               <Icon />
-            </a>
+            </Link>
             <Link className="text-link" to="/help">
               Find an answer
               <Icon />

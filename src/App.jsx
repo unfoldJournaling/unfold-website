@@ -6,6 +6,7 @@ import ArticleCard from "./components/ArticleCard.jsx";
 import { DownloadCta } from "./components/SiteLayout.jsx";
 import { articles } from "./data/articles.js";
 import { prompts, CONTACT_EMAIL } from "./data/site.js";
+import PlatformDownloadLink from "./components/PlatformDownloadLink.jsx";
 
 const features = [
   {
@@ -13,8 +14,8 @@ const features = [
     title: "A place for the whole of your day.",
     description:
       "The big feelings. The tiny wins. The thought you haven’t found the words for yet. Write it down or talk it through, with a prompt when you need a place to start.",
-    image: 3,
-    alt: "Unfold guided journaling screen showing a reflection and follow-up questions",
+    image: 7,
+    alt: "Unfold journal history screen with a reflection entry",
     note: "Written & voice journaling",
   },
   {
@@ -22,8 +23,8 @@ const features = [
     title: "Get a little closer to what makes you, you.",
     description:
       "Check in with your mood and look back on your days. With your permission, Apple Health adds sleep and activity context to the story you’re telling.",
-    image: 4,
-    alt: "Unfold health screen with recent heart rate variability readings",
+    image: 5,
+    alt: "Unfold mood tracker showing recent check-ins",
     note: "Mood, sleep & activity context",
   },
   {
@@ -40,8 +41,8 @@ const features = [
     title: "A moment to look back. Space to move forward.",
     description:
       "Return to your entries and weekly summaries to notice what has been on your mind. Make room for the routines, moments, and small changes that matter to you.",
-    image: 4,
-    alt: "Unfold health view showing seven days of heart rate variability",
+    image: 6,
+    alt: "Unfold recovery view showing a weekly trend",
     note: "Weekly reports & personal trends",
   },
 ];
@@ -226,9 +227,7 @@ export default function Home() {
             A journal for your thoughts, moods, and everyday patterns. Write or speak, check in with yourself, and explore a different perspective with optional Luma reflections.
           </p>
           <div className="hero-actions">
-            <Link className="button" to="/get-app">
-              Get Unfold <Icon size={20} />
-            </Link>
+            <PlatformDownloadLink />
             <Link className="text-link" to="/#how-it-works">
               See how it works <Icon size={18} />
             </Link>
@@ -240,8 +239,8 @@ export default function Home() {
           </p>
         </div>
         <figure className="hero-visual hero-product">
-          <ProductScreenshot image={3} eager alt="Unfold guided journal with a reflection and follow-up questions" />
-          <figcaption className="hero-caption">Guided reflection in Unfold · iOS preview</figcaption>
+          <ProductScreenshot image={3} eager alt="Unfold iOS guided journal with reflection questions" />
+          <figcaption className="hero-caption">Unfold iOS App Store preview · screens may change</figcaption>
         </figure>
       </section>
       <div className="benefit-strip">

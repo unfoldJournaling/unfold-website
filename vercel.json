@@ -1,6 +1,14 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
+  "functions": { "api/blog/[slug].js": { "includeFiles": "dist/article-shell.html" } },
+  "rewrites": [
+    { "source": "/api/content/:path*", "destination": "https://api.tryunfold.ai/public/content/:path*" },
+    { "source": "/api/feedback", "destination": "https://api.tryunfold.ai/public/feature-requests" },
+    { "source": "/api/support", "destination": "https://api.tryunfold.ai/support/contact" },
+    { "source": "/sitemap-live.xml", "destination": "/api/sitemap" },
+    { "source": "/blog/:slug", "destination": "/api/blog/:slug" }
+  ],
   "headers": [
     {
       "source": "/(.*)",

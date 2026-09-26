@@ -6,8 +6,14 @@ export const staticRoutes = [
   "/features",
   "/prompts",
   "/help",
+  "/faq",
+  "/knowledge-base",
+  "/feature-request",
+  "/roadmap",
+  "/report-bug",
   "/about",
   "/careers",
+  "/releases",
   "/plans",
   "/get-app",
   "/privacy",
@@ -28,6 +34,11 @@ const pageData = {
     "Unfold Help — Answers & support",
     "Find answers about getting started with Unfold, journaling, privacy, subscriptions, and account deletion. Contact the team for help.",
   ],
+  "/faq": ["Unfold FAQs — Common questions", "Answers to common questions about Unfold journaling, privacy, subscriptions, and getting started."],
+  "/knowledge-base": ["Unfold Knowledge Base — Guides & answers", "Browse Unfold help topics for getting started, journaling, privacy, and subscriptions."],
+  "/feature-request": ["Request a Feature — Help shape Unfold", "Suggest an improvement to Unfold and explore product requests shared on the public board."],
+  "/roadmap": ["Unfold Roadmap — What’s planned and released", "Explore ideas planned, in progress, and released for Unfold."],
+  "/report-bug": ["Report a Bug — Unfold Support", "Tell the Unfold team about a product issue and get help by email."],
   "/about": [
     "About Unfold — Space for everyday reflection",
     "Learn what guides Unfold: thoughtful journaling, curiosity, clear choices, and space to understand your own experience.",
@@ -35,6 +46,10 @@ const pageData = {
   "/careers": [
     "Careers at Unfold — Build space for reflection",
     "Explore careers at Unfold, the principles behind our journaling and mood check-in experience, and how to ask about future opportunities.",
+  ],
+  "/releases": [
+    "Release Notes — What’s new in Unfold",
+    "See the latest Unfold updates for iOS and Android, with clear notes on what changed.",
   ],
   "/plans": [
     "Unfold Subscriptions — Billing & subscription guidance",

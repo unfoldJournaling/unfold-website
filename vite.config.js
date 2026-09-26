@@ -7,9 +7,28 @@ import { staticRoutes } from "./src/data/metadata.js";
 
 const deployment = JSON.parse(readFileSync(new URL("./vercel.json", import.meta.url), "utf8"));
 const responseHeaders = Object.fromEntries(deployment.headers[0].headers.map(({key, value}) => [key, value]));
+const contentOrigin = process.env.UNFOLD_CONTENT_API_ORIGIN;
+const contentProxy = contentOrigin ? {
+  "/api/content": {
+    target: contentOrigin,
+    changeOrigin: true,
+    rewrite: (path) => path.replace(/^\/api\/content/, "/public/content"),
+  },
+  "/api/feedback": {
+    target: contentOrigin,
+    changeOrigin: true,
+    rewrite: (path) => path.replace(/^\/api\/feedback/, "/public/feature-requests"),
+  },
+  "/api/support": {
+    target: contentOrigin,
+    changeOrigin: true,
+    rewrite: (path) => path.replace(/^\/api\/support/, "/support/contact"),
+  },
+} : {};
 
 export default defineConfig(({ isPreview }) => ({
   appType: isPreview ? "mpa" : "spa",
+  server: { proxy: contentProxy },
   preview: { headers: responseHeaders },
   plugins: [
     react(),
@@ -17,13 +36,44 @@ export default defineConfig(({ isPreview }) => ({
       name: "static-page-preview",
       configurePreviewServer(server) {
         server.middlewares.use(async (request, response, next) => {
-          if (!["GET", "HEAD"].includes(request.method)) return next();
           const url = new URL(request.url, "http://localhost");
+          const publicApiPath = url.pathname === "/api/feedback" ? "/public/feature-requests"
+            : url.pathname === "/api/support" ? "/support/contact" : null;
+          if (contentOrigin && publicApiPath) {
+            try {
+              const chunks = [];
+              for await (const chunk of request) chunks.push(chunk);
+              const upstream = await fetch(`${contentOrigin}${publicApiPath}`, {
+                method: request.method,
+                headers: { "Content-Type": "application/json" },
+                ...(chunks.length ? { body: Buffer.concat(chunks) } : {}),
+                cache: "no-store",
+              });
+              response.writeHead(upstream.status, { "Content-Type": upstream.headers.get("content-type") || "application/json", "Cache-Control": "no-store" });
+              response.end(request.method === "HEAD" ? undefined : await upstream.text());
+            } catch (error) { next(error); }
+            return;
+          }
+          if (!["GET", "HEAD"].includes(request.method)) return next();
+          if (contentOrigin && url.pathname.startsWith("/api/content/")) {
+            try {
+              const upstream = await fetch(`${contentOrigin}${url.pathname.replace(/^\/api\/content/, "/public/content")}${url.search}`, { cache: "no-store" });
+              response.writeHead(upstream.status, { "Content-Type": upstream.headers.get("content-type") || "application/json", "Cache-Control": "no-store" });
+              response.end(request.method === "HEAD" ? undefined : await upstream.text());
+            } catch (error) { next(error); }
+            return;
+          }
           if (url.pathname !== "/" && url.pathname.endsWith("/")) {
             response.writeHead(308, {
               Location: url.pathname.replace(/\/+$/, "") + url.search,
             });
             response.end();
+            return;
+          }
+          if (url.pathname.startsWith("/blog/") && !staticRoutes.includes(url.pathname) && !extname(url.pathname)) {
+            const html = await readFile(resolve(server.config.root, server.config.build.outDir, "blog/_published.html"));
+            response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
+            response.end(request.method === "HEAD" ? undefined : html);
             return;
           }
           if (!staticRoutes.includes(url.pathname) && !extname(url.pathname)) {

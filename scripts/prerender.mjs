@@ -21,6 +21,10 @@ const vite = await createServer({
 });
 try {
   const { render } = await vite.ssrLoadModule("/src/entry-server.jsx");
+  await writeFile(
+    "dist/article-shell.html",
+    template.replace(/<!--page-meta-start-->[\s\S]*?<!--page-meta-end-->/, () => `<!--page-meta-start-->${renderMetadata("/blog/_published")}<!--page-meta-end-->`),
+  );
   for (const route of [...staticRoutes, "/404"]) {
     const output =
       route === "/" ? "dist/index.html" : join("dist", `${route}.html`);
@@ -35,13 +39,17 @@ try {
     await mkdir(dirname(output), { recursive: true });
     await writeFile(output, html);
   }
+  const publishedFallback = template
+    .replace(/<!--page-meta-start-->[\s\S]*?<!--page-meta-end-->/, () => renderMetadata("/blog/_published"))
+    .replace('<div id="root"></div>', () => `<div id="root" data-prerendered="true">${render("/blog/_published")}</div>`);
+  await writeFile("dist/blog/_published.html", publishedFallback);
   await writeFile(
     "dist/sitemap.xml",
     `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${staticRoutes.map((route) => `<url><loc>${SITE_URL}${route}</loc></url>`).join("")}</urlset>\n`,
   );
   await writeFile(
     "dist/robots.txt",
-    `User-agent: *\nAllow: /\nSitemap: ${SITE_URL}/sitemap.xml\n`,
+    `User-agent: *\nAllow: /\nSitemap: ${SITE_URL}/sitemap.xml\nSitemap: ${SITE_URL}/sitemap-live.xml\n`,
   );
   await writeFile(
     "dist/feed.xml",

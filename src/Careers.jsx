@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import Icon from "./components/Icon.jsx";
+import ContentBody from "./components/ContentBody.jsx";
 import { CONTACT_EMAIL } from "./data/site.js";
+import usePublishedContent from "./hooks/usePublishedContent.js";
 import "./careers.css";
 
 const principles = [
@@ -25,6 +27,7 @@ const principles = [
 ];
 
 export default function Careers() {
+  const { items: roles, loading, error } = usePublishedContent("roles");
   return (
     <>
       <section className="careers-hero container" aria-labelledby="careers-title">
@@ -103,7 +106,30 @@ export default function Careers() {
             <p className="eyebrow">Join us</p>
             <h2 id="careers-openings-title">Open roles</h2>
           </div>
-          <div className="careers-empty-state">
+          {roles.length > 0 && (
+            <div className="careers-role-list">
+              {roles.map((role) => (
+                <article key={role.slug} className="careers-role">
+                  <span className="careers-role-department">{role.department}</span>
+                  <div>
+                    <h3>{role.title}</h3>
+                    <p className="careers-role-location">{role.location}</p>
+                    {role.summary && <p>{role.summary}</p>}
+                    <details>
+                      <summary>Read role details</summary>
+                      <div className="careers-role-body"><ContentBody text={role.body} headingLevel={4} /></div>
+                    </details>
+                  </div>
+                  <a className="text-link" href={role.application_url} target="_blank" rel="noopener noreferrer">
+                    Apply <Icon size={18} />
+                  </a>
+                </article>
+              ))}
+            </div>
+          )}
+          {roles.length === 0 && loading && <p className="careers-openings-status" role="status">Checking current openings…</p>}
+          {roles.length === 0 && error && <p className="careers-openings-status" role="status">Open roles are temporarily unavailable. Please check back shortly.</p>}
+          {roles.length === 0 && !loading && !error && <div className="careers-empty-state">
             <div>
               <h3>No roles are listed right now.</h3>
               <p>
@@ -117,7 +143,7 @@ export default function Careers() {
             >
               Ask about careers <Icon size={18} />
             </a>
-          </div>
+          </div>}
         </div>
       </section>
     </>

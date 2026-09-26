@@ -3,18 +3,29 @@ import { Link } from "react-router-dom";
 import {
   articles,
   categories,
-  filterArticles,
   readingTime,
 } from "./data/articles.js";
 import ArticleCard, { ArticleCover } from "./components/ArticleCard.jsx";
 import Icon from "./components/Icon.jsx";
 import { DownloadCta } from "./components/SiteLayout.jsx";
+import usePublishedContent from "./hooks/usePublishedContent.js";
 
 export default function Blog() {
   const { query, setQuery, category, setCategory, reset } = useResourceQuery("All stories");
-  const allResults = filterArticles(query, category);
+  const { items: published, error: publishingError } = usePublishedContent("articles");
+  const liveArticles = published.map((item) => ({
+    ...item,
+    description: item.summary,
+    date: item.published_at?.slice(0, 10) || null,
+  }));
+  const allArticles = [...liveArticles, ...articles];
+  const availableCategories = [...new Set([...categories, ...liveArticles.map((item) => item.category)])];
+  const search = query.trim().toLocaleLowerCase();
+  const allResults = allArticles.filter((item) =>
+    (category === "All stories" || item.category === category) &&
+    `${item.title} ${item.description} ${item.category}`.toLocaleLowerCase().includes(search));
   const filtered = !query.trim() && category === "All stories" ? allResults.slice(1) : allResults;
-  const featured = articles[0];
+  const featured = allArticles[0];
   return (
     <>
       <section className="blog-heading container">
@@ -78,7 +89,7 @@ export default function Blog() {
           role="group"
           aria-label="Filter stories by topic"
         >
-          {categories.map((item) => (
+          {availableCategories.map((item) => (
             <button
               key={item}
               aria-pressed={category === item}
@@ -94,6 +105,7 @@ export default function Blog() {
           {category !== "All stories" ? ` in ${category}` : ""}
           {query.trim() ? ` matching “${query.trim()}”` : ""}
         </p>
+        {publishingError && <p className="results-count" role="status">Recent stories are temporarily unavailable; explore our Journal guides below.</p>}
         {filtered.length ? (
           <div className="article-grid">
             {filtered.map((article) => (

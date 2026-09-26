@@ -340,6 +340,9 @@ export function getArticle(slug) {
   return articles.find((article) => article.slug === slug);
 }
 export function readingTime(article) {
+  if (article.body) {
+    return Math.max(1, Math.ceil(`${article.title} ${article.body}`.trim().split(/\s+/).length / 200));
+  }
   const text = [
     article.title,
     article.intro,
