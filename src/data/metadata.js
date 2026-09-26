@@ -27,8 +27,8 @@ const pageData = {
     "Explore written and voice journaling, mood check-ins, stress-style reflections, and optional wellness context in Unfold.",
   ],
   "/prompts": [
-    "Journaling Prompts — Find a place to begin | Unfold",
-    "Find a question for your next journal entry. Browse 24 Unfold prompts by topic, then answer one in your own words in Interactive Journal or a notebook.",
+    "Interactive Journal Prompts — Find a place to begin | Unfold",
+    "Browse 24 Unfold prompts by topic, then answer one in your own words in Interactive Journal.",
   ],
   "/help": [
     "Unfold Help — Answers & support",

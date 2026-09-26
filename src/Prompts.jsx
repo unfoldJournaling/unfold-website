@@ -34,7 +34,7 @@ export default function Prompts() {
   return (
     <>
       <PageIntro
-        eyebrow="Journaling prompts"
+        eyebrow="Interactive Journal prompts"
         title={
           <>
             A place to start
@@ -43,8 +43,8 @@ export default function Prompts() {
           </>
         }
       >
-        Choose a question, then answer it in your own words. A few words are
-        enough.
+        Choose a question for Interactive Journal, then answer it in your own
+        words. A few words are enough.
       </PageIntro>
       <section
         className="container prompt-guidance"
@@ -53,7 +53,7 @@ export default function Prompts() {
         <div>
           <p className="eyebrow">Start with one question</p>
           <h2>The question is for you to answer.</h2>
-          <p>Open Interactive Journal in Unfold and write your response, or use a notebook. You don’t need to paste the question into the chat. Morning and Evening Reflection begin with their own questions.</p>
+          <p>Open Interactive Journal in Unfold and write your response. You don’t need to paste the question into the chat. Morning and Evening Reflection begin with their own questions.</p>
           <div className="prompt-guidance-links">
             <Link className="text-link" to="/get-app">Get Unfold <Icon /></Link>
             <Link className="text-link" to="/blog/how-to-start-journaling">New to journaling? <Icon /></Link>
