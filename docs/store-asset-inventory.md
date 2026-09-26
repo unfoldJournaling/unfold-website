@@ -1,5 +1,12 @@
 # App imagery source
 
-On 2026-09-26, the US App Store listing for [Unfold: AI Stress & Wellness](https://apps.apple.com/us/app/unfold-ai-stress-wellness/id6743553743) reported app version 2.1.4 and exposed nine screenshot posters through Apple's lookup feed (`https://itunes.apple.com/lookup?id=6743553743&country=us`). The site uses posters 3, 4, 5, 6, 7, and 9 as `public/images/app-*.webp`. Posters 5, 7, and 9 were refreshed from that feed on this date; 3, 4, and 6 were already present and visually match the feed.
+On 2026-09-26, the rendered US [Unfold App Store listing](https://apps.apple.com/us/app/unfold-ai-stress-wellness/id6743553743) showed app version 2.1.4 and six iPhone/Apple Watch marketing posters. The website uses four of those currently visible posters, downloaded at 600 × 1300 WebP, as `public/images/store-2.webp` through `store-5.webp`:
 
-The posters include an iPhone frame with Dynamic Island, but some depicted in-app dates are from 2025. They are current *listing artwork*, not proof that every displayed screen matches the latest installed app. When the store artwork changes, refresh these files and recheck the cropping in `ProductScreenshot.jsx` at phone, tablet, and desktop widths. Do not label these posters as live app captures.
+| File | Store poster | Site use |
+| --- | --- | --- |
+| `store-2.webp` | Understand & Manage Stress Style | Stress-style reflection |
+| `store-3.webp` | AI-Guided Journaling Made Easy | Homepage hero and journaling |
+| `store-4.webp` | Sync & Connect With Apple Health | Optional health context |
+| `store-5.webp` | Monitor Stress & Improve Balance | General wellness trends |
+
+These are current *listing posters*, not live captures of the installed app. They include an iPhone frame with Dynamic Island and sometimes show illustrative values or older in-app dates. The site describes the screens without repeating specific values as product claims. Before another marketing refresh, compare the rendered App Store gallery with the installed app and recheck the `ProductScreenshot.jsx` crop at phone, tablet, and desktop widths.

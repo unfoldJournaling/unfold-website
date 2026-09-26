@@ -105,7 +105,7 @@ test("resource search intersects topics and text, handles whitespace and recover
 
 
 test("metadata describes the category and uses branded share images with truthful dates", () => {
-  assert.match(getMetadata("/").title, /Journaling & Mood Tracking/);
+  assert.match(getMetadata("/").title, /Journaling, Mood & Wellness/);
   assert.equal(getMetadata("/").schema.publisher["@type"], "Organization");
   for (const article of articles) {
     const meta = getMetadata(`/blog/${article.slug}`);

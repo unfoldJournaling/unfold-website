@@ -11,8 +11,8 @@ const chapters = [
     text: "Some days the words flow. Other days, one sentence is enough. Write or speak about what’s on your mind, with guided prompts when you want somewhere to begin.",
     detail:
       "Luma can offer a follow-up question or a new angle. AI-guided reflection is optional; you decide what feels useful and what to leave behind.",
-    image: 7,
-    alt: "Unfold journal history with a recent reflection entry",
+    image: 3,
+    alt: "Unfold iPhone screen showing an AI-guided journal entry",
     to: "/prompts",
     link: "Try a journaling prompt",
   },
@@ -23,20 +23,20 @@ const chapters = [
     text: "Check in with your mood and add context to your days. On supported devices, optional Apple Health or Health Connect connections bring sleep and activity into the picture.",
     detail:
       "Look for observations that invite curiosity. An association is not a cause, a diagnosis, or a prediction. Your lived experience matters more than any single score.",
-    image: 5,
-    alt: "Unfold mood tracker with recent check-ins",
+    image: 4,
+    alt: "Unfold iPhone health view showing recovery, stress, sleep and activity context",
     to: "/blog/mood-tracking-with-curiosity",
     link: "A curious approach to mood tracking",
   },
   {
     id: "reflect",
     label: "03 / Return with perspective",
-    title: "Small moments can tell a bigger story.",
-    text: "Personal trends offer a way to revisit your days. Notice what kept coming up, what changed, and what you would like to carry forward.",
+    title: "Find words for familiar patterns.",
+    text: "Stress style reflections offer a way to notice how you respond to pressure. Take what resonates and leave what does not.",
     detail:
-      "You don’t need to turn reflection into another performance goal. Use the overview as a starting point for a gentler check-in with yourself.",
-    image: 6,
-    alt: "Unfold recovery trends across a week",
+      "A stress style is a starting point for curiosity, not a fixed identity or clinical assessment. Your experience matters more than a label.",
+    image: 2,
+    alt: "Unfold iPhone stress style screen with a profile and reflection",
     to: "/blog/a-weekly-reflection-ritual",
     link: "Try a weekly reflection",
   },
@@ -46,8 +46,8 @@ const chapters = [
     title: "Wellness trends, with room for nuance.",
     text: "Explore general wellness estimates for stress, recovery, and sleep when supported data is available. See the sources and explanations behind the numbers inside the app.",
     detail: "These views are informational, can be incomplete, and do not diagnose or predict a condition. You decide how much health context to connect and when to pause.",
-    image: 9,
-    alt: "Unfold stress view showing a daily estimate and trend chart",
+    image: 5,
+    alt: "Unfold iPhone stress view showing a daily estimate and trend chart",
     to: "/privacy",
     link: "Understand your data choices",
   },
@@ -65,13 +65,13 @@ export default function Features() {
           </>
         }
       >
-        Journaling, mood check-ins, and everyday reflection, brought together so
-        you can listen to yourself a little more closely.
+        Journaling, mood check-ins, and optional wellness context, brought
+        together so you can listen to yourself a little more closely.
       </PageIntro>
       <nav className="container chapter-nav" aria-label="On this page">
         <a href="#journal">Journal your way</a>
-        <a href="#patterns">Notice your patterns</a>
-        <a href="#reflect">Look back</a>
+        <a href="#patterns">Health context</a>
+        <a href="#reflect">Stress style</a>
         <a href="#wellness">Wellness context</a>
         <a href="#pause">Take a pause</a>
       </nav>

@@ -1,6 +1,6 @@
 export const SITE_URL = "https://tryunfold.ai";
 export const APP_STORE_URL =
-  "https://apps.apple.com/us/app/unfold-journal-mood-tracker/id6743553743";
+  "https://apps.apple.com/us/app/unfold-ai-stress-wellness/id6743553743";
 export const PLAY_STORE_URL =
   "https://play.google.com/store/apps/details?id=com.unfold.mobile.production&hl=en_US";
 export const CONTACT_EMAIL = "kings@tryunfold.ai";

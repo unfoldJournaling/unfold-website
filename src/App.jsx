@@ -14,36 +14,36 @@ const features = [
     title: "A place for the whole of your day.",
     description:
       "The big feelings. The tiny wins. The thought you haven’t found the words for yet. Write it down or talk it through, with a prompt when you need a place to start.",
-    image: 7,
-    alt: "Unfold journal history screen with a reflection entry",
+    image: 3,
+    alt: "Unfold iPhone screen showing an AI-guided journal entry",
     note: "Written & voice journaling",
   },
   {
-    label: "Notice your patterns",
-    title: "Get a little closer to what makes you, you.",
+    label: "Add health context",
+    title: "Your day has more than one signal.",
     description:
-      "Check in with your mood and look back on your days. With your permission, Apple Health on iOS or Health Connect on Android can add sleep and activity context.",
+      "Check in with your mood. If you choose to connect supported health data, sleep and activity can add context to how your days feel.",
+    image: 4,
+    alt: "Unfold iPhone health view showing recovery, stress, sleep and activity context",
+    note: "Optional health connections",
+  },
+  {
+    label: "Explore your stress style",
+    title: "Find language for familiar patterns.",
+    description:
+      "Explore the ways you tend to respond to pressure. Use what resonates as a starting point for reflection, never as a fixed label.",
+    image: 2,
+    alt: "Unfold iPhone stress style screen with a profile and reflection",
+    note: "Stress style reflection",
+  },
+  {
+    label: "See your day in context",
+    title: "Notice a trend. Make room for nuance.",
+    description:
+      "When supported data is available, explore general wellness estimates and stress trends. They are one perspective on your day, not a diagnosis or prediction.",
     image: 5,
-    alt: "Unfold mood tracker showing recent check-ins",
-    note: "Mood, sleep & activity context",
-  },
-  {
-    label: "Reflect with Luma",
-    title: "Sometimes, a good question is all it takes.",
-    description:
-      "Luma, your AI journaling companion, offers prompts and reflections to help you explore your thoughts. Take what resonates. Your perspective always comes first.",
-    image: 3,
-    alt: "Unfold conversation with guided journaling questions",
-    note: "Optional AI-guided reflection",
-  },
-  {
-    label: "See the bigger picture",
-    title: "A moment to look back. Space to move forward.",
-    description:
-      "Return to your entries and weekly summaries to notice what has been on your mind. Make room for the routines, moments, and small changes that matter to you.",
-    image: 6,
-    alt: "Unfold recovery view showing a weekly trend",
-    note: "Weekly reports & personal trends",
+    alt: "Unfold iPhone stress view with a daily estimate and trend chart",
+    note: "Stress & wellness trends",
   },
 ];
 const faqs = [
@@ -217,14 +217,14 @@ export default function Home() {
     <>
       <section className="hero container" aria-labelledby="hero-title">
         <div className="hero-copy">
-          <p className="eyebrow">Your everyday journaling companion</p>
+          <p className="eyebrow">Reflection for your whole day</p>
           <h1 id="hero-title">
             Make room
             <br />
             for <span>yourself.</span>
           </h1>
           <p className="hero-description">
-            A journal for your thoughts, moods, and everyday patterns. Write or speak, check in with yourself, and explore a different perspective with optional Luma reflections.
+            Write or speak, check in with your mood, and explore wellness context from supported health data when you choose to connect it. Luma offers another perspective when you want one.
           </p>
           <div className="hero-actions">
             <PlatformDownloadLink />
@@ -233,14 +233,14 @@ export default function Home() {
             </Link>
           </div>
           <p className="hero-footnote">
-            Journaling, mood tracking & reflection.
+            Journaling, mood & wellness context.
             <br />
             On iOS and Android. At your own pace.
           </p>
         </div>
         <figure className="hero-visual hero-product">
-          <ProductScreenshot image={3} eager alt="Unfold iOS guided journal with reflection questions" />
-          <figcaption className="hero-caption">Unfold iOS App Store preview · screens may change</figcaption>
+          <ProductScreenshot image={4} eager alt="Unfold iPhone health view showing recovery, stress, sleep and activity context" />
+          <figcaption className="hero-caption">Unfold iOS App Store preview · screens may vary</figcaption>
         </figure>
       </section>
       <div className="benefit-strip">

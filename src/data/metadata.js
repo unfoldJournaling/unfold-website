@@ -23,8 +23,8 @@ export const staticRoutes = [
 ];
 const pageData = {
   "/features": [
-    "Explore Unfold — Journaling, mood & everyday reflection",
-    "Explore written and voice journaling, optional AI reflection, mood check-ins, and weekly reports in Unfold.",
+    "Explore Unfold — Journaling, Mood & Wellness Features",
+    "Explore written and voice journaling, mood check-ins, stress-style reflections, and optional wellness context in Unfold.",
   ],
   "/prompts": [
     "Journaling Prompts — Find a place to begin | Unfold",
@@ -56,16 +56,16 @@ const pageData = {
     "Learn about Unfold’s optional subscriptions, where to find current local prices, and how to manage an Apple or Google Play subscription.",
   ],
   "/": [
-    "Unfold — Journaling & Mood Tracking App",
-    "Make space for yourself with Unfold. Explore guided journaling, mood tracking, and thoughtful reflection on iOS and Android.",
+    "Unfold — Journaling, Mood & Wellness App",
+    "Make room for yourself with Unfold. Explore journaling, mood check-ins, stress reflections, and optional wellness context on iOS and Android.",
   ],
   "/blog": [
     "The Unfold Journal — Ideas for everyday reflection",
     "Thoughtful reads, journaling prompts, and simple rituals to help you get to know yourself. Explore the Unfold Journal.",
   ],
   "/get-app": [
-    "Get Unfold — Your everyday journaling companion",
-    "Download Unfold for iOS or Android. Make room for guided journaling, mood check-ins, and everyday reflection.",
+    "Get Unfold — Your everyday wellness companion",
+    "Download Unfold for iOS or Android. Make room for journaling, mood check-ins, and optional wellness context.",
   ],
   "/privacy": [
     "Privacy & Consumer Health Data Notice — Unfold",
@@ -95,7 +95,7 @@ export function getMetadata(pathname) {
     "This page could not be found. Explore Unfold or return to the Journal.";
   const url = `${SITE_URL}${path === "/" ? "/" : path}`;
   const image = `${SITE_URL}${article ? `/images/social-${article.slug}.png` : "/og-image.png"}`;
-  const imageAlt = article ? `Unfold Journal: ${article.title}` : "Unfold — Journaling, mood tracking, and everyday reflection";
+  const imageAlt = article ? `Unfold Journal: ${article.title}` : "Unfold — Journaling, mood and wellness context";
   let schema = article
     ? {
         "@context": "https://schema.org",
