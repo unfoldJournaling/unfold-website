@@ -41,6 +41,10 @@ route list matches the generated output.
 - `src/Prompts.jsx`, `src/Help.jsx`: searchable resources and support.
 - `src/data/resources.js`: original prompts, help answers, and resource filtering.
 - `src/Blog.jsx`, `src/Article.jsx`: journal library and article pages.
+- `src/Careers.jsx`, `src/RoleDetail.jsx`, `src/ReleaseNotes.jsx`:
+  public roles and product updates backed by the publishing API.
+- `src/FeatureRequest.jsx`, `src/Roadmap.jsx`: private idea submission and
+  the owner-curated public roadmap.
 - `src/data/articles.js`: article content, categories, search, and reading time.
 - `src/data/site.js`: canonical site URL, store URLs, contact, and prompts.
 - `src/data/metadata.js`: route metadata and structured data.
@@ -49,7 +53,22 @@ route list matches the generated output.
 - `scripts/prerender.mjs`: static pages, sitemap, robots, RSS, and 404 generation.
 - `tests/`: content and production-build regression tests.
 
-## Add a journal article
+## Public publishing
+
+The executive dashboard publishes roles, Journal stories, and release notes to
+the backend's `marketingContent` Firestore collection. Public pages fetch only
+published items through `/api/content/*`; removing or withdrawing one takes it
+off the public page without rebuilding the site. The dashboard also moderates
+private feature requests from `/feature-request`, publishing selected ideas to
+`/roadmap`. Email addresses never appear in the public response. The public
+site calls same-origin API paths, which the deployment rewrites to the Unfold
+backend. Configure `UNFOLD_CONTENT_API_ORIGIN` for local development and the
+server-rendered live feed/sitemap. Deploy and verify the backend publishing API
+before enabling a deployed dashboard workflow. Test a real owner publish and
+withdraw cycle after deployment; a local preview cannot verify production
+Firebase credentials or Firestore data.
+
+## Add an editorial journal article
 
 Add an entry to `src/data/articles.js` with a unique `slug`, title, description,
 category, publication date (or `null` until publication), cover, intro, sections, and takeaway. Each section
@@ -62,9 +81,10 @@ Add a 1200 × 630 branded share card at `public/images/social-<slug>.png`.
 Keep publication dates accurate. Write substantive original copy, distinguish
 reflection from medical advice, and verify product claims against current
 product information. Avoid unsupported statistics, testimonials, or promises.
-Run the build and tests after editing. Articles automatically receive a route,
+Run the build and tests after editing. Editorial articles receive a route,
 canonical URL, social metadata, BlogPosting structured data, and RSS/sitemap
-entries. No CMS, account, or external service is required.
+entries. Dashboard-published stories also receive public detail pages and
+live feed/sitemap entries.
 
 ## Hosting
 
