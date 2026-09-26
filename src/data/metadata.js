@@ -28,7 +28,7 @@ const pageData = {
   ],
   "/prompts": [
     "Journaling Prompts — Find a place to begin | Unfold",
-    "Explore 24 thoughtful journaling prompts for checking in, finding small joys, making space, and looking back. Search by topic and copy a prompt.",
+    "Find a question for your next journal entry. Browse 24 Unfold prompts by topic, copy one, and begin writing in the app or your own notebook.",
   ],
   "/help": [
     "Unfold Help — Answers & support",
