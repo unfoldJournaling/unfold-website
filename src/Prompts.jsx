@@ -14,7 +14,7 @@ import {
   promptLibrary,
 } from "./data/resources.js";
 
-const featuredPrompt = promptLibrary[0];
+const featuredPrompt = promptLibrary[1];
 const startingIds = new Set(
   Object.keys(promptGroups).flatMap((group) =>
     promptLibrary
@@ -26,37 +26,10 @@ const startingIds = new Set(
 
 export default function Prompts() {
   const { query, setQuery, category, setCategory, reset } = useResourceQuery("All");
-  const [copyFeedback, setCopyFeedback] = useState(null);
   const [showAll, setShowAll] = useState(false);
   const visible = filterResources(promptLibrary, query, category);
   const browsingAll = showAll || category !== "All" || Boolean(query.trim());
   const shown = browsingAll ? visible : visible.filter((prompt) => startingIds.has(prompt.id));
-
-  async function copyPrompt(prompt, surface) {
-    try {
-      await navigator.clipboard.writeText(prompt.text);
-      setCopyFeedback({ id: prompt.id, surface, text: "Copied. Paste this question into a new journal entry." });
-    } catch {
-      setCopyFeedback({ id: prompt.id, surface, text: "Copy is unavailable here. Select the question to copy it manually." });
-    }
-  }
-
-  function copyAction(prompt, featured = false) {
-    const surface = featured ? "starter" : "library";
-    const feedbackHere = copyFeedback?.id === prompt.id && copyFeedback.surface === surface;
-    return <>
-      <button
-        className={featured ? "button button-small" : "text-link"}
-        type="button"
-        onClick={() => void copyPrompt(prompt, surface)}
-        aria-label={`Copy question: ${prompt.text}`}
-      >
-        {feedbackHere ? "Copy again" : featured ? "Copy this question" : "Copy question"}
-        {!featured && <Icon size={18} />}
-      </button>
-      {feedbackHere && <p className="prompt-copy-feedback" role="status">{copyFeedback.text}</p>}
-    </>;
-  }
 
   return (
     <>
@@ -70,8 +43,8 @@ export default function Prompts() {
           </>
         }
       >
-        Choose a question and copy it into your Unfold journal or a notebook.
-        A few words are enough.
+        Choose a question, then answer it in your own words. A few words are
+        enough.
       </PageIntro>
       <section
         className="container prompt-guidance"
@@ -79,17 +52,20 @@ export default function Prompts() {
       >
         <div>
           <p className="eyebrow">Start with one question</p>
-          <h2>Begin wherever you are.</h2>
-          <p>Paste the question into a new journal entry and write what comes. Skip anything that doesn’t feel right; you can always choose another.</p>
+          <h2>The question is for you to answer.</h2>
+          <p>Open Interactive Journal in Unfold and write your response, or use a notebook. You don’t need to paste the question into the chat. Morning and Evening Reflection begin with their own questions.</p>
           <div className="prompt-guidance-links">
             <Link className="text-link" to="/get-app">Get Unfold <Icon /></Link>
             <Link className="text-link" to="/blog/how-to-start-journaling">New to journaling? <Icon /></Link>
           </div>
         </div>
         <div className="prompt-starter">
-          <p className="eyebrow">A starting point</p>
+          <p className="eyebrow">An example question</p>
           <blockquote>{featuredPrompt.text}</blockquote>
-          {copyAction(featuredPrompt, true)}
+          <div className="prompt-starter-answer">
+            <p className="eyebrow">You might write</p>
+            <p>“Emotionally, today felt cloudy in the morning, then clearer after a walk. Work overwhelmed me, but I’m calmer now.”</p>
+          </div>
         </div>
       </section>
       <section
@@ -116,7 +92,6 @@ export default function Prompts() {
                 <article className="prompt-entry" key={prompt.id}>
                   <p className="eyebrow">{prompt.category}</p>
                   <h3>{prompt.text}</h3>
-                  {copyAction(prompt)}
                 </article>
               ))}
             </div>

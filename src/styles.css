@@ -2081,17 +2081,20 @@ main:focus {
   background: var(--white);
 }
 .prompt-starter blockquote {
-  margin: 18px 0 30px;
+  margin: 18px 0 26px;
   font-size: clamp(1.45rem, 2.3vw, 2rem);
   font-weight: 750;
   letter-spacing: -0.035em;
   line-height: 1.35;
 }
-.prompt-copy-feedback {
-  margin-top: 12px;
-  font-size: 0.85rem;
-  color: var(--primary);
-  font-weight: 700;
+.prompt-starter-answer {
+  border-top: 1px solid var(--line);
+  padding-top: 22px;
+}
+.prompt-starter-answer > p:last-child {
+  margin: 12px 0 0;
+  color: var(--muted);
+  line-height: 1.65;
 }
 .prompt-library-intro {
   margin-top: 14px;
@@ -2133,10 +2136,6 @@ main:focus {
   line-height: 1.45;
   margin: 12px 0 28px;
   font-weight: 650;
-}
-.prompt-entry .text-link {
-  margin-top: auto;
-  min-height: 44px;
 }
 .prompt-show-all {
   margin-top: 36px;
@@ -2416,9 +2415,6 @@ main:focus {
   }
   .prompt-guidance {
     grid-template-columns: 1fr;
-  }
-  .prompt-starter {
-    order: -1;
   }
   .pathway-grid {
     gap: 24px;

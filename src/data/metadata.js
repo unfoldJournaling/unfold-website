@@ -28,7 +28,7 @@ const pageData = {
   ],
   "/prompts": [
     "Journaling Prompts — Find a place to begin | Unfold",
-    "Find a question for your next journal entry. Browse 24 Unfold prompts by topic, copy one, and begin writing in the app or your own notebook.",
+    "Find a question for your next journal entry. Browse 24 Unfold prompts by topic, then answer one in your own words in Interactive Journal or a notebook.",
   ],
   "/help": [
     "Unfold Help — Answers & support",
