@@ -2498,18 +2498,37 @@ main:focus {
   }
 }
 
-/* Product previews retain the real interface from the public store captures. */
+/* Store posters keep their authored composition; only the clean journal hero is framed as a phone. */
 .app-screen-window {
   position: relative;
   width: min(100%, 290px);
-  aspect-ratio: 346 / 720;
   overflow: hidden;
-  border-radius: 42px;
   margin-inline: auto;
   background: #fff;
 }
-.app-screen-window img,
-.chapter-screen .app-screen-window img {
+.app-screen-window--poster {
+  aspect-ratio: 600 / 1298;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  box-shadow: 0 18px 36px -30px rgba(32, 25, 77, 0.45);
+}
+.app-screen-window--poster img,
+.chapter-screen .app-screen-window--poster img {
+  display: block;
+  position: static;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0;
+  margin: 0;
+}
+.app-screen-window--device {
+  aspect-ratio: 346 / 720;
+  border-radius: 42px;
+}
+.app-screen-window--device img,
+.chapter-screen .app-screen-window--device img {
   position: absolute;
   width: 128.04%;
   max-width: none;
@@ -2524,18 +2543,20 @@ main:focus {
   align-items: center;
   justify-content: center;
   min-height: 0;
-  padding: 30px 20px 48px;
-  background: #eeecfb;
-  border-radius: 100px 8px 8px 8px;
+  padding: 40px 28px 48px;
+  background: #f2f0fa;
+  border: 1px solid var(--line);
+  border-radius: 28px;
   margin: 0;
 }
+.hero-product .app-screen-window--device { width: min(100%, 264px); }
 .hero-product .hero-caption { bottom: 12px; right: 0; width: 100%; text-align: center; }
 .privacy-toc { margin: 28px 0; padding: 24px; background: #f3f1fc; border-radius: 8px; }
 .privacy-toc ol { columns: 2; column-gap: 36px; padding-left: 22px; }
 .privacy-toc li { break-inside: avoid; margin-bottom: 10px; }
 [id^="privacy-section-"] { scroll-margin-top: 100px; }
 @media (max-width: 600px) {
-  .hero-visual.hero-product { padding: 24px 16px 44px; }
-  .hero-product .app-screen-window { width: 230px; border-radius: 34px; }
+  .hero-visual.hero-product { padding: 26px 16px 44px; border-radius: 22px; }
+  .hero-product .app-screen-window--device { width: min(100%, 220px); border-radius: 34px; }
   .privacy-toc ol { columns: 1; }
 }

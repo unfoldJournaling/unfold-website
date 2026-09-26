@@ -15,7 +15,7 @@ const features = [
     description:
       "The big feelings. The tiny wins. The thought you haven’t found the words for yet. Write it down or talk it through, with a prompt when you need a place to start.",
     image: 3,
-    alt: "Unfold iPhone screen showing an AI-guided journal entry",
+    alt: "Unfold App Store poster showing an AI-guided journal entry on iPhone",
     note: "Written & voice journaling",
   },
   {
@@ -24,7 +24,7 @@ const features = [
     description:
       "Check in with your mood. If you choose to connect supported health data, sleep and activity can add context to how your days feel.",
     image: 4,
-    alt: "Unfold iPhone health view showing recovery, stress, sleep and activity context",
+    alt: "Unfold App Store poster showing optional Apple Health context on iPhone",
     note: "Optional health connections",
   },
   {
@@ -33,7 +33,7 @@ const features = [
     description:
       "Explore the ways you tend to respond to pressure. Use what resonates as a starting point for reflection, never as a fixed label.",
     image: 2,
-    alt: "Unfold iPhone stress style screen with a profile and reflection",
+    alt: "Unfold App Store poster showing a stress style reflection on iPhone",
     note: "Stress style reflection",
   },
   {
@@ -42,7 +42,7 @@ const features = [
     description:
       "When supported data is available, explore general wellness estimates and stress trends. They are one perspective on your day, not a diagnosis or prediction.",
     image: 5,
-    alt: "Unfold iPhone stress view with a daily estimate and trend chart",
+    alt: "Unfold App Store poster showing an illustrative stress trend on iPhone",
     note: "Stress & wellness trends",
   },
 ];
@@ -156,7 +156,7 @@ function ProductFeatures() {
               <span>{feature.note}</span>
             </div>
             <p className="preview-source">
-              Shown on iOS. Features vary by platform.
+              From our iOS App Store gallery. Features vary by platform.
             </p>
           </div>
         </div>
@@ -239,7 +239,7 @@ export default function Home() {
           </p>
         </div>
         <figure className="hero-visual hero-product">
-          <ProductScreenshot image={4} eager alt="Unfold iPhone health view showing recovery, stress, sleep and activity context" />
+          <ProductScreenshot image={3} presentation="device" eager alt="Unfold iPhone preview showing an AI-guided journal conversation" />
           <figcaption className="hero-caption">Unfold iOS App Store preview · screens may vary</figcaption>
         </figure>
       </section>

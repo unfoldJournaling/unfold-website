@@ -12,7 +12,7 @@ const chapters = [
     detail:
       "Luma can offer a follow-up question or a new angle. AI-guided reflection is optional; you decide what feels useful and what to leave behind.",
     image: 3,
-    alt: "Unfold iPhone screen showing an AI-guided journal entry",
+    alt: "Unfold App Store poster showing an AI-guided journal entry on iPhone",
     to: "/prompts",
     link: "Try a journaling prompt",
   },
@@ -24,7 +24,7 @@ const chapters = [
     detail:
       "Look for observations that invite curiosity. An association is not a cause, a diagnosis, or a prediction. Your lived experience matters more than any single score.",
     image: 4,
-    alt: "Unfold iPhone health view showing recovery, stress, sleep and activity context",
+    alt: "Unfold App Store poster showing optional Apple Health context on iPhone",
     to: "/blog/mood-tracking-with-curiosity",
     link: "A curious approach to mood tracking",
   },
@@ -36,7 +36,7 @@ const chapters = [
     detail:
       "A stress style is a starting point for curiosity, not a fixed identity or clinical assessment. Your experience matters more than a label.",
     image: 2,
-    alt: "Unfold iPhone stress style screen with a profile and reflection",
+    alt: "Unfold App Store poster showing a stress style reflection on iPhone",
     to: "/blog/a-weekly-reflection-ritual",
     link: "Try a weekly reflection",
   },
@@ -47,7 +47,7 @@ const chapters = [
     text: "Explore general wellness estimates for stress, recovery, and sleep when supported data is available. See the sources and explanations behind the numbers inside the app.",
     detail: "These views are informational, can be incomplete, and do not diagnose or predict a condition. You decide how much health context to connect and when to pause.",
     image: 5,
-    alt: "Unfold iPhone stress view showing a daily estimate and trend chart",
+    alt: "Unfold App Store poster showing an illustrative stress trend on iPhone",
     to: "/privacy",
     link: "Understand your data choices",
   },
