@@ -400,6 +400,13 @@ main:focus {
 .feature-option.is-selected > svg:last-child {
   opacity: 1;
 }
+.product-preview .app-screen-window {
+  animation: product-preview-enter 340ms cubic-bezier(.2, .7, .2, 1) both;
+}
+@keyframes product-preview-enter {
+  from { opacity: .72; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 .feature-copy {
   padding: 32px 20px 0;
 }

@@ -22,7 +22,7 @@ const features = [
     label: "Notice your patterns",
     title: "Get a little closer to what makes you, you.",
     description:
-      "Check in with your mood and look back on your days. With your permission, Apple Health adds sleep and activity context to the story you’re telling.",
+      "Check in with your mood and look back on your days. With your permission, Apple Health on iOS or Health Connect on Android can add sleep and activity context.",
     image: 5,
     alt: "Unfold mood tracker showing recent check-ins",
     note: "Mood, sleep & activity context",
@@ -53,7 +53,7 @@ const faqs = [
   },
   {
     q: "Do I need a wearable to use it?",
-    a: "No. You can journal and check in with your mood without a wearable. On supported Apple devices, you can choose to connect Apple Health for additional sleep and activity context. Available features depend on your device and permissions.",
+    a: "No. You can journal and check in with your mood without a wearable. On supported devices, you can choose to connect Apple Health on iOS or Health Connect on Android for additional sleep and activity context. Available features depend on your device and permissions.",
   },
   {
     q: "Is Unfold available on Android?",
@@ -61,8 +61,8 @@ const faqs = [
       <>
         Yes. Unfold is available on iOS and Android. Visit the{" "}
         <Link to="/get-app">download page</Link> for both stores. Some features,
-        including Apple Health and the Apple Watch companion, are specific to
-        Apple devices.
+        including the Apple Watch companion, are specific to Apple devices.
+        Android health connections use Health Connect on supported devices.
       </>
     ),
   },

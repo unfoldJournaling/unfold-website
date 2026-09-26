@@ -1,38 +1,10 @@
 import { readFile } from "node:fs/promises";
 import { escapeHtml } from "../../src/data/metadata.js";
 import { SITE_URL } from "../../src/data/site.js";
+import { contentHtml } from "../../src/data/content-html.js";
 
 const apiOrigin = (process.env.UNFOLD_CONTENT_API_ORIGIN || "https://api.tryunfold.ai").replace(/\/$/, "");
 const validSlug = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
-
-function paragraphs(body) {
-  const lines = String(body || "").replace(/\r\n?/g, "\n").split("\n");
-  const blocks = [];
-  let paragraph = [];
-  let list = [];
-  const flush = () => {
-    if (paragraph.length) blocks.push(`<p>${escapeHtml(paragraph.join(" "))}</p>`);
-    if (list.length) blocks.push(`<ul>${list.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>`);
-    paragraph = [];
-    list = [];
-  };
-  for (const raw of lines) {
-    const line = raw.trim();
-    if (!line) flush();
-    else if (line.startsWith("## ")) {
-      flush();
-      blocks.push(`<h2>${escapeHtml(line.slice(3))}</h2>`);
-    } else if (line.startsWith("- ")) {
-      if (paragraph.length) flush();
-      list.push(line.slice(2));
-    } else {
-      if (list.length) flush();
-      paragraph.push(line);
-    }
-  }
-  flush();
-  return blocks.join("\n");
-}
 
 function renderArticleMetadata(article, slug) {
   const title = `${article.title} — Unfold Journal`;
@@ -78,10 +50,10 @@ export async function renderPublishedArticle(article, slug) {
   const date = published && !Number.isNaN(Date.parse(published))
     ? `<time datetime="${published}">${escapeHtml(new Date(`${published}T12:00:00Z`).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }))}</time>`
     : "";
-  const content = `<article class="article-page"><header class="article-header container"><a class="back-link" href="/blog">Back to the Journal</a><div class="article-meta"><span>${category}</span></div><h1>${title}</h1><p class="article-deck">${summary}</p><div class="article-byline"><span>Unfold</span>${date}</div></header><div class="container article-hero"><img class="article-cover" src="${cover}" alt="" /></div><div class="container article-layout published-article-layout"><div class="article-body">${paragraphs(article.body)}<p class="editorial-note">The Journal offers ideas for everyday reflection and general information. It is not medical or mental-health advice.</p></div></div></article>`;
+  const content = `<article class="article-page"><header class="article-header container"><a class="back-link" href="/blog">Back to the Journal</a><div class="article-meta"><span>${category}</span></div><h1>${title}</h1><p class="article-deck">${summary}</p><div class="article-byline"><span>Unfold</span>${date}</div></header><div class="container article-hero"><img class="article-cover" src="${cover}" alt="" /></div><div class="container article-layout published-article-layout"><div class="article-body">${contentHtml(article.body)}<p class="editorial-note">The Journal offers ideas for everyday reflection and general information. It is not medical or mental-health advice.</p></div></div></article>`;
   return shell
     .replace(/<!--page-meta-start-->[\s\S]*?<!--page-meta-end-->/, () => renderArticleMetadata(article, slug))
-    .replace('<div id="root"></div>', `<div id="root">${content}</div>`);
+    .replace("<!--dynamic-content-->", content);
 }
 
 export default async function handler(request, response) {

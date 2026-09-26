@@ -132,7 +132,7 @@ export default function Blog() {
             <br />
             <span>
               Save a story for later, or follow along with our{" "}
-              <a href="/feed.xml">RSS feed</a>.
+              <a href="/feed-live.xml">RSS feed</a>.
             </span>
           </p>
         </div>

@@ -21,9 +21,17 @@ const vite = await createServer({
 });
 try {
   const { render } = await vite.ssrLoadModule("/src/entry-server.jsx");
+  const dynamicLayout = render("/careers/_published").replace(
+    /<main id="main-content" tabindex="-1">[\s\S]*?<\/main>/,
+    '<main id="main-content" tabindex="-1"><!--dynamic-content--></main>',
+  );
+  if (!dynamicLayout.includes("<!--dynamic-content-->")) {
+    throw new Error("The dynamic page shell is missing its main content marker.");
+  }
   await writeFile(
     "dist/article-shell.html",
-    template.replace(/<!--page-meta-start-->[\s\S]*?<!--page-meta-end-->/, () => `<!--page-meta-start-->${renderMetadata("/blog/_published")}<!--page-meta-end-->`),
+    template.replace(/<!--page-meta-start-->[\s\S]*?<!--page-meta-end-->/, () => `<!--page-meta-start-->${renderMetadata("/blog/_published")}<!--page-meta-end-->`)
+      .replace('<div id="root"></div>', `<div id="root">${dynamicLayout}</div>`),
   );
   for (const route of [...staticRoutes, "/404"]) {
     const output =
@@ -43,6 +51,11 @@ try {
     .replace(/<!--page-meta-start-->[\s\S]*?<!--page-meta-end-->/, () => renderMetadata("/blog/_published"))
     .replace('<div id="root"></div>', () => `<div id="root" data-prerendered="true">${render("/blog/_published")}</div>`);
   await writeFile("dist/blog/_published.html", publishedFallback);
+  const roleFallback = template
+    .replace(/<!--page-meta-start-->[\s\S]*?<!--page-meta-end-->/, () => renderMetadata("/careers/_published"))
+    .replace('<div id="root"></div>', () => `<div id="root" data-prerendered="true">${render("/careers/_published")}</div>`);
+  await mkdir("dist/careers", { recursive: true });
+  await writeFile("dist/careers/_published.html", roleFallback);
   await writeFile(
     "dist/sitemap.xml",
     `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${staticRoutes.map((route) => `<url><loc>${SITE_URL}${route}</loc></url>`).join("")}</urlset>\n`,

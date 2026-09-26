@@ -4,6 +4,8 @@ import { readFile } from "node:fs/promises";
 import { readFileSync } from "node:fs";
 import { extname, resolve } from "node:path";
 import { staticRoutes } from "./src/data/metadata.js";
+import feedHandler from "./api/feed.js";
+import sitemapHandler from "./api/sitemap.js";
 
 const deployment = JSON.parse(readFileSync(new URL("./vercel.json", import.meta.url), "utf8"));
 const responseHeaders = Object.fromEntries(deployment.headers[0].headers.map(({key, value}) => [key, value]));
@@ -55,6 +57,10 @@ export default defineConfig(({ isPreview }) => ({
             return;
           }
           if (!["GET", "HEAD"].includes(request.method)) return next();
+          if (url.pathname === "/feed-live.xml" || url.pathname === "/sitemap-live.xml") {
+            await (url.pathname === "/feed-live.xml" ? feedHandler : sitemapHandler)(request, response);
+            return;
+          }
           if (contentOrigin && url.pathname.startsWith("/api/content/")) {
             try {
               const upstream = await fetch(`${contentOrigin}${url.pathname.replace(/^\/api\/content/, "/public/content")}${url.search}`, { cache: "no-store" });
@@ -72,6 +78,12 @@ export default defineConfig(({ isPreview }) => ({
           }
           if (url.pathname.startsWith("/blog/") && !staticRoutes.includes(url.pathname) && !extname(url.pathname)) {
             const html = await readFile(resolve(server.config.root, server.config.build.outDir, "blog/_published.html"));
+            response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
+            response.end(request.method === "HEAD" ? undefined : html);
+            return;
+          }
+          if (url.pathname.startsWith("/careers/") && !extname(url.pathname)) {
+            const html = await readFile(resolve(server.config.root, server.config.build.outDir, "careers/_published.html"));
             response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
             response.end(request.method === "HEAD" ? undefined : html);
             return;

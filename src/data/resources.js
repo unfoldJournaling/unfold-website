@@ -58,7 +58,7 @@ export const helpItems = [
   {
     category: "Getting started",
     q: "Do I need a watch or wearable?",
-    a: "No. Journaling and mood check-ins do not require a wearable. Optional Apple Health context and the Apple Watch companion depend on supported Apple devices and the permissions you choose.",
+    a: "No. Journaling and mood check-ins do not require a wearable. Optional Apple Health on iOS or Health Connect on Android can add context on supported devices with your permission. The Apple Watch companion requires a supported Apple device.",
   },
   {
     category: "Getting started",
@@ -100,8 +100,8 @@ export const helpItems = [
   },
   {
     category: "Privacy & data",
-    q: "Do I have to connect Apple Health?",
-    a: "No. Health connections are optional. On supported Apple devices, you choose which permissions to allow. You can manage those permissions in your device settings.",
+    q: "Do I have to connect Apple Health or Health Connect?",
+    a: "No. Health connections are optional. On supported iOS and Android devices, you choose which permissions to allow. You can manage those permissions in Apple Health, Health Connect, or your device settings.",
   },
   {
     category: "Privacy & data",

@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import Icon from "./components/Icon.jsx";
-import ContentBody from "./components/ContentBody.jsx";
 import { CONTACT_EMAIL } from "./data/site.js";
 import usePublishedContent from "./hooks/usePublishedContent.js";
 import "./careers.css";
@@ -112,13 +111,10 @@ export default function Careers() {
                 <article key={role.slug} className="careers-role">
                   <span className="careers-role-department">{role.department}</span>
                   <div>
-                    <h3>{role.title}</h3>
+                    <h3><Link to={`/careers/${role.slug}`}>{role.title}</Link></h3>
                     <p className="careers-role-location">{role.location}</p>
                     {role.summary && <p>{role.summary}</p>}
-                    <details>
-                      <summary>Read role details</summary>
-                      <div className="careers-role-body"><ContentBody text={role.body} headingLevel={4} /></div>
-                    </details>
+                    <Link className="careers-role-details" to={`/careers/${role.slug}`}>Read role details <Icon size={16} /></Link>
                   </div>
                   <a className="text-link" href={role.application_url} target="_blank" rel="noopener noreferrer">
                     Apply <Icon size={18} />

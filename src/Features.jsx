@@ -20,7 +20,7 @@ const chapters = [
     id: "patterns",
     label: "02 / Notice the everyday",
     title: "There’s more to a day than a single feeling.",
-    text: "Check in with your mood and add context to your days. On supported Apple devices, optional Apple Health connections bring sleep and activity into the picture.",
+    text: "Check in with your mood and add context to your days. On supported devices, optional Apple Health or Health Connect connections bring sleep and activity into the picture.",
     detail:
       "Look for observations that invite curiosity. An association is not a cause, a diagnosis, or a prediction. Your lived experience matters more than any single score.",
     image: 5,

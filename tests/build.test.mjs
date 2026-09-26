@@ -4,6 +4,7 @@ import { readFile, access } from "node:fs/promises";
 import { join } from "node:path";
 import { staticRoutes, getMetadata, escapeHtml } from "../src/data/metadata.js";
 import { articles } from "../src/data/articles.js";
+import deployment from "../vercel.json" with { type: "json" };
 const readPage = (route) =>
   readFile(
     route === "/" ? "dist/index.html" : join("dist", `${route}.html`),
@@ -37,6 +38,10 @@ test("all local hyperlinks, fragment targets and image assets resolve in the pro
     for (const href of hrefs) {
       if (!href.startsWith("/") && !href.startsWith("#")) continue;
       const url = new URL(href, `https://tryunfold.ai${route}`);
+      if (url.pathname === "/feed-live.xml") {
+        assert.ok(deployment.rewrites.some((rewrite) => rewrite.source === url.pathname && rewrite.destination === "/api/feed"));
+        continue;
+      }
       if (/\.[a-z0-9]+$/i.test(url.pathname)) {
         await access(join("dist", decodeURIComponent(url.pathname)));
       } else {

@@ -16,6 +16,7 @@ import Help from "./Help.jsx";
 import About from "./About.jsx";
 import Plans from "./Plans.jsx";
 import Careers from "./Careers.jsx";
+import CareerRole from "./CareerRole.jsx";
 import Releases from "./Releases.jsx";
 import FeatureRequest from "./FeatureRequest.jsx";
 import Roadmap from "./Roadmap.jsx";
@@ -39,6 +40,7 @@ export default function SiteRoutes() {
           <Route path="/report-bug" element={<ReportBug />} />
           <Route path="/about" element={<About />} />
           <Route path="/careers" element={<Careers />} />
+          <Route path="/careers/:slug" element={<CareerRole />} />
           <Route path="/releases" element={<Releases />} />
           <Route path="/plans" element={<Plans />} />
           <Route path="/blog" element={<Blog />} />
