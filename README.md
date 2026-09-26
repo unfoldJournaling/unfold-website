@@ -68,6 +68,11 @@ before enabling a deployed dashboard workflow. Test a real owner publish and
 withdraw cycle after deployment; a local preview cannot verify production
 Firebase credentials or Firestore data.
 
+The contact and bug-report forms send to `/api/support`, which forwards to the
+backend's `/support/contact` ticket route. Executive owners can read and reply
+in the Support inbox. Verify ticket creation and email delivery in the target
+environment before treating the public form as operational.
+
 ## Add an editorial journal article
 
 Add an entry to `src/data/articles.js` with a unique `slug`, title, description,
