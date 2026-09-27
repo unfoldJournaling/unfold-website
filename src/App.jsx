@@ -15,17 +15,18 @@ const features = [
     description:
       "The big feelings. The tiny wins. The thought you haven’t found the words for yet. Write it down or talk it through, with a prompt when you need a place to start.",
     image: 3,
-    alt: "Unfold App Store poster showing an AI-guided journal entry on iPhone",
+    alt: "Unfold iPhone preview of an AI-guided journal conversation",
     note: "Written & voice journaling",
   },
   {
     label: "Add health context",
     title: "Your day has more than one signal.",
     description:
-      "Check in with your mood. If you choose to connect supported health data, sleep and activity can add context to how your days feel.",
+      "Check in with your mood, with or without a wearable. If you opt in, Apple Health on iPhone or Health Connect on supported Android devices can add sleep and activity context.",
     image: 4,
-    alt: "Unfold App Store poster showing optional Apple Health context on iPhone",
+    alt: "Unfold iPhone preview showing optional Apple Health context",
     note: "Optional health connections",
+    previewNote: "iPhone preview shows Apple Health. Android connects through Health Connect on supported devices.",
   },
   {
     label: "Explore your stress style",
@@ -33,7 +34,7 @@ const features = [
     description:
       "Explore the ways you tend to respond to pressure. Use what resonates as a starting point for reflection, never as a fixed label.",
     image: 2,
-    alt: "Unfold App Store poster showing a stress style reflection on iPhone",
+    alt: "Unfold iPhone preview of a stress style reflection",
     note: "Stress style reflection",
   },
   {
@@ -42,7 +43,7 @@ const features = [
     description:
       "When supported data is available, explore general wellness estimates and stress trends. They are one perspective on your day, not a diagnosis or prediction.",
     image: 5,
-    alt: "Unfold App Store poster showing an illustrative stress trend on iPhone",
+    alt: "Unfold iPhone preview of an illustrative stress trend",
     note: "Stress & wellness trends",
   },
 ];
@@ -151,12 +152,12 @@ function ProductFeatures() {
             </div>
           </div>
           <div id="feature-preview" className="product-preview">
-            <ProductScreenshot key={feature.image} image={feature.image} alt={feature.alt} />
+            <ProductScreenshot key={feature.image} image={feature.image} alt={feature.alt} presentation="device" />
             <div className="preview-caption">
               <span>{feature.note}</span>
             </div>
             <p className="preview-source">
-              From our iOS App Store gallery. Features vary by platform.
+              {feature.previewNote || "iPhone app preview. Features may vary by platform."}
             </p>
           </div>
         </div>

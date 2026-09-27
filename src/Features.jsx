@@ -12,7 +12,7 @@ const chapters = [
     detail:
       "Luma can offer a follow-up question or a new angle. AI-guided reflection is optional; you decide what feels useful and what to leave behind.",
     image: 3,
-    alt: "Unfold App Store poster showing an AI-guided journal entry on iPhone",
+    alt: "Unfold iPhone preview of an AI-guided journal entry",
     to: "/prompts",
     link: "Try a journaling prompt",
   },
@@ -24,7 +24,8 @@ const chapters = [
     detail:
       "Look for observations that invite curiosity. An association is not a cause, a diagnosis, or a prediction. Your lived experience matters more than any single score.",
     image: 4,
-    alt: "Unfold App Store poster showing optional Apple Health context on iPhone",
+    alt: "Unfold iPhone preview showing optional Apple Health context",
+    previewNote: "This iPhone preview shows Apple Health. Android uses Health Connect on supported devices.",
     to: "/blog/mood-tracking-with-curiosity",
     link: "A curious approach to mood tracking",
   },
@@ -36,7 +37,7 @@ const chapters = [
     detail:
       "A stress style is a starting point for curiosity, not a fixed identity or clinical assessment. Your experience matters more than a label.",
     image: 2,
-    alt: "Unfold App Store poster showing a stress style reflection on iPhone",
+    alt: "Unfold iPhone preview of a stress style reflection",
     to: "/blog/a-weekly-reflection-ritual",
     link: "Try a weekly reflection",
   },
@@ -47,7 +48,7 @@ const chapters = [
     text: "Explore general wellness estimates for stress, recovery, and sleep when supported data is available. See the sources and explanations behind the numbers inside the app.",
     detail: "These views are informational, can be incomplete, and do not diagnose or predict a condition. You decide how much health context to connect and when to pause.",
     image: 5,
-    alt: "Unfold App Store poster showing an illustrative stress trend on iPhone",
+    alt: "Unfold iPhone preview of an illustrative stress trend",
     to: "/privacy",
     link: "Understand your data choices",
   },
@@ -94,8 +95,8 @@ export default function Features() {
               </Link>
             </div>
             <figure className="chapter-screen">
-              <ProductScreenshot image={item.image} alt={item.alt} />
-              <figcaption>iOS App Store imagery. Screens and features may vary by version and platform.</figcaption>
+              <ProductScreenshot image={item.image} alt={item.alt} presentation="device" />
+              <figcaption>{item.previewNote || "iPhone app preview. Screens and features may vary by version and platform."}</figcaption>
             </figure>
           </section>
         ))}

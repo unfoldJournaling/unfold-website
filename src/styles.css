@@ -421,13 +421,16 @@ main:focus {
 .product-preview {
   position: relative;
   background: var(--tint);
-  border: 0;
-  border-radius: 16px;
+  border: 1px solid var(--line);
+  border-radius: 24px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 26px 24px 16px;
+  padding: 32px 24px 24px;
   overflow: hidden;
+}
+.product-preview .app-screen-window--device {
+  width: min(100%, 308px);
 }
 .product-preview > img {
   width: 218px;
@@ -442,14 +445,16 @@ main:focus {
   gap: 10px;
   padding: 12px 20px;
   border-radius: 14px;
-  margin-top: 22px;
-  font-size: 0.8rem;
+  margin-top: 20px;
+  font-size: 0.9rem;
   color: var(--primary);
   font-weight: 800;
 }
 .preview-source {
-  font-size: 0.65rem;
-  margin-top: 14px;
+  font-size: 0.79rem;
+  line-height: 1.5;
+  max-width: 330px;
+  margin-top: 2px;
   text-align: center;
 }
 .routine-section {
@@ -1958,7 +1963,8 @@ main:focus {
   padding: 40px 24px 22px;
   background: #f0eefb;
   text-align: center;
-  border-radius: 4px;
+  border: 1px solid var(--line);
+  border-radius: 24px;
 }
 .chapter-screen img {
   display: block;
@@ -1970,7 +1976,11 @@ main:focus {
 .chapter-screen figcaption {
   color: var(--muted);
   font-size: 0.8rem;
+  line-height: 1.5;
   margin-top: 20px;
+}
+.chapter-screen .app-screen-window--device {
+  width: min(100%, 260px);
 }
 .feature-chapter:nth-child(2) .chapter-screen {
   background: #f0f2ed;
@@ -2498,7 +2508,7 @@ main:focus {
   }
 }
 
-/* Store posters keep their authored composition; only the clean journal hero is framed as a phone. */
+/* Crop the verified App Store artwork to its iPhone for product previews. */
 .app-screen-window {
   position: relative;
   width: min(100%, 290px);

@@ -3,7 +3,7 @@
 .site-footer .footer-grid > div > a:not(.brand) { line-height: 1.4; }
 .footer-signoff { display: grid; gap: 12px; }
 .footer-signoff > span:last-child { display: flex; flex-wrap: wrap; gap: 18px; }
-.footer-signoff a { color: inherit; }
+.footer-signoff a { color: inherit; display: inline-flex; align-items: center; min-height: 44px; }
 .footer-signoff a:hover { color: var(--primary); }
 .releases-heading { max-width: 1160px; padding-block: clamp(70px, 10vw, 132px) clamp(52px, 7vw, 90px); }
 .releases-heading h1 { max-width: 790px; margin: 14px 0 20px; font-size: clamp(2.8rem, 6.5vw, 5.4rem); line-height: 1.05; letter-spacing: -.06em; }
