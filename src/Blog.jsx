@@ -12,7 +12,7 @@ import usePublishedContent from "./hooks/usePublishedContent.js";
 
 export default function Blog() {
   const { query, setQuery, category, setCategory, reset } = useResourceQuery("All stories");
-  const { items: published, error: publishingError } = usePublishedContent("articles");
+  const { items: published } = usePublishedContent("articles");
   const liveArticles = published.map((item) => ({
     ...item,
     description: item.summary,
@@ -105,7 +105,6 @@ export default function Blog() {
           {category !== "All stories" ? ` in ${category}` : ""}
           {query.trim() ? ` matching “${query.trim()}”` : ""}
         </p>
-        {publishingError && <p className="results-count" role="status">Recent stories are temporarily unavailable; explore our Journal guides below.</p>}
         {filtered.length ? (
           <div className="article-grid">
             {filtered.map((article) => (
