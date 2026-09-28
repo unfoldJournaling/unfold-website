@@ -124,7 +124,15 @@ export default function Careers() {
             </div>
           )}
           {roles.length === 0 && loading && <p className="careers-openings-status" role="status">Checking current openings…</p>}
-          {roles.length === 0 && error && <p className="careers-openings-status" role="status">Open roles are temporarily unavailable. Please check back shortly.</p>}
+          {roles.length === 0 && error && <div className="careers-empty-state" role="status">
+            <div>
+              <h3>Current openings couldn’t load.</h3>
+              <p>Please check back shortly. If you have a question about working with Unfold, you can reach the team directly.</p>
+            </div>
+            <a className="text-link" href={`mailto:${CONTACT_EMAIL}?subject=Careers%20at%20Unfold`}>
+              Ask about careers <Icon size={18} />
+            </a>
+          </div>}
           {roles.length === 0 && !loading && !error && <div className="careers-empty-state">
             <div>
               <h3>No roles are listed right now.</h3>

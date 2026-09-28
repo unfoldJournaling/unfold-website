@@ -2235,6 +2235,8 @@ main:focus {
 .support-contact-form .support-form-success { color: #21694f; }
 .support-contact-form .support-form-error,
 .support-contact-form .support-form-success { margin: 4px 0; }
+.support-contact-form .support-form-recovery { margin: 0 0 8px; font-size: .88rem; }
+.support-form-recovery a { color: var(--primary); font-weight: 800; text-decoration: underline; text-underline-offset: 3px; }
 .support-form-trap { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 .support-contact .support-contact-alternative { font-size: .9rem; }
 .support-contact-alternative a { text-decoration: underline; text-underline-offset: 3px; }
@@ -2569,4 +2571,15 @@ main:focus {
   .hero-visual.hero-product { padding: 26px 16px 44px; border-radius: 22px; }
   .hero-product .app-screen-window--device { width: min(100%, 220px); border-radius: 34px; }
   .privacy-toc ol { columns: 1; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes unfold-enter {
+    from { opacity: .82; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hero-product { animation: unfold-enter 560ms cubic-bezier(.2,.7,.2,1) both; }
+  @media (max-width: 820px) {
+    .main-nav.is-open { animation: unfold-enter 200ms cubic-bezier(.2,.7,.2,1) both; }
+  }
 }

@@ -22,6 +22,8 @@
 .release-empty { border-top: 1px solid var(--line); padding-block: 56px 90px; }
 .release-empty h2 { font-size: 2rem; }
 .release-empty p, .content-status { color: var(--muted); line-height: 1.7; }
+.release-empty p { max-width: 620px; margin-top: 16px; }
+.release-empty .text-link { margin-top: 24px; }
 .content-status { padding-block: 64px 100px; }
 .published-article-layout .article-toc { padding-top: 8px; }
 @media (max-width: 1120px) { .site-footer .footer-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } .site-footer .footer-brand { grid-column: 1 / -1; } }

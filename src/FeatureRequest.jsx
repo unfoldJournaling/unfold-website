@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { feedbackRequest, roadmapColumns } from "./data/feedback.js";
 import useFeatureBoard from "./hooks/useFeatureBoard.js";
+import { CONTACT_EMAIL } from "./data/site.js";
 import "./feedback.css";
 
 export default function FeatureRequest() {
@@ -28,19 +29,20 @@ export default function FeatureRequest() {
   }
 
   const visible = items.filter((item) => `${item.title} ${item.details}`.toLowerCase().includes(query.toLowerCase().trim()));
+  const boardUnavailable = loadError && !items.length;
   return <>
     <section className="feedback-intro container">
       <p className="eyebrow">Shape what comes next</p>
       <h1>Your ideas have a place here.</h1>
-      <p>Tell us what would make Unfold more useful for your everyday reflection. We read every request and share selected work on our <Link to="/roadmap">public roadmap</Link>.</p>
+      <p>Tell us what would make Unfold more useful for your everyday reflection. The team reviews submissions before selected work appears on our <Link to="/roadmap">public roadmap</Link>.</p>
     </section>
     <section className="feedback-layout container" aria-label="Feature requests">
       <div className="feedback-browser">
-        <div className="feedback-heading"><h2>Explore requests</h2><span>{visible.length} public ideas</span></div>
-        <label htmlFor="feature-search">Search ideas</label>
-        <input id="feature-search" type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search by topic" />
+        <div className="feedback-heading"><h2>Explore requests</h2><span>{boardUnavailable ? "Board unavailable" : `${visible.length} public ideas`}</span></div>
+        {!boardUnavailable && <><label htmlFor="feature-search">Search ideas</label>
+        <input id="feature-search" type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search by topic" /></>}
         {loading && <p role="status">Loading requests…</p>}
-        {loadError && <p role="alert">Requests are unavailable right now. You can still send your idea.</p>}
+        {loadError && <p role="status">Public requests couldn’t load right now. You can still try the form, or <a href={`mailto:${CONTACT_EMAIL}?subject=An%20idea%20for%20Unfold`}>email the team directly</a>.</p>}
         {!loading && !loadError && !visible.length && <p className="feedback-empty">{query ? "No ideas match that search." : "No public ideas yet. Be the first to share one."}</p>}
         {visible.map((item) => <article className="feedback-item" key={item.id}>
           <div><h3>{item.title}</h3><p>{item.details}</p></div>
@@ -61,6 +63,9 @@ export default function FeatureRequest() {
           <div className="support-form-trap" aria-hidden="true"><label htmlFor="feature-website">Website</label><input id="feature-website" tabIndex={-1} autoComplete="off" value={form.website} onChange={(event) => setForm({ ...form, website: event.target.value })} /></div>
           <button className="button" type="submit" disabled={sending}>{sending ? "Sending…" : "Send request"}</button>
           {message && <p role={message.type === "error" ? "alert" : "status"} className={`feedback-${message.type}`}>{message.text}</p>}
+          {message?.type === "error" && <p className="feedback-recovery">
+            Your idea is still in the form. <a href={`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(`Unfold feature request: ${form.title}`)}&body=${encodeURIComponent(`Reply email: ${form.email}\n\n${form.details}`)}`}>Open an email draft</a> or write to {CONTACT_EMAIL}.
+          </p>}
         </form>
         <p className="feedback-note">Your email stays with the team. Public roadmap cards show only the idea, details, and progress.</p>
       </aside>

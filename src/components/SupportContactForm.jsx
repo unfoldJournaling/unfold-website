@@ -69,6 +69,9 @@ export default function SupportContactForm({ initialCategory = "question", headi
         </div>
         <button type="submit" disabled={sending}>{sending ? "Sending…" : submitLabel}</button>
         {status && <p role={status.kind === "error" ? "alert" : "status"} className={`support-form-${status.kind}`}>{status.text}</p>}
+        {status?.kind === "error" && <p className="support-form-recovery">
+          Your message is still in the form. <a href={`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(`Unfold ${category}: ${subject}`)}&body=${encodeURIComponent(`Reply email: ${email}\n\n${message}`)}`}>Open an email draft</a> to send it directly.
+        </p>}
       </form>
       <p className="support-contact-alternative">Prefer email? <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a></p>
     </div>

@@ -225,7 +225,9 @@ export default function Home() {
             for <span>yourself.</span>
           </h1>
           <p className="hero-description">
-            Write or speak, check in with your mood, and explore wellness context from supported health data when you choose to connect it. Luma offers another perspective when you want one.
+            Write or speak your thoughts, check in with your mood, and notice
+            patterns over time. Bring in supported health data or Luma, your
+            optional AI reflection companion, when you choose.
           </p>
           <div className="hero-actions">
             <PlatformDownloadLink />

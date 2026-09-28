@@ -1,6 +1,8 @@
 import usePublishedContent from "./hooks/usePublishedContent.js";
 import ContentBody from "./components/ContentBody.jsx";
 import { DownloadCta } from "./components/SiteLayout.jsx";
+import { Link } from "react-router-dom";
+import Icon from "./components/Icon.jsx";
 
 const platformNames = { all: "iOS & Android", ios: "iOS", android: "Android" };
 
@@ -27,7 +29,11 @@ export default function Releases() {
           </div>
         </article>)}
         {!items.length && loading && <p className="content-status" role="status">Checking for updates…</p>}
-        {!items.length && error && <p className="content-status" role="status">Release notes are temporarily unavailable. Please check back shortly.</p>}
+        {!items.length && error && <div className="release-empty" role="status">
+          <h2>The latest notes couldn’t load.</h2>
+          <p>You can still check the app stores for the current version of Unfold. We’ll show verified updates here when they’re available.</p>
+          <Link className="text-link" to="/get-app">See the app stores <Icon size={18} /></Link>
+        </div>}
         {!items.length && !loading && !error && <div className="release-empty"><h2>Updates are coming.</h2><p>When there is something new to share, you’ll find the details here.</p></div>}
       </section>
       <DownloadCta />
