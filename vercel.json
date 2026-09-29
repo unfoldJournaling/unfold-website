@@ -1,8 +1,37 @@
 {
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "functions": { "api/blog/[slug].js": { "includeFiles": "dist/article-shell.html" }, "api/careers/[slug].js": { "includeFiles": "dist/article-shell.html" } },
   "rewrites": [
+    { "source": "/api/content/:path*", "destination": "https://api.tryunfold.ai/public/content/:path*" },
+    { "source": "/api/feedback", "destination": "https://api.tryunfold.ai/public/feature-requests" },
+    { "source": "/api/support", "destination": "https://api.tryunfold.ai/support/contact" },
+    { "source": "/sitemap-live.xml", "destination": "/api/sitemap" },
+    { "source": "/feed-live.xml", "destination": "/api/feed" },
+    { "source": "/blog/:slug", "destination": "/api/blog/:slug" },
+    { "source": "/careers/:slug", "destination": "/api/careers/:slug" }
+  ],
+  "headers": [
     {
       "source": "/(.*)",
-      "destination": "/index.html"
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests"
+        }
+      ]
     }
   ]
 }
