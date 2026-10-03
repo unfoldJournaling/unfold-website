@@ -41,7 +41,7 @@ route list matches the generated output.
 - `src/Prompts.jsx`, `src/Help.jsx`: searchable resources and support.
 - `src/data/resources.js`: original prompts, help answers, and resource filtering.
 - `src/Blog.jsx`, `src/Article.jsx`: journal library and article pages.
-- `src/Careers.jsx`, `src/RoleDetail.jsx`, `src/ReleaseNotes.jsx`:
+- `src/Careers.jsx`, `src/CareerRole.jsx`, `src/Releases.jsx`:
   public roles and product updates backed by the publishing API.
 - `src/FeatureRequest.jsx`, `src/Roadmap.jsx`: private idea submission and
   the owner-curated public roadmap.
@@ -93,22 +93,41 @@ live feed/sitemap entries.
 
 ## Hosting
 
-Deploy only the contents of `dist/` using the established hosting workflow.
+For Vercel, deploy from the repository root with `npm run build` and `dist/` as
+the output directory. Keep `api/`, `server/` and `vercel.json` in the deployment
+source so published content, recovery responses and API rewrites are included.
 `vercel.json` enables clean URLs and removes trailing slashes. Netlify's generated
 `_redirects` preserves existing static files and sends unknown routes to the
-custom 404 page with status 404. Other hosts must resolve `/blog/example` to
+custom 404 page with status 404. Static-only hosts need separate equivalents for
+the dynamic published-content functions and backend rewrites. Other hosts must resolve `/blog/example` to
 `/blog/example.html`, serve `/` from `index.html`, and serve `404.html` with an
 HTTP 404 for unknown paths. Do not use an unconditional homepage SPA fallback:
 it would serve the wrong article HTML and break hydration and indexing.
 
-Keep `/privacy`, `/terms`, `/delete-account`, and `/get-app` stable. Mobile visits
-to `/get-app` redirect to the existing platform store; desktop shows both stores.
+Keep `/privacy`, `/terms`, `/delete-account`, and `/get-app` stable. The download
+page always shows both stores, putting the detected mobile platform first.
+Desktop visitors choose their store rather than being assumed to own an iPhone.
+`/faq` permanently redirects to `/help`; the latter is the indexed help page.
+Dynamic missing stories and roles return branded HTML with HTTP 404. Upstream
+failures return HTTP 503 with retry and navigation actions, noindex, and
+Retry-After. The server recovery shells are generated during the build and
+included in the Vercel functions. The configured www redirect still requires
+valid domain registration, DNS and TLS on the hosting project.
 
 ## Visuals and content sources
 
 Nunito is self-hosted; its SIL Open Font License is in `public/fonts/OFL.txt`.
 Product gallery images come from the public
 [Unfold App Store listing](https://apps.apple.com/us/app/unfold-journal-mood-tracker/id6743553743).
+The current gallery was checked against the public listing on 2 October 2026
+(version 2.1.4). Exact source URLs are recorded in
+`public/images/app-store-sources.json`. Preserve each complete composition:
+some cards extend beyond the depicted phone. These are store previews, not
+independently captured live app screens. The hero shows the product overview;
+the feature gallery shows journaling, mood history, health connections and trends.
+The desktop download QR is a local static asset for
+`https://tryunfold.ai/get-app`; its encoded value was decoded and verified using
+Apple Vision. It needs no tracking service or runtime dependency.
 The notebook, window, and water images are original editorial artwork in
 `public/images/quiet-moment.webp`, `morning-light.webp`, and
 `water-reflection.webp`. They illustrate the journal and are not app screenshots.

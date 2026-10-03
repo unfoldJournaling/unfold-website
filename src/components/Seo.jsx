@@ -1,10 +1,12 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { getMetadata } from "../data/metadata.js";
-export default function Seo() {
+export default function Seo({ contentError = null }) {
   const { pathname } = useLocation();
+  const errorKind = contentError?.kind;
+  const errorStatus = contentError?.status;
   useEffect(() => {
-    const meta = getMetadata(pathname);
+    const meta = getMetadata(pathname, errorStatus ? { kind: errorKind, status: errorStatus } : null);
     document.title = meta.title;
     const setMeta = (attribute, name, content) => {
       let element = document.head.querySelector(`meta[${attribute}="${name}"]`);
@@ -53,6 +55,6 @@ export default function Seo() {
       script.textContent = JSON.stringify(meta.schema);
       document.head.append(script);
     }
-  }, [pathname]);
+  }, [pathname, errorKind, errorStatus]);
   return null;
 }

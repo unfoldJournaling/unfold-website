@@ -1,0 +1,28 @@
+{
+  "listing": "https://apps.apple.com/us/app/id6743553743",
+  "checkedOn": "2026-10-02",
+  "version": "2.1.4",
+  "releaseDate": "2026-08-31T21:14:26Z",
+  "images": [
+    {
+      "file": "public/images/app-store-overview.jpg",
+      "source": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/0d/98/c2/0d98c23c-a50d-73ac-1400-9e4fe3fec634/Unfold_App_-_Apple_Store_Snapshot_1__U00281_U0029.png/600x0w.jpg"
+    },
+    {
+      "file": "public/images/app-store-journal.jpg",
+      "source": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/22/42/7a/22427a25-99cf-d8ca-3516-1b0f8c1977fd/Unfold_App_-_Apple_Store_Snapshot_3__U00281_U0029.png/600x0w.jpg"
+    },
+    {
+      "file": "public/images/app-store-mood.jpg",
+      "source": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/c4/2c/57/c42c57b5-0591-1c9f-af0a-30fd854ba756/Unfold_App_-_Apple_Store_Snapshot_5__U00281_U0029.png/600x0w.jpg"
+    },
+    {
+      "file": "public/images/app-store-health.jpg",
+      "source": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/c1/53/06/c1530680-89d8-f00b-e46d-1efa380e8a01/Unfold_App_-_Apple_Store_Snapshot_8__U00281_U0029.png/600x0w.jpg"
+    },
+    {
+      "file": "public/images/app-store-trends.jpg",
+      "source": "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/fb/b3/63/fbb36340-533f-bcbc-711f-a68dc765ec5b/Unfold_App_-_Apple_Store_Snapshot_9__U00281_U0029.png/600x0w.jpg"
+    }
+  ]
+}

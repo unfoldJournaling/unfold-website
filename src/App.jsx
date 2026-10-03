@@ -1,5 +1,5 @@
 import ProductScreenshot from "./components/ProductScreenshot.jsx";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import Icon from "./components/Icon.jsx";
 import ArticleCard from "./components/ArticleCard.jsx";
@@ -29,13 +29,13 @@ const features = [
     previewNote: "iPhone preview shows Apple Health. Android connects through Health Connect on supported devices.",
   },
   {
-    label: "Explore your stress style",
-    title: "Find language for familiar patterns.",
+    label: "Check in with your mood",
+    title: "See your feelings in context.",
     description:
-      "Explore the ways you tend to respond to pressure. Use what resonates as a starting point for reflection, never as a fixed label.",
+      "Name how you feel, then return to your mood history alongside your reflections. Look for the moments and patterns you want to understand a little better.",
     image: 2,
-    alt: "Unfold iPhone preview of a stress style reflection",
-    note: "Stress style reflection",
+    alt: "Unfold App Store artwork showing mood history and a journal observation",
+    note: "Mood check-ins & history",
   },
   {
     label: "See your day in context",
@@ -103,7 +103,14 @@ const faqs = [
 
 function ProductFeatures() {
   const [selected, setSelected] = useState(0);
-  const feature = features[selected];
+  const controls = useRef([]);
+  const selectionChanged = useRef(false);
+  useEffect(() => {
+    if (selectionChanged.current && window.matchMedia("(max-width: 600px)").matches) {
+      // Collapsing the previous panel can move the newly selected control offscreen.
+      controls.current[selected]?.scrollIntoView({ block: "start", behavior: "instant" });
+    }
+  }, [selected]);
   return (
     <section
       className="section product-section"
@@ -132,33 +139,42 @@ function ProductFeatures() {
             aria-label="Explore Unfold features"
           >
             {features.map((item, index) => (
-              <button
-                key={item.label}
-                className={`feature-option ${selected === index ? "is-selected" : ""}`}
-                aria-pressed={selected === index}
-                aria-controls="feature-preview"
-                onClick={() => setSelected(index)}
-              >
-                <span>{item.label}</span>
-                <Icon size={18} />
-              </button>
+              <div className="feature-item" key={item.label}>
+                <button
+                  ref={(element) => { controls.current[index] = element; }}
+                  id={`feature-control-${index}`}
+                  className={`feature-option ${selected === index ? "is-selected" : ""}`}
+                  aria-expanded={selected === index}
+                  aria-disabled={selected === index}
+                  aria-controls={`feature-panel-${index}`}
+                  onClick={() => {
+                    selectionChanged.current = true;
+                    setSelected(index);
+                  }}
+                >
+                  <span>{item.label}</span>
+                  <Icon size={18} />
+                </button>
+                <div className="feature-panel" id={`feature-panel-${index}`} role="region" aria-labelledby={`feature-control-${index}`} hidden={selected !== index}>
+                  <div className="feature-copy">
+                    <h3>{item.title}</h3>
+                    <p>{item.description}</p>
+                    <Link className="text-link" to="/features">
+                      Explore all features <Icon size={19} />
+                    </Link>
+                  </div>
+                  <figure className="product-preview">
+                    <ProductScreenshot image={item.image} alt={item.alt} />
+                    <figcaption>
+                      <span className="preview-caption">{item.note}</span>
+                      <span className="preview-source">
+                        {item.previewNote || "iPhone App Store preview. Screens may vary by version and platform."}
+                      </span>
+                    </figcaption>
+                  </figure>
+                </div>
+              </div>
             ))}
-            <div className="feature-copy" aria-live="polite">
-              <h3>{feature.title}</h3>
-              <p>{feature.description}</p>
-              <Link className="text-link" to="/features">
-                Explore all features <Icon size={19} />
-              </Link>
-            </div>
-          </div>
-          <div id="feature-preview" className="product-preview">
-            <ProductScreenshot key={feature.image} image={feature.image} alt={feature.alt} presentation="device" />
-            <div className="preview-caption">
-              <span>{feature.note}</span>
-            </div>
-            <p className="preview-source">
-              {feature.previewNote || "iPhone app preview. Features may vary by platform."}
-            </p>
           </div>
         </div>
       </div>
@@ -225,9 +241,9 @@ export default function Home() {
             for <span>yourself.</span>
           </h1>
           <p className="hero-description">
-            Write or speak your thoughts, check in with your mood, and notice
-            patterns over time. Bring in supported health data or Luma, your
-            optional AI reflection companion, when you choose.
+            A journal that brings your words and moods together. Write or speak
+            your thoughts, check in with how you feel, and look back with a
+            little more perspective.
           </p>
           <div className="hero-actions">
             <PlatformDownloadLink />
@@ -242,7 +258,7 @@ export default function Home() {
           </p>
         </div>
         <figure className="hero-visual hero-product">
-          <ProductScreenshot image={3} presentation="device" eager alt="Unfold iPhone preview showing an AI-guided journal conversation" />
+          <ProductScreenshot image={1} eager alt="Unfold App Store artwork showing its dashboard, reflection options, and mood check-in" />
           <figcaption className="hero-caption">Unfold iOS App Store preview · screens may vary</figcaption>
         </figure>
       </section>

@@ -4,7 +4,7 @@ import ContentBody from "./components/ContentBody.jsx";
 import Icon from "./components/Icon.jsx";
 import usePublishedContent from "./hooks/usePublishedContent.js";
 import { SITE_URL } from "./data/site.js";
-import NotFound from "./NotFound.jsx";
+import ContentRecovery from "./components/ContentRecovery.jsx";
 import "./careers.css";
 
 export default function CareerRole() {
@@ -49,8 +49,8 @@ export default function CareerRole() {
   }, [role, slug]);
 
   if (loading && !role) return <p className="container content-status" role="status">Loading role…</p>;
-  if (error && !role) return <p className="container content-status" role="status">This role is temporarily unavailable. Please try again shortly.</p>;
-  if (!role) return <NotFound />;
+  if (error && !role) return <ContentRecovery kind="role" status={503} />;
+  if (!role) return <ContentRecovery kind="role" />;
 
   return <article className="career-detail container">
     <Link className="back-link" to="/careers#open-roles"><Icon /> All open roles</Link>

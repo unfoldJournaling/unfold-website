@@ -1,4 +1,5 @@
-import { Route, Routes } from "react-router-dom";
+import { useState } from "react";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import Home from "./App.jsx";
 import Blog from "./Blog.jsx";
 import Article from "./Article.jsx";
@@ -22,18 +23,29 @@ import FeatureRequest from "./FeatureRequest.jsx";
 import Roadmap from "./Roadmap.jsx";
 import KnowledgeBase from "./KnowledgeBase.jsx";
 import ReportBug from "./ReportBug.jsx";
-export default function SiteRoutes() {
+import ContentRecovery from "./components/ContentRecovery.jsx";
+
+function FaqRedirect() {
+  const { search, hash } = useLocation();
+  return <Navigate to={{ pathname: "/help", search, hash }} replace />;
+}
+
+export default function SiteRoutes({ contentError = null }) {
+  const location = useLocation();
+  const [initialPath] = useState(location.pathname);
+  const showRecovery = contentError && location.pathname === initialPath;
   return (
     <>
-      <Seo />
+      {!showRecovery && <Seo />}
       <ScrollToTop />
       <Routes>
         <Route element={<SiteLayout />}>
+          {showRecovery ? <Route path="*" element={<ContentRecovery {...contentError} />} /> : <>
           <Route path="/" element={<Home />} />
           <Route path="/features" element={<Features />} />
           <Route path="/prompts" element={<Prompts />} />
           <Route path="/help" element={<Help />} />
-          <Route path="/faq" element={<Help />} />
+          <Route path="/faq" element={<FaqRedirect />} />
           <Route path="/knowledge-base" element={<KnowledgeBase />} />
           <Route path="/feature-request" element={<FeatureRequest />} />
           <Route path="/roadmap" element={<Roadmap />} />
@@ -71,6 +83,7 @@ export default function SiteRoutes() {
             }
           />
           <Route path="*" element={<NotFound />} />
+          </>}
         </Route>
       </Routes>
     </>

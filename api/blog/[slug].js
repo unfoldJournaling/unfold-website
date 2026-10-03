@@ -2,6 +2,7 @@ import { readFile } from "node:fs/promises";
 import { escapeHtml } from "../../src/data/metadata.js";
 import { SITE_URL } from "../../src/data/site.js";
 import { contentHtml } from "../../src/data/content-html.js";
+import { sendContentRecovery } from "../../server/content-recovery.js";
 
 const apiOrigin = (process.env.UNFOLD_CONTENT_API_ORIGIN || "https://api.tryunfold.ai").replace(/\/$/, "");
 const validSlug = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
@@ -59,15 +60,13 @@ export async function renderPublishedArticle(article, slug) {
 export default async function handler(request, response) {
   const slug = String(request.query?.slug || "");
   if (!validSlug.test(slug)) {
-    response.statusCode = 404;
-    response.end("Story not found.");
+    await sendContentRecovery(response, "story", 404);
     return;
   }
   try {
-    const upstream = await fetch(`${apiOrigin}/public/content/articles/${slug}`, { cache: "no-store" });
+    const upstream = await fetch(`${apiOrigin}/public/content/articles/${slug}`, { cache: "no-store", signal: AbortSignal.timeout(8000) });
     if (upstream.status === 404) {
-      response.statusCode = 404;
-      response.end("Story not found.");
+      await sendContentRecovery(response, "story", 404);
       return;
     }
     if (!upstream.ok) throw new Error("Content unavailable");
@@ -79,8 +78,6 @@ export default async function handler(request, response) {
     response.statusCode = 200;
     response.end(html);
   } catch {
-    response.statusCode = 503;
-    response.setHeader("Retry-After", "60");
-    response.end("This story is temporarily unavailable.");
+    await sendContentRecovery(response, "story", 503);
   }
 }

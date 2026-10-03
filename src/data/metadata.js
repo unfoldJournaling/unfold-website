@@ -6,7 +6,6 @@ export const staticRoutes = [
   "/features",
   "/prompts",
   "/help",
-  "/faq",
   "/knowledge-base",
   "/feature-request",
   "/roadmap",
@@ -34,7 +33,6 @@ const pageData = {
     "Unfold Help — Answers & support",
     "Find answers about getting started with Unfold, journaling, privacy, subscriptions, and account deletion. Contact the team for help.",
   ],
-  "/faq": ["Unfold FAQs — Common questions", "Answers to common questions about Unfold journaling, privacy, subscriptions, and getting started."],
   "/knowledge-base": ["Unfold Knowledge Base — Guides & answers", "Browse Unfold help topics for getting started, journaling, privacy, and subscriptions."],
   "/feature-request": ["Request a Feature — Help shape Unfold", "Suggest an improvement to Unfold and explore product requests shared on the public board."],
   "/roadmap": ["Unfold Roadmap — What’s planned and released", "Explore ideas planned, in progress, and released for Unfold."],
@@ -80,8 +78,21 @@ const pageData = {
     "Learn how to request deletion of your Unfold account and associated data through the app or by email.",
   ],
 };
-export function getMetadata(pathname) {
-  const path = pathname.replace(/\/+$/, "") || "/";
+export function getMetadata(pathname, contentError = null) {
+  if (contentError) {
+    const unavailable = contentError.status === 503;
+    return {
+      ...getMetadata(pathname),
+      title: unavailable ? "Temporarily unavailable — Unfold" : "Page not found — Unfold",
+      description: unavailable
+        ? "This content couldn’t load. Try again in a moment or explore the rest of Unfold."
+        : "This content may have moved or is no longer available. Explore Unfold to find your next step.",
+      noindex: true,
+      schema: null,
+    };
+  }
+  const requestedPath = pathname.replace(/\/+$/, "") || "/";
+  const path = requestedPath === "/faq" ? "/help" : requestedPath;
   const article = path.startsWith("/blog/")
     ? getArticle(path.slice(6))
     : undefined;
@@ -151,7 +162,7 @@ export function escapeHtml(text) {
       ],
   );
 }
-export function renderMetadata(path) {
-  const meta = getMetadata(path);
+export function renderMetadata(path, contentError = null) {
+  const meta = getMetadata(path, contentError);
   return `<title>${escapeHtml(meta.title)}</title>\n<meta name="description" content="${escapeHtml(meta.description)}" />\n<link rel="canonical" href="${escapeHtml(meta.url)}" />\n<meta name="robots" content="${meta.noindex ? "noindex, follow" : "index, follow"}" />\n<meta property="og:site_name" content="Unfold" />\n<meta property="og:type" content="${meta.type}" />\n<meta property="og:title" content="${escapeHtml(meta.title)}" />\n<meta property="og:description" content="${escapeHtml(meta.description)}" />\n<meta property="og:url" content="${escapeHtml(meta.url)}" />\n<meta property="og:image" content="${meta.image}" />\n<meta property="og:image:alt" content="${escapeHtml(meta.imageAlt)}" />\n<meta name="twitter:card" content="summary_large_image" />\n<meta name="twitter:title" content="${escapeHtml(meta.title)}" />\n<meta name="twitter:description" content="${escapeHtml(meta.description)}" />\n<meta name="twitter:image" content="${meta.image}" />\n${meta.schema ? `<script id="page-schema" type="application/ld+json">${JSON.stringify(meta.schema).replace(/</g, "\\u003c")}</script>` : ""}`;
 }

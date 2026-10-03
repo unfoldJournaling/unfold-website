@@ -1,6 +1,31 @@
 import { Link } from "react-router-dom";
 import { PageIntro } from "./components/ResourceBrowser.jsx";
 import Icon from "./components/Icon.jsx";
+
+const plans = [
+  {
+    name: "Free",
+    label: "A place to begin",
+    description: "Build a journaling practice at your own pace.",
+    benefits: ["Basic journaling", "Access to your existing entries", "Optional AI previews where available"],
+    billing: "No subscription needed.",
+  },
+  {
+    name: "Pro",
+    label: "For your own practice",
+    description: "Go deeper with your personal reflections.",
+    benefits: ["Everything in Free", "Deeper AI insights and memory", "Voice journaling and Unfold Clarity"],
+    billing: "Choose Monthly or Yearly in the app.",
+  },
+  {
+    name: "Family",
+    label: "For you and your loved ones",
+    description: "One person pays. Everyone has their own account.",
+    benefits: ["Premium benefits for each member", "2, 4 or 6 accounts, including the payer", "Private journals and optional wellness sharing"],
+    billing: "Choose your account count and Monthly or Yearly in the app.",
+  },
+];
+
 export default function Plans() {
   return (
     <>
@@ -14,9 +39,29 @@ export default function Plans() {
           </>
         }
       >
-        Unfold is free to download, with optional subscriptions for premium
-        features. Explore the current options in the app before you decide.
+        Start with free journaling. Choose an optional subscription when you
+        want more, for yourself or your loved ones.
       </PageIntro>
+      <section className="section container plan-comparison" aria-labelledby="compare-title">
+        <p className="eyebrow">Choose what fits</p>
+        <h2 id="compare-title">Your journal. Your choice.</h2>
+        <div className="plan-comparison-grid">
+          {plans.map((plan) => (
+            <article key={plan.name}>
+              <p className="plan-label">{plan.label}</p>
+              <h3>{plan.name}</h3>
+              <p className="plan-description">{plan.description}</p>
+              <ul>{plan.benefits.map((benefit) => <li key={benefit}>{benefit}</li>)}</ul>
+              <p className="plan-billing">{plan.billing}</p>
+            </article>
+          ))}
+        </div>
+        <p className="plan-availability">
+          Available plans, features and usage allowances are shown in the app.
+          Your store shows the current local price and total charge before you pay.
+          Family payment never unlocks another person’s journal or wellness data.
+        </p>
+      </section>
       <section className="container plan-overview" aria-labelledby="plan-title">
         <div>
           <p className="eyebrow">Your store. Your local price.</p>
@@ -25,11 +70,15 @@ export default function Plans() {
             <br />
             before the decision.
           </h2>
-          <p>
-            Your purchase screen shows the available features, price, billing
-            period, and any eligible trial. These can vary by platform and
-            region.
-          </p>
+            <p>
+              Your purchase screen shows the available features, price, billing
+              period, and any eligible trial. These can vary by platform and
+              region.
+            </p>
+            <p>
+              Yearly is billed as one annual payment. Any monthly equivalent is
+              a comparison, not a monthly charge.
+            </p>
           <Link className="button" to="/get-app">
             Get Unfold
             <Icon />

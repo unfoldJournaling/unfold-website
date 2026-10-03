@@ -21,6 +21,14 @@ const vite = await createServer({
 });
 try {
   const { render } = await vite.ssrLoadModule("/src/entry-server.jsx");
+  for (const kind of ["story", "role"]) {
+    for (const status of [404, 503]) {
+      const html = template
+        .replace(/<!--page-meta-start-->[\s\S]*?<!--page-meta-end-->/, () => renderMetadata("/404", { kind, status }))
+        .replace('<div id="root"></div>', () => `<div id="root" data-prerendered="true" data-content-error="${kind}:${status}">${render("/404", { kind, status })}</div>`);
+      await writeFile(`dist/content-${kind}-${status}.html`, html);
+    }
+  }
   const dynamicLayout = render("/careers/_published").replace(
     /<main id="main-content" tabindex="-1">[\s\S]*?<\/main>/,
     '<main id="main-content" tabindex="-1"><!--dynamic-content--></main>',

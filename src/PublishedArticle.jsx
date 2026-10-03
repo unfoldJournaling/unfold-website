@@ -7,7 +7,7 @@ import { DownloadCta } from "./components/SiteLayout.jsx";
 import { articles, readingTime } from "./data/articles.js";
 import { SITE_URL } from "./data/site.js";
 import usePublishedContent from "./hooks/usePublishedContent.js";
-import NotFound from "./NotFound.jsx";
+import ContentRecovery from "./components/ContentRecovery.jsx";
 
 function setMeta(name, value, attribute = "name") {
   const element = document.head.querySelector(`meta[${attribute}="${name}"]`);
@@ -54,8 +54,8 @@ export default function PublishedArticle({ slug }) {
     };
   }, [article, slug]);
   if (loading && !article) return <p className="container content-status" role="status">Loading story…</p>;
-  if (error && !article) return <p className="container content-status" role="status">This story is temporarily unavailable. Please try again shortly.</p>;
-  if (!article) return <NotFound />;
+  if (error && !article) return <ContentRecovery kind="story" status={503} />;
+  if (!article) return <ContentRecovery kind="story" />;
   const published = article.published_at?.slice(0, 10);
   return (
     <>

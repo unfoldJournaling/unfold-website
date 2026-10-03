@@ -7,8 +7,7 @@ import Icon from "./components/Icon.jsx";
 export default function GetApp() {
   const [platform, setPlatform] = useState("desktop");
   useEffect(() => {
-    const detected = detectPlatform();
-    setPlatform(detected === "desktop" && /Macintosh|Mac OS X/.test(navigator.userAgent) ? "ios" : detected);
+    setPlatform(detectPlatform());
   }, []);
   return (
     <section className="get-app container">
@@ -32,6 +31,16 @@ export default function GetApp() {
         <br />
         Features and pricing can vary by platform and region.
       </p>
+      {platform === "desktop" && (
+        <div className="download-handoff">
+          <img src="/images/download-qr.png" width="312" height="312" alt="QR code for https://tryunfold.ai/get-app" />
+          <div>
+            <h2>Continue on your phone</h2>
+            <p>Open your camera and scan to choose your app store.</p>
+            <a href="https://tryunfold.ai/get-app">tryunfold.ai/get-app</a>
+          </div>
+        </div>
+      )}
       <Link className="text-link" to="/">
         Back to Unfold <Icon />
       </Link>

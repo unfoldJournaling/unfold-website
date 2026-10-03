@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const REFRESH_INTERVAL = 5000;
+const REFRESH_INTERVAL = 60000;
 
 export default function usePublishedContent(collection) {
   const [state, setState] = useState({ items: [], loading: true, error: false });
@@ -25,7 +25,7 @@ export default function usePublishedContent(collection) {
         }
       } catch {
         if (active && request === latestRequest) {
-          setState({ items: [], loading: false, error: true });
+          setState((current) => ({ ...current, loading: false, error: true }));
         }
       }
     };

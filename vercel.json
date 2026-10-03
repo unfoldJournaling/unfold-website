@@ -1,7 +1,11 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
-  "functions": { "api/blog/[slug].js": { "includeFiles": "dist/article-shell.html" }, "api/careers/[slug].js": { "includeFiles": "dist/article-shell.html" } },
+  "functions": { "api/blog/[slug].js": { "includeFiles": "dist/*.html" }, "api/careers/[slug].js": { "includeFiles": "dist/*.html" } },
+  "redirects": [
+    { "source": "/:path*", "has": [{ "type": "host", "value": "www.tryunfold.ai" }], "destination": "https://tryunfold.ai/:path*", "permanent": true },
+    { "source": "/faq", "destination": "/help", "permanent": true }
+  ],
   "rewrites": [
     { "source": "/api/content/:path*", "destination": "https://api.tryunfold.ai/public/content/:path*" },
     { "source": "/api/feedback", "destination": "https://api.tryunfold.ai/public/feature-requests" },

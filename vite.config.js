@@ -6,6 +6,8 @@ import { extname, resolve } from "node:path";
 import { staticRoutes } from "./src/data/metadata.js";
 import feedHandler from "./api/feed.js";
 import sitemapHandler from "./api/sitemap.js";
+import articleHandler from "./api/blog/[slug].js";
+import roleHandler from "./api/careers/[slug].js";
 
 const deployment = JSON.parse(readFileSync(new URL("./vercel.json", import.meta.url), "utf8"));
 const responseHeaders = Object.fromEntries(deployment.headers[0].headers.map(({key, value}) => [key, value]));
@@ -57,6 +59,11 @@ export default defineConfig(({ isPreview }) => ({
             return;
           }
           if (!["GET", "HEAD"].includes(request.method)) return next();
+          if (url.pathname === "/faq" || url.pathname === "/faq/") {
+            response.writeHead(308, { Location: `/help${url.search}` });
+            response.end();
+            return;
+          }
           if (url.pathname === "/feed-live.xml" || url.pathname === "/sitemap-live.xml") {
             await (url.pathname === "/feed-live.xml" ? feedHandler : sitemapHandler)(request, response);
             return;
@@ -77,15 +84,13 @@ export default defineConfig(({ isPreview }) => ({
             return;
           }
           if (url.pathname.startsWith("/blog/") && !staticRoutes.includes(url.pathname) && !extname(url.pathname)) {
-            const html = await readFile(resolve(server.config.root, server.config.build.outDir, "blog/_published.html"));
-            response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
-            response.end(request.method === "HEAD" ? undefined : html);
+            request.query = { slug: url.pathname.slice(6) };
+            await articleHandler(request, response);
             return;
           }
           if (url.pathname.startsWith("/careers/") && !extname(url.pathname)) {
-            const html = await readFile(resolve(server.config.root, server.config.build.outDir, "careers/_published.html"));
-            response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
-            response.end(request.method === "HEAD" ? undefined : html);
+            request.query = { slug: url.pathname.slice(9) };
+            await roleHandler(request, response);
             return;
           }
           if (!staticRoutes.includes(url.pathname) && !extname(url.pathname)) {

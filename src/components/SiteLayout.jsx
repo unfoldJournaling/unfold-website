@@ -128,7 +128,6 @@ function Footer() {
             <h2>Support</h2>
             <Link to="/help">Help & FAQs</Link>
             <Link to="/knowledge-base">Knowledge base</Link>
-            <Link to="/faq">FAQs</Link>
             <a href={`mailto:${CONTACT_EMAIL}`}>Contact us</a>
             <Link to="/feature-request">Request a feature</Link>
             <Link to="/report-bug">Report a bug</Link>

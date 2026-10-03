@@ -17,7 +17,7 @@ export default function useFeatureBoard() {
         if (active && request === requestNumber) setState((current) => ({ ...current, loading: false, error: true }));
       }
     }
-    const timer = window.setInterval(() => void refresh(), 5000);
+    const timer = window.setInterval(() => void refresh(), 60000);
     const onVisible = () => { if (document.visibilityState === "visible") void refresh(); };
     void refresh();
     window.addEventListener("focus", onVisible);

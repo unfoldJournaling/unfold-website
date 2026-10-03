@@ -32,12 +32,12 @@ const chapters = [
   {
     id: "reflect",
     label: "03 / Return with perspective",
-    title: "Find words for familiar patterns.",
-    text: "Stress style reflections offer a way to notice how you respond to pressure. Take what resonates and leave what does not.",
+    title: "Your mood has a story behind it.",
+    text: "Name how you feel and return to your mood history. Bring your reflections into the picture to notice the moments you want to understand a little better.",
     detail:
-      "A stress style is a starting point for curiosity, not a fixed identity or clinical assessment. Your experience matters more than a label.",
+      "A mood check-in is a moment of observation, not a grade. Look back with curiosity, leaving room for the context that a single label cannot capture.",
     image: 2,
-    alt: "Unfold iPhone preview of a stress style reflection",
+    alt: "Unfold App Store artwork showing mood history and a journal observation",
     to: "/blog/a-weekly-reflection-ritual",
     link: "Try a weekly reflection",
   },
@@ -72,7 +72,7 @@ export default function Features() {
       <nav className="container chapter-nav" aria-label="On this page">
         <a href="#journal">Journal your way</a>
         <a href="#patterns">Health context</a>
-        <a href="#reflect">Stress style</a>
+        <a href="#reflect">Mood history</a>
         <a href="#wellness">Wellness context</a>
         <a href="#pause">Take a pause</a>
       </nav>
@@ -95,7 +95,7 @@ export default function Features() {
               </Link>
             </div>
             <figure className="chapter-screen">
-              <ProductScreenshot image={item.image} alt={item.alt} presentation="device" />
+              <ProductScreenshot image={item.image} alt={item.alt} />
               <figcaption>{item.previewNote || "iPhone app preview. Screens and features may vary by version and platform."}</figcaption>
             </figure>
           </section>

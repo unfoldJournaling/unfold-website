@@ -75,22 +75,22 @@ h1,
 h2,
 h3 {
   line-height: 1.12;
-  letter-spacing: -0.045em;
+  letter-spacing: -0.025em;
   overflow-wrap: anywhere;
 }
 h1 {
   font-size: clamp(2.9rem, 5.3vw, 4.8rem);
-  font-weight: 800;
+  font-weight: 700;
 }
 h2 {
   font-size: clamp(2rem, 3.35vw, 3.05rem);
-  font-weight: 800;
+  font-weight: 700;
 }
 h3 {
   font-size: 1.6rem;
-  font-weight: 800;
+  font-weight: 700;
   line-height: 1.28;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.018em;
 }
 p {
   color: var(--muted);
@@ -119,8 +119,8 @@ main:focus {
 }
 .eyebrow {
   font-size: 0.74rem;
-  font-weight: 800;
-  letter-spacing: 0.13em;
+  font-weight: 700;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--primary);
   margin-bottom: 24px;
@@ -129,9 +129,9 @@ main:focus {
   display: inline-flex;
   gap: 12px;
   align-items: center;
-  min-height: 44px;
+  min-height: 48px;
   font-size: 0.92rem;
-  font-weight: 800;
+  font-weight: 700;
   color: var(--primary);
   background: none;
   padding: 0;
@@ -159,18 +159,24 @@ main:focus {
   background: var(--primary);
   color: var(--white);
   font-size: 0.95rem;
-  font-weight: 800;
+  font-weight: 700;
   line-height: 1.3;
   transition:
     background 0.18s,
     transform 0.18s;
 }
-.button:hover {
+.button:hover:not(:disabled) {
   background: var(--primary-hover);
   transform: translateY(-2px);
 }
+.button:active:not(:disabled) {
+  transform: translateY(0);
+}
+.button:disabled {
+  cursor: wait;
+}
 .button-small {
-  min-height: 45px;
+  min-height: 48px;
   padding: 12px 20px;
   gap: 18px;
   font-size: 0.85rem;
@@ -180,7 +186,7 @@ main:focus {
   background: var(--white);
   color: var(--primary);
 }
-.button-light:hover {
+.button-light:hover:not(:disabled) {
   background: var(--lavender);
 }
 .download-cta :focus-visible {
@@ -190,8 +196,8 @@ main:focus {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 46px;
-  height: 46px;
+  width: 48px;
+  height: 48px;
   border-radius: 12px;
   background: var(--tint);
 }
@@ -253,12 +259,12 @@ main:focus {
   font-size: 0.88rem;
   font-weight: 700;
   color: #514d61;
-  min-height: 44px;
+  min-height: 48px;
   display: flex;
   align-items: center;
 }
-.main-nav > a:hover,
-.main-nav > a[aria-current="page"] {
+.main-nav > a:not(.button):hover,
+.main-nav > a:not(.button)[aria-current="page"] {
   color: var(--primary);
 }
 .menu-toggle {
@@ -276,9 +282,9 @@ main:focus {
   padding-block: 20px;
 }
 .hero h1 {
-  font-size: clamp(3.4rem, 6vw, 5.35rem);
-  line-height: 1.02;
-  letter-spacing: -0.055em;
+  font-size: clamp(3.2rem, 5.6vw, 4.75rem);
+  line-height: 1.08;
+  letter-spacing: -0.032em;
 }
 .hero h1 span {
   color: var(--primary);
@@ -296,8 +302,11 @@ main:focus {
   gap: 26px;
   margin-top: 30px;
 }
+.content-recovery-actions .text-link {
+  min-height: 48px;
+}
 .hero-footnote {
-  font-size: 0.8rem;
+  font-size: 0.875rem;
   line-height: 1.75;
   margin-top: 28px;
 }
@@ -317,11 +326,8 @@ main:focus {
   border-radius: 160px 18px 18px 18px;
 }
 .hero-caption {
-  position: absolute;
-  bottom: -30px;
-  right: 0;
   color: var(--muted);
-  font-size: 0.73rem;
+  font-size: 0.875rem;
   letter-spacing: 0.02em;
 }
 .benefit-strip {
@@ -358,14 +364,23 @@ main:focus {
 }
 .product-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-rows: repeat(4, max-content) minmax(0, 1fr);
+  column-gap: 80px;
   align-items: start;
 }
-.feature-list {
-  padding-top: 14px;
+.feature-list,
+.feature-item,
+.feature-panel {
+  display: contents;
 }
+.feature-panel[hidden] { display: none; }
+.feature-item:nth-child(1) .feature-option { grid-row: 1; }
+.feature-item:nth-child(2) .feature-option { grid-row: 2; }
+.feature-item:nth-child(3) .feature-option { grid-row: 3; }
+.feature-item:nth-child(4) .feature-option { grid-row: 4; }
 .feature-option {
+  grid-column: 1;
   display: flex;
   align-items: center;
   gap: 18px;
@@ -375,7 +390,7 @@ main:focus {
   padding: 20px;
   border-bottom: 2px solid var(--line);
   font-size: 1.04rem;
-  font-weight: 800;
+  font-weight: 700;
   border-radius: 0;
   color: var(--muted);
   transition:
@@ -408,6 +423,8 @@ main:focus {
   to { opacity: 1; transform: translateY(0); }
 }
 .feature-copy {
+  grid-column: 1;
+  grid-row: 5;
   padding: 32px 20px 0;
 }
 .feature-copy h3 {
@@ -419,6 +436,9 @@ main:focus {
   font-size: 1rem;
 }
 .product-preview {
+  grid-column: 2;
+  grid-row: 1 / span 5;
+  margin: 0;
   position: relative;
   background: var(--tint);
   border: 1px solid var(--line);
@@ -429,7 +449,7 @@ main:focus {
   padding: 32px 24px 24px;
   overflow: hidden;
 }
-.product-preview .app-screen-window--device {
+.product-preview .app-screen-window {
   width: min(100%, 308px);
 }
 .product-preview > img {
@@ -448,9 +468,11 @@ main:focus {
   margin-top: 20px;
   font-size: 0.9rem;
   color: var(--primary);
-  font-weight: 800;
+  font-weight: 700;
+  justify-content: center;
 }
 .preview-source {
+  display: block;
   font-size: 0.79rem;
   line-height: 1.5;
   max-width: 330px;
@@ -472,7 +494,7 @@ main:focus {
 .step-number {
   display: block;
   font-size: 0.85rem;
-  font-weight: 800;
+  font-weight: 600;
   color: var(--primary);
   border-top: 1px solid #ccc6ed;
   padding-top: 20px;
@@ -506,7 +528,7 @@ main:focus {
   align-items: center;
   gap: 10px;
   font-size: 0.72rem;
-  font-weight: 800;
+  font-weight: 600;
   color: var(--primary);
 }
 .prompt-card-top > span:last-child {
@@ -659,7 +681,7 @@ main:focus {
   padding: 24px 0;
   cursor: pointer;
   font-size: 0.95rem;
-  font-weight: 800;
+  font-weight: 700;
   line-height: 1.5;
 }
 .faq-list summary::-webkit-details-marker {
@@ -734,13 +756,13 @@ main:focus {
 .footer-grid h2 {
   font-size: 0.83rem;
   letter-spacing: 0;
-  font-weight: 800;
+  font-weight: 700;
   margin: 12px 0 18px;
 }
 .footer-grid > div > a:not(.brand) {
   display: flex;
   align-items: center;
-  min-height: 38px;
+  min-height: 48px;
   font-size: 0.82rem;
   color: var(--muted);
 }
@@ -838,7 +860,7 @@ main:focus {
   border-bottom: 2px solid transparent;
   border-radius: 0;
   padding: 10px 18px;
-  min-height: 44px;
+  min-height: 48px;
   font-size: 0.82rem;
   font-weight: 700;
 }
@@ -1094,7 +1116,42 @@ main:focus {
   letter-spacing: 0.03em;
 }
 .get-app .small-text {
-  font-size: 0.77rem;
+  font-size: 0.875rem;
+}
+.download-handoff {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  max-width: 490px;
+  margin: 32px auto;
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  text-align: left;
+}
+.download-handoff img {
+  width: 128px;
+  height: 128px;
+  flex-shrink: 0;
+  image-rendering: pixelated;
+}
+.download-handoff h2 {
+  font-size: 1.125rem;
+  line-height: 1.4;
+}
+.download-handoff p {
+  margin: 8px 0;
+  font-size: 0.9rem;
+}
+.download-handoff a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  overflow-wrap: anywhere;
+  color: var(--primary);
+  font-size: 0.9rem;
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
 .not-found {
   padding-block: 100px 130px;
@@ -1147,7 +1204,7 @@ main:focus {
     gap: 18px;
   }
   .product-grid {
-    gap: 48px;
+    column-gap: 48px;
   }
   .privacy-inner {
     grid-template-columns: 1fr 1fr;
@@ -1197,6 +1254,9 @@ main:focus {
   .menu-toggle {
     display: flex;
   }
+  .search-field input {
+    font-size: 1rem;
+  }
   .main-nav {
     display: none;
     position: absolute;
@@ -1220,7 +1280,7 @@ main:focus {
   }
   .main-nav > a {
     flex-shrink: 0;
-    min-height: 44px;
+    min-height: 48px;
   }
   .main-nav > a:not(.button) {
     padding-block: 8px;
@@ -1257,7 +1317,7 @@ main:focus {
     font-size: 0.8rem;
   }
   .hero-footnote {
-    font-size: 0.73rem;
+    font-size: 0.875rem;
     margin-top: 20px;
   }
   .benefit-strip > .container {
@@ -1276,7 +1336,7 @@ main:focus {
     font-size: 0.93rem;
   }
   .product-grid {
-    gap: 30px;
+    column-gap: 30px;
   }
   .feature-option {
     padding: 17px 14px;
@@ -1453,7 +1513,7 @@ main:focus {
   }
   .hero h1 {
     font-size: clamp(2rem, 12.8vw, 4.6rem);
-    line-height: 1.04;
+    line-height: 1.08;
   }
   .hero-description {
     font-size: 1.02rem;
@@ -1466,7 +1526,7 @@ main:focus {
     font-size: 0.84rem;
   }
   .hero-footnote {
-    font-size: 0.75rem;
+    font-size: 0.875rem;
   }
   .hero-visual {
     min-height: 330px;
@@ -1477,7 +1537,7 @@ main:focus {
     object-position: center 56%;
   }
   .hero-caption {
-    font-size: 0.65rem;
+    font-size: 0.875rem;
   }
   .benefit-strip > .container {
     flex-direction: column;
@@ -1503,18 +1563,19 @@ main:focus {
     margin-bottom: 16px;
   }
   .product-grid {
-    grid-template-columns: 1fr;
-    gap: 30px;
+    display: block;
   }
-  .feature-list {
-    padding-top: 0;
+  .feature-list,
+  .feature-item,
+  .feature-panel:not([hidden]) {
+    display: block;
   }
   .feature-option {
     padding: 17px 16px;
     font-size: 0.98rem;
   }
   .feature-copy {
-    padding: 26px 5px 0;
+    padding: 24px 0 0;
   }
   .feature-copy h3 {
     font-size: 1.65rem;
@@ -1524,14 +1585,16 @@ main:focus {
     font-size: 0.99rem;
   }
   .product-preview {
+    margin-block: 24px 32px;
     padding: 22px 24px 18px;
   }
   .product-preview > img {
     width: 220px;
   }
   .preview-source {
-    font-size: 0.62rem;
+    font-size: 0.875rem;
   }
+  .download-handoff { display: none; }
   .routine-steps {
     grid-template-columns: 1fr;
     gap: 30px;
@@ -1681,7 +1744,7 @@ main:focus {
     font-size: 0.82rem;
   }
   .footer-grid > div > a:not(.brand) {
-    min-height: 44px;
+    min-height: 48px;
     font-size: 0.82rem;
   }
   .footer-bottom {
@@ -1849,7 +1912,7 @@ main:focus {
     transition: none !important;
     scroll-behavior: auto !important;
   }
-  .button:hover,
+  .button:hover:not(:disabled),
   .text-link:hover svg,
   .article-card-link:hover img,
   .featured-image:hover img {
@@ -1979,7 +2042,7 @@ main:focus {
   line-height: 1.5;
   margin-top: 20px;
 }
-.chapter-screen .app-screen-window--device {
+.chapter-screen .app-screen-window {
   width: min(100%, 260px);
 }
 .feature-chapter:nth-child(2) .chapter-screen {
@@ -2254,6 +2317,72 @@ main:focus {
   background: #f3f1fc;
   border-radius: 4px;
 }
+.plan-comparison {
+  padding-top: 0;
+}
+.plan-comparison h2 {
+  font-size: clamp(2rem, 3.1vw, 3rem);
+}
+.plan-comparison-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 32px;
+  margin-top: 40px;
+}
+.plan-comparison-grid article {
+  display: flex;
+  flex-direction: column;
+  padding-top: 24px;
+  border-top: 2px solid var(--line);
+}
+.plan-label {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+.plan-comparison-grid h3 {
+  font-size: 2rem;
+  margin-block: 12px;
+}
+.plan-description {
+  color: var(--muted);
+  line-height: 1.75;
+  max-width: 30ch;
+}
+.plan-comparison-grid ul {
+  padding-left: 20px;
+  margin-block: 24px;
+  line-height: 1.75;
+}
+.plan-comparison-grid li {
+  margin-bottom: 12px;
+  padding-left: 4px;
+}
+.plan-comparison-grid li::marker {
+  color: var(--primary);
+}
+.plan-billing {
+  margin-top: auto;
+  font-weight: 700;
+  line-height: 1.65;
+}
+.plan-availability {
+  max-width: 78ch;
+  margin-top: 32px;
+  color: var(--muted);
+  font-size: 0.875rem;
+  line-height: 1.75;
+}
+@media (max-width: 760px) {
+  .plan-comparison-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+    margin-top: 28px;
+  }
+  .plan-description {
+    max-width: none;
+  }
+}
 .plan-overview h2 {
   font-size: clamp(2rem, 3.1vw, 3rem);
   letter-spacing: -0.035em;
@@ -2510,7 +2639,7 @@ main:focus {
   }
 }
 
-/* Crop the verified App Store artwork to its iPhone for product previews. */
+/* Preserve the complete store composition, including cards outside the phone. */
 .app-screen-window {
   position: relative;
   width: min(100%, 290px);
@@ -2519,7 +2648,7 @@ main:focus {
   background: #fff;
 }
 .app-screen-window--poster {
-  aspect-ratio: 600 / 1298;
+  aspect-ratio: 600 / 1300;
   border: 1px solid var(--line);
   border-radius: 10px;
   box-shadow: 0 18px 36px -30px rgba(32, 25, 77, 0.45);
@@ -2531,45 +2660,32 @@ main:focus {
   width: 100%;
   max-width: none;
   height: 100%;
-  object-fit: cover;
-  border-radius: 0;
-  margin: 0;
-}
-.app-screen-window--device {
-  aspect-ratio: 346 / 720;
-  border-radius: 42px;
-}
-.app-screen-window--device img,
-.chapter-screen .app-screen-window--device img {
-  position: absolute;
-  width: 128.04%;
-  max-width: none;
-  height: auto;
-  left: -13.87%;
-  top: -24.17%;
+  object-fit: contain;
   border-radius: 0;
   margin: 0;
 }
 .hero-visual.hero-product {
   display: flex;
+  flex-direction: column;
+  gap: 20px;
   align-items: center;
   justify-content: center;
   min-height: 0;
-  padding: 40px 28px 48px;
+  padding: 32px 28px;
   background: #f2f0fa;
   border: 1px solid var(--line);
   border-radius: 28px;
   margin: 0;
 }
-.hero-product .app-screen-window--device { width: min(100%, 264px); }
-.hero-product .hero-caption { bottom: 12px; right: 0; width: 100%; text-align: center; }
+.hero-product .app-screen-window { width: min(100%, 264px); flex-shrink: 0; }
+.hero-product .hero-caption { max-width: 340px; text-align: center; line-height: 1.5; }
 .privacy-toc { margin: 28px 0; padding: 24px; background: #f3f1fc; border-radius: 8px; }
 .privacy-toc ol { columns: 2; column-gap: 36px; padding-left: 22px; }
 .privacy-toc li { break-inside: avoid; margin-bottom: 10px; }
 [id^="privacy-section-"] { scroll-margin-top: 100px; }
 @media (max-width: 600px) {
-  .hero-visual.hero-product { padding: 26px 16px 44px; border-radius: 22px; }
-  .hero-product .app-screen-window--device { width: min(100%, 220px); border-radius: 34px; }
+  .hero-visual.hero-product { padding: 24px 16px; border-radius: 22px; }
+  .hero-product .app-screen-window { width: min(100%, 240px); }
   .privacy-toc ol { columns: 1; }
 }
 

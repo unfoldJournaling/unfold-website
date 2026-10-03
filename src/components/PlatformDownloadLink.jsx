@@ -11,8 +11,7 @@ function StoreMark({ platform }) {
 export default function PlatformDownloadLink({ light = false }) {
   const [platform, setPlatform] = useState("desktop");
   useEffect(() => {
-    const detected = detectPlatform();
-    setPlatform(detected === "desktop" && /Macintosh|Mac OS X/.test(navigator.userAgent) ? "ios" : detected);
+    setPlatform(detectPlatform());
   }, []);
   const className = `button${light ? " button-light" : ""}`;
   if (platform === "desktop") return <Link className={className} to="/get-app">Get Unfold <Icon size={20} /></Link>;
