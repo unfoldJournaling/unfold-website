@@ -1,0 +1,128 @@
+{
+  "captured": "2026-10-05",
+  "sourcePackage": "Unfold CEO Screenshot Review - 2026-10-05",
+  "status": "Native app captures supplied for review; fictional offline sample data. Store campaign artwork remains a draft. These captures do not establish release availability.",
+  "processing": "Original PNGs copied intact; no pixel edits, crops, device replacement or retouching.",
+  "assets": [
+    {
+      "file": "ios-dashboard.png",
+      "source": "02 Actual App Screens/iOS/01-dashboard.png",
+      "bytes": 334977,
+      "sha256": "4f8d87ce5e9ea8e5778f0c13a64a717a57b16c9fe9a7ff12a43b20a6484c720d",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "ios-health.png",
+      "source": "02 Actual App Screens/iOS/02-health.png",
+      "bytes": 276076,
+      "sha256": "b0ab0f6ce8fc6b6ca622fe4db0060e141a306b69e70ee4f01b71538ad4376657",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "ios-journal.png",
+      "source": "02 Actual App Screens/iOS/03-guided-journaling.png",
+      "bytes": 218772,
+      "sha256": "c26f02899c4fc0b0fc03cd4cd35ad0c5a0a5971d9f460d52c2910346987f026e",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "ios-history.png",
+      "source": "02 Actual App Screens/iOS/04-journal-history.png",
+      "bytes": 308848,
+      "sha256": "8c5915084a4d8a48c0e881abc01d1371b13ad47163ccde39662daee4306c209b",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "ios-family.png",
+      "source": "02 Actual App Screens/iOS/05-family.png",
+      "bytes": 248145,
+      "sha256": "774e6e756f6940c986af3f8d476ebee64252dd014b630fef5da7a82e0657d9b8",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "ios-breathing.png",
+      "source": "02 Actual App Screens/iOS/10-breathing-patterns.png",
+      "bytes": 267120,
+      "sha256": "35d30c10d8e8b22bb7bac334165dbbb3dadadbc586dd749c33c7498310b19c90",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "ios-voice.png",
+      "source": "02 Actual App Screens/iOS/14-voice-journaling.png",
+      "bytes": 410456,
+      "sha256": "fb07f915a5e2bedf575e99bb16b70709b8822b0281fdc094649480f6462ee16f",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "android-dashboard.png",
+      "source": "02 Actual App Screens/Android/01-dashboard.png",
+      "bytes": 235189,
+      "sha256": "fe8c6a0e45589f4dc5ab59fdd92683e857c8bbe9247f997831e88dc38ae22636",
+      "width": 1080,
+      "height": 2340
+    },
+    {
+      "file": "android-health.png",
+      "source": "02 Actual App Screens/Android/02-health.png",
+      "bytes": 183695,
+      "sha256": "38e2dd9d3233af6dc270527cca9a8a179c1ee7ad5a8ad537e63d5cb61f5e1678",
+      "width": 1080,
+      "height": 2340
+    },
+    {
+      "file": "android-journal.png",
+      "source": "02 Actual App Screens/Android/03-guided-journaling.png",
+      "bytes": 150495,
+      "sha256": "c0da00fc570ed3ee54da05121f403685a740f3839e14fa0e1ccc23a6a6d0d13d",
+      "width": 1080,
+      "height": 2340
+    },
+    {
+      "file": "android-history.png",
+      "source": "02 Actual App Screens/Android/04-journal-history.png",
+      "bytes": 212596,
+      "sha256": "a049bb78b5db008557a1819c72df58f0c29d261b78d67a9389fcde343efd54e6",
+      "width": 1080,
+      "height": 2340
+    },
+    {
+      "file": "android-family.png",
+      "source": "02 Actual App Screens/Android/05-family.png",
+      "bytes": 166243,
+      "sha256": "cd69adb01bd8e1caf4ac49efae53354f4992a6382b2d432f652def42af2cb1d9",
+      "width": 1080,
+      "height": 2340
+    },
+    {
+      "file": "android-breathing.png",
+      "source": "02 Actual App Screens/Android/10-breathing-patterns.png",
+      "bytes": 193792,
+      "sha256": "54683418ee0881d096c6926e00376ba21a33f65aad754097271f4a70b14efd31",
+      "width": 1080,
+      "height": 2340
+    },
+    {
+      "file": "android-voice.png",
+      "source": "02 Actual App Screens/Android/14-voice-journaling.png",
+      "bytes": 130367,
+      "sha256": "8b99a45bc0c08404327313cd5938b5d736df7bbe111be00d2dc7a384f96567b2",
+      "width": 1080,
+      "height": 2340
+    },
+    {
+      "file": "watch-breathing.png",
+      "source": "02 Actual App Screens/Apple Watch/02-breathing.png",
+      "bytes": 24946,
+      "sha256": "d888947ea1616192efddda2abb2f2bfa0aa1838c1ed58d2d49dd5495115536f9",
+      "width": 416,
+      "height": 496
+    }
+  ]
+}

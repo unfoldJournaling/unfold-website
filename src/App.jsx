@@ -1,4 +1,6 @@
-import ProductScreenshot from "./components/ProductScreenshot.jsx";
+import ProductScreenshot, { ProductPreviewCaption } from "./components/ProductScreenshot.jsx";
+import { useProductPlatform } from "./components/ProductPlatformPicker.jsx";
+import HeroProductStory from "./components/HeroProductStory.jsx";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import Icon from "./components/Icon.jsx";
@@ -10,41 +12,37 @@ import PlatformDownloadLink from "./components/PlatformDownloadLink.jsx";
 
 const features = [
   {
-    label: "Journal your way",
-    title: "A place for the whole of your day.",
+    label: "Journal with Luma",
+    title: "Start with a thought. See where it takes you.",
     description:
-      "The big feelings. The tiny wins. The thought you haven’t found the words for yet. Write it down or talk it through, with a prompt when you need a place to start.",
-    image: 3,
-    alt: "Unfold iPhone preview of an AI-guided journal conversation",
-    note: "Written & voice journaling",
+      "Write about what’s on your mind. When you want a little guidance, Luma can offer a question or a follow-up to help you explore it. You decide what feels useful.",
+    screen: "journal",
+    note: "Guided journaling with Luma",
+  },
+  {
+    label: "Talk it through",
+    title: "Some thoughts are easier to say.",
+    description: "Give your thoughts a voice. Speak with Luma when you’d rather talk than type, with microphone and session controls in your hands.",
+    screen: "voice",
+    note: "Voice journaling",
+    previewNote: "Voice access depends on your plan and app version.",
   },
   {
     label: "Add health context",
     title: "Your day has more than one signal.",
     description:
       "Check in with your mood, with or without a wearable. If you opt in, Apple Health on iPhone or Health Connect on supported Android devices can add sleep and activity context.",
-    image: 4,
-    alt: "Unfold iPhone preview showing optional Apple Health context",
+    screen: "health",
     note: "Optional health connections",
-    previewNote: "iPhone preview shows Apple Health. Android connects through Health Connect on supported devices.",
+    previewNote: "Apple Health on iPhone. Health Connect on supported Android devices. Connections are optional.",
   },
   {
-    label: "Check in with your mood",
-    title: "See your feelings in context.",
+    label: "Return to your journal",
+    title: "Your words, with a little more perspective.",
     description:
-      "Name how you feel, then return to your mood history alongside your reflections. Look for the moments and patterns you want to understand a little better.",
-    image: 2,
-    alt: "Unfold App Store artwork showing mood history and a journal observation",
-    note: "Mood check-ins & history",
-  },
-  {
-    label: "See your day in context",
-    title: "Notice a trend. Make room for nuance.",
-    description:
-      "When supported data is available, explore general wellness estimates and stress trends. They are one perspective on your day, not a diagnosis or prediction.",
-    image: 5,
-    alt: "Unfold iPhone preview of an illustrative stress trend",
-    note: "Stress & wellness trends",
+      "Find an entry by its mood, topic or tags. Revisit a written reflection or a voice journal, and notice the moments you want to carry forward.",
+    screen: "history",
+    note: "Searchable journal history",
   },
 ];
 const faqs = [
@@ -90,6 +88,10 @@ const faqs = [
     a: "No. Unfold is a general wellness tool. Its insights describe possible patterns and associations, not proven causes or predictions. It does not diagnose or treat conditions and is not a substitute for a doctor, therapist, or emergency service.",
   },
   {
+    q: "Does Family let other people read my journal?",
+    a: "No. Family keeps each person’s journal separate. Joining does not switch wellness sharing on. You choose which wellness summaries to share with each person and can pause sharing. Journals, conversations, Cycle data and location are never included in Family sharing. Check the app for current Family availability.",
+  },
+  {
     q: "Can I delete my account?",
     a: (
       <>
@@ -101,7 +103,7 @@ const faqs = [
   },
 ];
 
-function ProductFeatures() {
+function ProductFeatures({ platform }) {
   const [selected, setSelected] = useState(0);
   const controls = useRef([]);
   const selectionChanged = useRef(false);
@@ -164,12 +166,10 @@ function ProductFeatures() {
                     </Link>
                   </div>
                   <figure className="product-preview">
-                    <ProductScreenshot image={item.image} alt={item.alt} />
+                    <ProductScreenshot screen={item.screen} platform={platform} />
                     <figcaption>
                       <span className="preview-caption">{item.note}</span>
-                      <span className="preview-source">
-                        {item.previewNote || "iPhone App Store preview. Screens may vary by version and platform."}
-                      </span>
+                      <ProductPreviewCaption platform={platform}>{item.previewNote}</ProductPreviewCaption>
                     </figcaption>
                   </figure>
                 </div>
@@ -230,9 +230,10 @@ function PromptMoment() {
 }
 
 export default function Home() {
+  const [platform, setPlatform] = useProductPlatform();
   return (
     <>
-      <section className="hero container" aria-labelledby="hero-title">
+      <section className="hero container hero--story" aria-labelledby="hero-title">
         <div className="hero-copy">
           <p className="eyebrow">Reflection for your whole day</p>
           <h1 id="hero-title">
@@ -241,9 +242,9 @@ export default function Home() {
             for <span>yourself.</span>
           </h1>
           <p className="hero-description">
-            A journal that brings your words and moods together. Write or speak
-            your thoughts, check in with how you feel, and look back with a
-            little more perspective.
+            Write it down. Talk it through with Luma. Make time for a breathing
+            pause, and bring a little more context to the way you feel.
+            A journal and wellness companion, at your pace.
           </p>
           <div className="hero-actions">
             <PlatformDownloadLink />
@@ -257,10 +258,7 @@ export default function Home() {
             On iOS and Android. At your own pace.
           </p>
         </div>
-        <figure className="hero-visual hero-product">
-          <ProductScreenshot image={1} eager alt="Unfold App Store artwork showing its dashboard, reflection options, and mood check-in" />
-          <figcaption className="hero-caption">Unfold iOS App Store preview · screens may vary</figcaption>
-        </figure>
+        <HeroProductStory platform={platform} onPlatformChange={setPlatform} />
       </section>
       <div className="benefit-strip">
         <div className="container">
@@ -269,7 +267,7 @@ export default function Home() {
           <span>You choose what to share.</span>
         </div>
       </div>
-      <ProductFeatures />
+      <ProductFeatures platform={platform} />
       <section
         className="section routine-section"
         id="how-it-works"
@@ -317,29 +315,48 @@ export default function Home() {
           </ol>
         </div>
       </section>
+      <section className="section home-breathing" aria-labelledby="breathing-title">
+        <div className="container product-story">
+          <div className="chapter-copy">
+            <p className="eyebrow">A pause, just for you</p>
+            <h2 id="breathing-title">A little space between one thing and the next.</h2>
+            <p>Choose a breathing pattern and follow a visual or audio guide. A few moments to pause, whether you’re starting your day or stepping away from a full one.</p>
+            <Link className="text-link" to="/features#pause">Explore guided breathing <Icon size={19} /></Link>
+          </div>
+          <figure className="chapter-screen">
+            <ProductScreenshot screen="breathing" platform={platform} />
+            <figcaption><ProductPreviewCaption platform={platform} /></figcaption>
+          </figure>
+        </div>
+      </section>
       <PromptMoment />
       <section
         className="section privacy-section"
         aria-labelledby="privacy-title"
       >
-        <div className="container privacy-inner">
+        <div className="container product-story">
           <div>
-            <p className="eyebrow">Personal means personal</p>
+            <p className="eyebrow">Your people. Your choice.</p>
             <h2 id="privacy-title">Your story belongs to you.</h2>
             <p>
-              Your journal and health information are not sold or used for
-              advertising. Optional AI features ask for your permission, and you
-              can change your mind.
+              Family brings your people together, with a separate account for
+              each person. Your journal stays private. Choose which wellness
+              summaries to share, with whom, and when to pause.
             </p>
-            <Link className="text-link" to="/privacy">
-              Read our privacy commitments <Icon size={19} />
-            </Link>
+            <ul className="privacy-points family-privacy-points">
+              <li>Joining does not turn sharing on</li>
+              <li>Journals and conversations stay out of Family sharing</li>
+              <li>Paying for the plan does not grant access to others’ data</li>
+            </ul>
+            <div className="editorial-links">
+              <Link className="text-link" to="/features#family">Meet Unfold Family <Icon size={19} /></Link>
+              <Link className="text-link" to="/privacy">Read our privacy commitments <Icon size={19} /></Link>
+            </div>
           </div>
-          <ul className="privacy-points">
-            <li>Your permission for optional AI features</li>
-            <li>Choices you can change</li>
-            <li>A clear account deletion process</li>
-          </ul>
+          <figure className="chapter-screen">
+            <ProductScreenshot screen="family" platform={platform} />
+            <figcaption><ProductPreviewCaption platform={platform}>Family availability and plans are shown in the app.</ProductPreviewCaption></figcaption>
+          </figure>
         </div>
       </section>
       <section

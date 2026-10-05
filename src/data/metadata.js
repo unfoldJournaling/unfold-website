@@ -23,7 +23,7 @@ export const staticRoutes = [
 const pageData = {
   "/features": [
     "Explore Unfold — Journaling, Mood & Wellness Features",
-    "Explore written and voice journaling, mood check-ins, stress-style reflections, and optional wellness context in Unfold.",
+    "Explore journaling with Luma, voice journals, guided breathing, searchable history, optional health context, Family and the Apple Watch companion.",
   ],
   "/prompts": [
     "Interactive Journal Prompts — Find a place to begin | Unfold",
@@ -31,9 +31,9 @@ const pageData = {
   ],
   "/help": [
     "Unfold Help — Answers & support",
-    "Find answers about getting started with Unfold, journaling, privacy, subscriptions, and account deletion. Contact the team for help.",
+    "Find answers about Unfold journaling, breathing, Apple Watch, Family sharing, privacy, subscriptions and account deletion. Contact the team for help.",
   ],
-  "/knowledge-base": ["Unfold Knowledge Base — Guides & answers", "Browse Unfold help topics for getting started, journaling, privacy, and subscriptions."],
+  "/knowledge-base": ["Unfold Knowledge Base — Guides & answers", "Browse Unfold help topics for journaling, breathing, Apple Watch, Family sharing, privacy and subscriptions."],
   "/feature-request": ["Request a Feature — Help shape Unfold", "Suggest an improvement to Unfold and explore product requests shared on the public board."],
   "/roadmap": ["Unfold Roadmap — What’s planned and released", "Explore ideas planned, in progress, and released for Unfold."],
   "/report-bug": ["Report a Bug — Unfold Support", "Tell the Unfold team about a product issue and get help by email."],
@@ -55,7 +55,7 @@ const pageData = {
   ],
   "/": [
     "Unfold — Journaling, Mood & Wellness App",
-    "Make room for yourself with Unfold. Explore journaling, mood check-ins, stress reflections, and optional wellness context on iOS and Android.",
+    "Make room for yourself with Unfold. Journal with Luma, talk it through, take a breathing pause and explore optional wellness context on iOS and Android.",
   ],
   "/blog": [
     "The Unfold Journal — Ideas for everyday reflection",

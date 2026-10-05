@@ -8,7 +8,7 @@ export default function KnowledgeBase() {
     <section className="feedback-intro container">
       <p className="eyebrow">Knowledge base</p>
       <h1>Find your way around Unfold.</h1>
-      <p>Clear guides for getting started, journaling, privacy, and subscriptions. For a searchable list of answers, visit the <Link to="/faq">FAQs</Link>.</p>
+      <p>Clear guides for journaling, breathing, Family, privacy, and subscriptions. For a searchable list of answers, visit the <Link to="/faq">FAQs</Link>.</p>
     </section>
     <section className="knowledge-grid container" aria-label="Help topics">
       {categories.map((category, index) => <article className="knowledge-card" key={category}>

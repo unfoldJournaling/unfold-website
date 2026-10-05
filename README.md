@@ -117,14 +117,18 @@ valid domain registration, DNS and TLS on the hosting project.
 ## Visuals and content sources
 
 Nunito is self-hosted; its SIL Open Font License is in `public/fonts/OFL.txt`.
-Product gallery images come from the public
-[Unfold App Store listing](https://apps.apple.com/us/app/unfold-journal-mood-tracker/id6743553743).
-The current gallery was checked against the public listing on 2 October 2026
-(version 2.1.4). Exact source URLs are recorded in
-`public/images/app-store-sources.json`. Preserve each complete composition:
-some cards extend beyond the depicted phone. These are store previews, not
-independently captured live app screens. The hero shows the product overview;
-the feature gallery shows journaling, mood history, health connections and trends.
+Product previews use intact native captures from Samuel’s 5 October 2026
+CEO screenshot review package. They contain fictional offline sample data,
+labelled on the site, and do not establish availability in a released build.
+The iPhone and Android galleries show their own native status bars and health
+connections; the visitor can switch platforms. The Apple Watch companion is
+identified separately as requiring Apple devices.
+Checksums, original dimensions and source filenames are in
+`public/images/product-20261005/sources.json`; selection and claim boundaries
+are in `docs/store-asset-inventory.md`. Only the hero image loads eagerly.
+The new store campaign artwork is still a draft awaiting approval and is not
+used as a substitute for the app captures. Older listing assets and their source
+manifest remain available for provenance but are no longer rendered in the gallery.
 The desktop download QR is a local static asset for
 `https://tryunfold.ai/get-app`; its encoded value was decoded and verified using
 Apple Vision. It needs no tracking service or runtime dependency.
@@ -132,8 +136,8 @@ The notebook, window, and water images are original editorial artwork in
 `public/images/quiet-moment.webp`, `morning-light.webp`, and
 `water-reflection.webp`. They illustrate the journal and are not app screenshots.
 The website uses the existing Unfold marks. Product descriptions follow the
-public app listing and the existing privacy notice; storefronts present current
-localized subscription pricing.
+supplied captures, current app code and existing privacy notice; storefronts
+present current localized subscription pricing.
 
 ## Manual browser checks
 
@@ -147,4 +151,4 @@ errors and that pages do not overflow horizontally.
 
 ## Release verification
 
-After an authorized deployment, verify `/robots.txt` is plain text, `/sitemap.xml` is XML, all article URLs return their own HTML, and an unknown URL returns HTTP 404. Verify the configured security headers on the actual host. Submit the sitemap through the authorized Search Console account, and measure field performance after sufficient traffic. Analytics and consent changes require a defined privacy and measurement plan; this site adds no third-party tracking. Confirm store screenshots and subscription entitlements with the product team before replacing listing-derived previews or adding a plan comparison.
+After an authorized deployment, verify `/robots.txt` is plain text, `/sitemap.xml` is XML, all article URLs return their own HTML, and an unknown URL returns HTTP 404. Verify the configured security headers on the actual host. Submit the sitemap through the authorized Search Console account, and measure field performance after sufficient traffic. Analytics and consent changes require a defined privacy and measurement plan; this site adds no third-party tracking. Confirm app release availability and subscription entitlements with the product team before publishing supplied app previews or plan claims.

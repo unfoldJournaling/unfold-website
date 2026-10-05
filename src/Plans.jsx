@@ -61,6 +61,7 @@ export default function Plans() {
           Your store shows the current local price and total charge before you pay.
           Family payment never unlocks another person’s journal or wellness data.
         </p>
+        <Link className="text-link" to="/features#family">See how Family sharing works <Icon /></Link>
       </section>
       <section className="container plan-overview" aria-labelledby="plan-title">
         <div>
