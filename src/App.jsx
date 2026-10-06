@@ -1,7 +1,9 @@
-import ProductScreenshot, { ProductPreviewCaption } from "./components/ProductScreenshot.jsx";
 import { useProductPlatform } from "./components/ProductPlatformPicker.jsx";
 import HeroProductStory from "./components/HeroProductStory.jsx";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
+import FeatureProductStory from "./components/FeatureProductStory.jsx";
+import { BreathingChapter, FamilyChapter } from "./components/HomeProductChapters.jsx";
+import usePageMotion from "./hooks/usePageMotion.js";
 import { Link } from "react-router-dom";
 import Icon from "./components/Icon.jsx";
 import ArticleCard from "./components/ArticleCard.jsx";
@@ -10,41 +12,6 @@ import { articles } from "./data/articles.js";
 import { prompts, CONTACT_EMAIL } from "./data/site.js";
 import PlatformDownloadLink from "./components/PlatformDownloadLink.jsx";
 
-const features = [
-  {
-    label: "Journal with Luma",
-    title: "Start with a thought. See where it takes you.",
-    description:
-      "Write about what’s on your mind. When you want a little guidance, Luma can offer a question or a follow-up to help you explore it. You decide what feels useful.",
-    screen: "journal",
-    note: "Guided journaling with Luma",
-  },
-  {
-    label: "Talk it through",
-    title: "Some thoughts are easier to say.",
-    description: "Give your thoughts a voice. Speak with Luma when you’d rather talk than type, with microphone and session controls in your hands.",
-    screen: "voice",
-    note: "Voice journaling",
-    previewNote: "Voice access depends on your plan and app version.",
-  },
-  {
-    label: "Add health context",
-    title: "Your day has more than one signal.",
-    description:
-      "Check in with your mood, with or without a wearable. If you opt in, Apple Health on iPhone or Health Connect on supported Android devices can add sleep and activity context.",
-    screen: "health",
-    note: "Optional health connections",
-    previewNote: "Apple Health on iPhone. Health Connect on supported Android devices. Connections are optional.",
-  },
-  {
-    label: "Return to your journal",
-    title: "Your words, with a little more perspective.",
-    description:
-      "Find an entry by its mood, topic or tags. Revisit a written reflection or a voice journal, and notice the moments you want to carry forward.",
-    screen: "history",
-    note: "Searchable journal history",
-  },
-];
 const faqs = [
   {
     q: "What is Unfold?",
@@ -103,89 +70,11 @@ const faqs = [
   },
 ];
 
-function ProductFeatures({ platform }) {
-  const [selected, setSelected] = useState(0);
-  const controls = useRef([]);
-  const selectionChanged = useRef(false);
-  useEffect(() => {
-    if (selectionChanged.current && window.matchMedia("(max-width: 600px)").matches) {
-      // Collapsing the previous panel can move the newly selected control offscreen.
-      controls.current[selected]?.scrollIntoView({ block: "start", behavior: "instant" });
-    }
-  }, [selected]);
-  return (
-    <section
-      className="section product-section"
-      id="features"
-      aria-labelledby="features-title"
-    >
-      <div className="container">
-        <div className="section-heading">
-          <div>
-            <p className="eyebrow">Inside Unfold</p>
-            <h2 id="features-title">
-              Your thoughts, moods,
-              <br />
-              and patterns, together.
-            </h2>
-          </div>
-          <p>
-            Your words, your feelings, your everyday rhythms.
-            <br className="desktop-break" /> A little more connected.
-          </p>
-        </div>
-        <div className="product-grid">
-          <div
-            className="feature-list"
-            role="group"
-            aria-label="Explore Unfold features"
-          >
-            {features.map((item, index) => (
-              <div className="feature-item" key={item.label}>
-                <button
-                  ref={(element) => { controls.current[index] = element; }}
-                  id={`feature-control-${index}`}
-                  className={`feature-option ${selected === index ? "is-selected" : ""}`}
-                  aria-expanded={selected === index}
-                  aria-disabled={selected === index}
-                  aria-controls={`feature-panel-${index}`}
-                  onClick={() => {
-                    selectionChanged.current = true;
-                    setSelected(index);
-                  }}
-                >
-                  <span>{item.label}</span>
-                  <Icon size={18} />
-                </button>
-                <div className="feature-panel" id={`feature-panel-${index}`} role="region" aria-labelledby={`feature-control-${index}`} hidden={selected !== index}>
-                  <div className="feature-copy">
-                    <h3>{item.title}</h3>
-                    <p>{item.description}</p>
-                    <Link className="text-link" to="/features">
-                      Explore all features <Icon size={19} />
-                    </Link>
-                  </div>
-                  <figure className="product-preview">
-                    <ProductScreenshot screen={item.screen} platform={platform} />
-                    <figcaption>
-                      <span className="preview-caption">{item.note}</span>
-                      <ProductPreviewCaption platform={platform}>{item.previewNote}</ProductPreviewCaption>
-                    </figcaption>
-                  </figure>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
 function PromptMoment() {
   const [index, setIndex] = useState(0);
   return (
     <section className="prompt-section section" aria-labelledby="prompt-title">
-      <div className="container prompt-inner">
+      <div className="container prompt-inner" data-motion="prompt">
         <div>
           <p className="eyebrow">Start right here</p>
           <h2 id="prompt-title">
@@ -207,7 +96,7 @@ function PromptMoment() {
             </span>
           </div>
           <p className="prompt-question" aria-live="polite" aria-atomic="true">
-            {prompts[index]}
+            <span key={index} className="prompt-question-text">{prompts[index]}</span>
           </p>
           <div className="prompt-card-bottom">
             <button
@@ -231,8 +120,10 @@ function PromptMoment() {
 
 export default function Home() {
   const [platform, setPlatform] = useProductPlatform();
+  const motionRoot = useRef(null);
+  usePageMotion(motionRoot);
   return (
-    <>
+    <div className="home-motion-root" ref={motionRoot}>
       <section className="hero container hero--story" aria-labelledby="hero-title">
         <div className="hero-copy">
           <p className="eyebrow">Reflection for your whole day</p>
@@ -267,14 +158,25 @@ export default function Home() {
           <span>You choose what to share.</span>
         </div>
       </div>
-      <ProductFeatures platform={platform} />
+      <section className="section product-section" id="features" aria-labelledby="features-title">
+        <div className="container">
+          <div className="section-heading" data-motion="reveal">
+            <div className="motion-content">
+              <p className="eyebrow">Inside Unfold</p>
+              <h2 id="features-title">Your thoughts, moods,<br />and patterns, together.</h2>
+            </div>
+            <p>Your words, your feelings, your everyday rhythms.<br className="desktop-break" /> A little more connected.</p>
+          </div>
+          <FeatureProductStory platform={platform} />
+        </div>
+      </section>
       <section
         className="section routine-section"
         id="how-it-works"
         aria-labelledby="routine-title"
       >
         <div className="container">
-          <div className="section-heading">
+          <div className="section-heading" data-motion="reveal">
             <div>
               <p className="eyebrow">A routine that fits your life</p>
               <h2 id="routine-title">
@@ -287,7 +189,7 @@ export default function Home() {
               New to journaling? Start here <Icon size={18} />
             </Link>
           </div>
-          <ol className="routine-steps">
+          <ol className="routine-steps" data-motion="routine">
             <li>
               <span className="step-number">01</span>
               <h3>Check in with yourself.</h3>
@@ -315,56 +217,15 @@ export default function Home() {
           </ol>
         </div>
       </section>
-      <section className="section home-breathing" aria-labelledby="breathing-title">
-        <div className="container product-story">
-          <div className="chapter-copy">
-            <p className="eyebrow">A pause, just for you</p>
-            <h2 id="breathing-title">A little space between one thing and the next.</h2>
-            <p>Choose a breathing pattern and follow a visual or audio guide. A few moments to pause, whether you’re starting your day or stepping away from a full one.</p>
-            <Link className="text-link" to="/features#pause">Explore guided breathing <Icon size={19} /></Link>
-          </div>
-          <figure className="chapter-screen">
-            <ProductScreenshot screen="breathing" platform={platform} />
-            <figcaption><ProductPreviewCaption platform={platform} /></figcaption>
-          </figure>
-        </div>
-      </section>
+      <BreathingChapter platform={platform} />
       <PromptMoment />
-      <section
-        className="section privacy-section"
-        aria-labelledby="privacy-title"
-      >
-        <div className="container product-story">
-          <div>
-            <p className="eyebrow">Your people. Your choice.</p>
-            <h2 id="privacy-title">Your story belongs to you.</h2>
-            <p>
-              Family brings your people together, with a separate account for
-              each person. Your journal stays private. Choose which wellness
-              summaries to share, with whom, and when to pause.
-            </p>
-            <ul className="privacy-points family-privacy-points">
-              <li>Joining does not turn sharing on</li>
-              <li>Journals and conversations stay out of Family sharing</li>
-              <li>Paying for the plan does not grant access to others’ data</li>
-            </ul>
-            <div className="editorial-links">
-              <Link className="text-link" to="/features#family">Meet Unfold Family <Icon size={19} /></Link>
-              <Link className="text-link" to="/privacy">Read our privacy commitments <Icon size={19} /></Link>
-            </div>
-          </div>
-          <figure className="chapter-screen">
-            <ProductScreenshot screen="family" platform={platform} />
-            <figcaption><ProductPreviewCaption platform={platform}>Family availability and plans are shown in the app.</ProductPreviewCaption></figcaption>
-          </figure>
-        </div>
-      </section>
+      <FamilyChapter platform={platform} />
       <section
         className="section journal-section"
         aria-labelledby="journal-title"
       >
         <div className="container">
-          <div className="section-heading">
+          <div className="section-heading" data-motion="reveal">
             <div>
               <p className="eyebrow">The Unfold Journal</p>
               <h2 id="journal-title">
@@ -376,7 +237,7 @@ export default function Home() {
               Explore all stories <Icon />
             </Link>
           </div>
-          <div className="article-grid">
+          <div className="article-grid" data-motion="articles">
             {articles.slice(0, 3).map((article) => (
               <ArticleCard key={article.slug} article={article} />
             ))}
@@ -414,7 +275,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <DownloadCta />
-    </>
+      <div data-motion="closing"><DownloadCta /></div>
+    </div>
   );
 }
