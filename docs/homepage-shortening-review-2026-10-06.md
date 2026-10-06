@@ -36,3 +36,15 @@ The repository has no lint or typecheck command. No packages, lockfiles or autom
 ## Scope
 
 Only the website presentation changes. Backend and executive dashboard behavior are unchanged. Pre-existing untracked `artifacts/` is preserved and excluded from the commit. The temporary preview server and QA tab are stopped after verification.
+
+## Follow-up: remove the repeated homepage preview
+
+Samuel approved removing “Inside Unfold” because Write and Speak repeated the hero demonstrations. The hero now links to `/features` with “Explore all features”, followed immediately by “Start where you are”. Health context and journal history remain available on the full Features page, and hero animation controls remain functional.
+
+| Viewport | Before this follow-up | After | Further reduction |
+| --- | ---: | ---: | ---: |
+| Phone, 393 × 852 | 7,380 px | 6,400 px | 13.3% |
+| Tablet, 768 × 1024 | 5,544 px | 4,805 px | 13.3% |
+| Desktop, 1440 × 1000 | 5,691 px | 4,821 px | 15.3% |
+
+`npm run build` and `git diff --check` passed without warnings or errors. The 23 generated routes retain canonical metadata, descriptions, social-image metadata, one h1 and existing referenced images. Manual browser screenshots confirmed the hero-to-routine transition on phone, tablet and desktop. The updated CTA was also checked at 320 × 852 with 200% text and reduced motion: no clipped text, horizontal overflow or broken heading references. The CTA opens the Features page, which contains the health and history sections. No console warnings/errors were observed. Temporary emulation, the QA tab and preview server are cleaned up after verification.

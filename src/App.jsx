@@ -2,7 +2,6 @@ import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useProductPlatform } from "./components/ProductPlatformPicker.jsx";
 import HeroProductStory from "./components/HeroProductStory.jsx";
-import FeatureProductStory from "./components/FeatureProductStory.jsx";
 import { BreathingChapter, FamilyChapter } from "./components/HomeProductChapters.jsx";
 import usePageMotion from "./hooks/usePageMotion.js";
 import Icon from "./components/Icon.jsx";
@@ -86,25 +85,13 @@ export default function Home() {
           </p>
           <div className="hero-actions">
             <PlatformDownloadLink />
-            <Link className="text-link" to="/#how-it-works">
-              See how it works <Icon size={18} />
+            <Link className="text-link" to="/features">
+              Explore all features <Icon size={18} />
             </Link>
           </div>
           <p className="hero-footnote">Available on iPhone and Android.</p>
         </div>
         <HeroProductStory platform={platform} onPlatformChange={setPlatform} />
-      </section>
-
-      <section className="section product-section" id="features" aria-labelledby="features-title">
-        <div className="container">
-          <div className="section-heading" data-motion="reveal">
-            <div className="motion-content">
-              <p className="eyebrow">Inside Unfold</p>
-              <h2 id="features-title">Your thoughts, in context.</h2>
-            </div>
-          </div>
-          <FeatureProductStory platform={platform} />
-        </div>
       </section>
 
       <section className="section routine-section" id="how-it-works" aria-labelledby="routine-title">
