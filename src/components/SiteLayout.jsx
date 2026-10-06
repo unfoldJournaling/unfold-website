@@ -74,16 +74,14 @@ function Header() {
   );
 }
 
-export function DownloadCta() {
+export function DownloadCta({ compact = false }) {
   return (
     <section className="download-cta section" aria-labelledby="download-title">
       <div className="container download-inner">
         <div>
-          <p className="eyebrow">A moment for you</p>
+          {!compact && <p className="eyebrow">A moment for you</p>}
           <h2 id="download-title">
-            Your journal. Your pace.
-            <br />
-            Start with one thought.
+            {compact ? "Start with one thought." : <>Your journal. Your pace.<br />Start with one thought.</>}
           </h2>
           <p>Write, reflect, and return when you’re ready.</p>
         </div>

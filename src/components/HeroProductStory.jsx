@@ -81,7 +81,7 @@ export default function HeroProductStory({ platform, onPlatformChange }) {
       enabled = !preference.matches
         && !enlarged && stage.offsetHeight < window.innerHeight - top - 8
         && (window.innerWidth <= 600 || copy.offsetHeight < window.innerHeight - top - 8);
-      distance = Math.min(window.innerHeight * 0.95, 1000);
+      distance = Math.min(window.innerHeight * 0.65, 640);
       section.style.setProperty("--hero-stick-top", `${top}px`);
       hero.style.setProperty("--hero-copy-top", `${Math.max(top, (window.innerHeight - copy.offsetHeight) / 2)}px`);
       section.style.setProperty("--hero-track-height", `${stage.offsetHeight + distance}px`);
@@ -155,7 +155,7 @@ export default function HeroProductStory({ platform, onPlatformChange }) {
           <div className="hero-story-progress" aria-hidden="true"><span /></div>
         </div>
         <p className="hero-story-cue" aria-hidden="true">{pinned ? "Scroll to explore" : "Choose a preview"}<span>{String(scene + 1).padStart(2, "0")} / 04</span></p>
-        <figcaption className="hero-caption"><ProductPreviewCaption platform={platform} /></figcaption>
+        <figcaption className="hero-caption"><ProductPreviewCaption platform={platform} compact /></figcaption>
       </figure>
     </div>
   );

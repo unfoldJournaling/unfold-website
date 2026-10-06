@@ -29,7 +29,8 @@ export default function ProductScreenshot({ screen = "journal", platform = "ios"
   );
 }
 
-export function ProductPreviewCaption({ platform, children }) {
+export function ProductPreviewCaption({ platform, children, compact = false }) {
+  if (compact) return <span>App screens show sample content.</span>;
   return <>
     <span>{platform === "android" ? "Android" : "iPhone"} app preview · sample data</span>
     <span className="preview-source">{children || "Features may vary by device and app version."}</span>
