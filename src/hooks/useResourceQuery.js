@@ -18,6 +18,7 @@ export default function useResourceQuery(defaultCategory = "All") {
     }, { replace: true, preventScrollReset: true });
   }
   return {
+    hydrated,
     query: hydrated ? params.get("q") || "" : "",
     category: hydrated ? params.get("topic") || defaultCategory : defaultCategory,
     reset: () => setParams({}, { replace: true, preventScrollReset: true }),

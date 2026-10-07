@@ -11,12 +11,13 @@ import { helpItems, filterResources } from "./data/resources.js";
 import SupportContactForm from "./components/SupportContactForm.jsx";
 export default function Help() {
   const { hash } = useLocation();
-  const { query, setQuery, category, setCategory, reset } = useResourceQuery("All");
+  const { query, setQuery, category, setCategory, reset, hydrated } = useResourceQuery("All");
   const visible = filterResources(helpItems, query, category);
   useEffect(() => {
+    if (!hydrated) return;
     const target = hash === "#contact" ? "contact" : helpItems.find((item) => hash === `#${item.id}`)?.id;
     if (target) document.getElementById(target)?.focus({ preventScroll: true });
-  }, [hash]);
+  }, [hash, hydrated]);
   return (
     <>
       <PageIntro
@@ -54,7 +55,7 @@ export default function Help() {
           {visible.length ? (
             <div className="faq-list">
               {visible.map((item) => (
-                <details key={item.id} open={hash === `#${item.id}` || query === item.q || undefined}>
+                <details key={item.id} open={(hydrated && hash === `#${item.id}`) || query === item.q || undefined}>
                   <summary id={item.id}>
                     {item.q}
                     <Icon name="plus" size={21} />
