@@ -1,5 +1,6 @@
 import useResourceQuery from "./hooks/useResourceQuery.js";
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import {
   PageIntro,
   ResourceFilters,
@@ -9,8 +10,13 @@ import Icon from "./components/Icon.jsx";
 import { helpItems, filterResources } from "./data/resources.js";
 import SupportContactForm from "./components/SupportContactForm.jsx";
 export default function Help() {
+  const { hash } = useLocation();
   const { query, setQuery, category, setCategory, reset } = useResourceQuery("All");
   const visible = filterResources(helpItems, query, category);
+  useEffect(() => {
+    const target = hash === "#contact" ? "contact" : helpItems.find((item) => hash === `#${item.id}`)?.id;
+    if (target) document.getElementById(target)?.focus({ preventScroll: true });
+  }, [hash]);
   return (
     <>
       <PageIntro
@@ -31,7 +37,10 @@ export default function Help() {
         aria-labelledby="answers-title"
       >
         <div>
-          <h2 id="answers-title">How can we help?</h2>
+          <div className="support-heading">
+            <h2 id="answers-title">How can we help?</h2>
+            <a className="text-link" href="#contact">Contact support <Icon size={18} /></a>
+          </div>
           <ResourceFilters
             label="Search help"
             query={query}
@@ -45,8 +54,8 @@ export default function Help() {
           {visible.length ? (
             <div className="faq-list">
               {visible.map((item) => (
-                <details key={item.q} open={query === item.q || undefined}>
-                  <summary>
+                <details key={item.id} open={hash === `#${item.id}` || query === item.q || undefined}>
+                  <summary id={item.id}>
                     {item.q}
                     <Icon name="plus" size={21} />
                   </summary>
@@ -84,7 +93,7 @@ export default function Help() {
           <Link to="/delete-account">
             Delete your account <Icon />
           </Link>
-          <SupportContactForm />
+          <SupportContactForm id="contact" />
         </aside>
       </section>
     </>

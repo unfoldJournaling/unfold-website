@@ -42,6 +42,7 @@ export const promptLibrary = Object.entries(promptGroups).flatMap(
 );
 export const helpItems = [
   {
+    id: "answer-about-unfold",
     category: "Getting started",
     q: "What is Unfold?",
     a: "Unfold brings together journaling, mood check-ins, and everyday wellness reflection. You can write or speak, use a prompt to begin, and return to your entries to notice what matters to you.",
@@ -49,6 +50,7 @@ export const helpItems = [
     label: "Explore the features",
   },
   {
+    id: "answer-download-unfold",
     category: "Getting started",
     q: "Where can I download the app?",
     a: "Unfold is available on the App Store and Google Play. Open our download page to choose your store. Compatibility requirements and current availability are listed there.",
@@ -56,16 +58,19 @@ export const helpItems = [
     label: "Get Unfold",
   },
   {
+    id: "answer-wearables",
     category: "Getting started",
     q: "Do I need a watch or wearable?",
     a: "No. Journaling and mood check-ins do not require a wearable. Optional Apple Health on iOS or Health Connect on Android can add context on supported devices with your permission. The Apple Watch companion requires a supported Apple device.",
   },
   {
+    id: "answer-wellness-not-therapy",
     category: "Getting started",
     q: "Is Unfold a medical or therapy service?",
     a: "No. Unfold is a general wellness app for reflection. Its observations are not diagnoses, predictions, or proof of cause and effect. It is not a substitute for professional care or an emergency service.",
   },
   {
+    id: "answer-what-to-write",
     category: "Journaling",
     q: "What can I write about?",
     a: "Start with a moment from your day, a feeling, or a question you are sitting with. A few words are enough. Our prompt library gives you starting points without needing an account.",
@@ -73,11 +78,13 @@ export const helpItems = [
     label: "Find a prompt",
   },
   {
+    id: "answer-voice-journaling",
     category: "Journaling",
     q: "Can I journal by speaking?",
     a: "Unfold supports written and voice journaling. Check your microphone permission if voice input is unavailable, and review your app version and device settings.",
   },
   {
+    id: "answer-journaling-frequency",
     category: "Journaling",
     q: "Do I have to journal every day?",
     a: "No. Your journal can fit the time and energy you have. You can return after a break without catching up on every day you missed.",
@@ -85,6 +92,7 @@ export const helpItems = [
     label: "Find your own rhythm",
   },
   {
+    id: "answer-luma",
     category: "Journaling",
     q: "What does Luma do?",
     a: "Luma offers AI-guided questions and reflections. You decide what feels useful and what does not. AI can misunderstand context, so treat its responses as a starting point for your own reflection.",
@@ -92,6 +100,7 @@ export const helpItems = [
     label: "Read about reflecting with AI",
   },
   {
+    id: "answer-breathing-sessions",
     category: "Breathing & Watch",
     q: "How do breathing sessions work?",
     a: "Choose an available pattern in Breathing Exercise, then follow its visual or audio guide. Pick a session that feels comfortable, and stop when you need to. These tools offer a way to pause, not a treatment or a replacement for professional care.",
@@ -99,6 +108,7 @@ export const helpItems = [
     label: "Explore guided breathing",
   },
   {
+    id: "answer-apple-watch",
     category: "Breathing & Watch",
     q: "Can I use Unfold on my watch?",
     a: "The Apple Watch companion supports breathing sessions and mood logging on supported Apple devices. It requires a compatible iPhone and Apple Watch; check the App Store for current requirements. There is no released Wear OS app for Android watches.",
@@ -106,6 +116,7 @@ export const helpItems = [
     label: "Meet the Apple Watch companion",
   },
   {
+    id: "answer-family-journal-privacy",
     category: "Family",
     q: "Does joining Family share my journal?",
     a: "No. Each person has a separate account, and joining does not turn wellness sharing on. Journals, conversations, Cycle data and location are never included in Family sharing. Check the app for current Family availability.",
@@ -113,16 +124,19 @@ export const helpItems = [
     label: "Meet Unfold Family",
   },
   {
+    id: "answer-family-wellness-sharing",
     category: "Family",
     q: "What can I share with Family members?",
     a: "You choose which wellness summaries to share with each person: sleep, recovery, stress, mood or activity where available. Review the preview before saving your choices. Sharing is optional and applies inside Unfold.",
   },
   {
+    id: "answer-pause-family-sharing",
     category: "Family",
     q: "How do I pause Family sharing?",
     a: "Open Sharing & privacy in Family and choose Pause all sharing. To share again, choose each person and save new sharing permissions. You can also stop sharing with an individual member.",
   },
   {
+    id: "answer-family-payer-privacy",
     category: "Family",
     q: "Does paying for Family give me access to other people’s data?",
     a: "No. The plan payer covers access to the plan, not access to anyone’s private journal or wellness data. Each person controls their own sharing. Available account counts, billing terms and local prices are shown before purchase in the app.",
@@ -130,6 +144,7 @@ export const helpItems = [
     label: "Understand Family plans",
   },
   {
+    id: "answer-optional-ai",
     category: "Privacy & data",
     q: "Is using AI optional?",
     a: "Applicable AI features ask for your permission before first use. You can withdraw that consent in Settings. The privacy notice explains the processors involved and how information is handled.",
@@ -137,11 +152,13 @@ export const helpItems = [
     label: "Read the privacy notice",
   },
   {
+    id: "answer-health-connections",
     category: "Privacy & data",
     q: "Do I have to connect Apple Health or Health Connect?",
     a: "No. Health connections are optional. On supported iOS and Android devices, you choose which permissions to allow. You can manage those permissions in Apple Health, Health Connect, or your device settings.",
   },
   {
+    id: "answer-journal-advertising",
     category: "Privacy & data",
     q: "Is my journal used for advertising?",
     a: "Unfold’s privacy notice states that journal content and health information are not sold or used for advertising. Read the full notice for processing, retention, and your rights.",
@@ -149,6 +166,7 @@ export const helpItems = [
     label: "Understand your data choices",
   },
   {
+    id: "answer-delete-account",
     category: "Privacy & data",
     q: "How do I delete my account?",
     a: "You can request deletion in the app or by email. Our account deletion page explains the process and timelines. If you have an active store subscription, manage that separately through the store that bills you.",
@@ -156,6 +174,7 @@ export const helpItems = [
     label: "Account deletion instructions",
   },
   {
+    id: "answer-free-download",
     category: "Subscriptions",
     q: "Is Unfold free to download?",
     a: "Yes, with optional subscriptions for premium features. Your app store and the purchase screen show the current options, local prices, and billing terms before you subscribe.",
@@ -163,6 +182,7 @@ export const helpItems = [
     label: "About plans and subscriptions",
   },
   {
+    id: "answer-cancel-subscription",
     category: "Subscriptions",
     q: "How do I cancel a subscription?",
     a: "Manage your subscription through the Apple or Google account used for the purchase. Deleting the app does not cancel a subscription. Our plans page links to both stores’ instructions.",
@@ -170,14 +190,18 @@ export const helpItems = [
     label: "Manage a subscription",
   },
   {
+    id: "answer-trial-and-renewal",
     category: "Subscriptions",
     q: "Where do I find trial and renewal details?",
     a: "Check the in-app purchase screen before confirming. Any available trial, its end date, the amount charged afterward, and the billing period should be reviewed there. Offers and prices can vary by region and store.",
   },
   {
+    id: "answer-restore-purchase",
     category: "Subscriptions",
     q: "What if a purchase is not showing up?",
     a: "Confirm that you are using the store account that made the purchase and look for the restore-purchases option in the app. If access is still missing, contact support with your platform and app version. Never send a password or full payment details.",
+    to: "/help#contact",
+    label: "Contact support",
   },
 ];
 export function filterResources(items, query = "", category = "All") {

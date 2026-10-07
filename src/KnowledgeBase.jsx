@@ -8,15 +8,15 @@ export default function KnowledgeBase() {
     <section className="feedback-intro container">
       <p className="eyebrow">Knowledge base</p>
       <h1>Find your way around Unfold.</h1>
-      <p>Clear guides for journaling, breathing, Family, privacy, and subscriptions. For a searchable list of answers, visit the <Link to="/faq">FAQs</Link>.</p>
+      <p>Clear guides for journaling, breathing, Family, privacy, and subscriptions. For a searchable list of answers, visit the <Link to="/help">FAQs</Link>.</p>
     </section>
     <section className="knowledge-grid container" aria-label="Help topics">
       {categories.map((category, index) => <article className="knowledge-card" key={category}>
         <span className="knowledge-number">0{index + 1}</span>
         <h2>{category}</h2>
-        <ul>{helpItems.filter((item) => item.category === category).map((item) => <li key={item.q}><Link to={`/faq?q=${encodeURIComponent(item.q)}`}>{item.q}</Link></li>)}</ul>
+        <ul>{helpItems.filter((item) => item.category === category).map((item) => <li key={item.id}><Link to={`/help#${item.id}`}>{item.q}</Link></li>)}</ul>
       </article>)}
     </section>
-    <section className="container knowledge-help"><h2>Need a person?</h2><p>Tell us what you need and the team will get back to you.</p><Link className="button" to="/help">Contact support</Link></section>
+    <section className="container knowledge-help"><h2>Need a person?</h2><p>Tell us what you need and the team will get back to you.</p><Link className="button" to="/help#contact">Contact support</Link></section>
   </>;
 }

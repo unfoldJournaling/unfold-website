@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { CONTACT_EMAIL } from "../data/site.js";
 
-export default function SupportContactForm({ initialCategory = "question", heading = "Still have a question?", lockCategory = false, submitLabel = "Send message" }) {
+export default function SupportContactForm({ id, initialCategory = "question", heading = "Still have a question?", lockCategory = false, submitLabel = "Send message" }) {
   const [category, setCategory] = useState(initialCategory);
   const [email, setEmail] = useState("");
   const [subject, setSubject] = useState("");
@@ -33,7 +33,7 @@ export default function SupportContactForm({ initialCategory = "question", headi
   }
 
   return (
-    <div className="support-contact">
+    <div id={id} tabIndex={id ? -1 : undefined} className="support-contact">
       <h2>{heading}</h2>
       <p>Send the team a message. Please leave out passwords and private journal entries.</p>
       <form className="support-contact-form" onSubmit={submit}>

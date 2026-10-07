@@ -2230,6 +2230,21 @@ main:focus {
 .support-layout .category-filters {
   gap: 8px;
 }
+.support-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+}
+.support-heading .text-link {
+  min-height: 48px;
+  font-size: 0.9rem;
+}
+.support-contact[id],
+.support-layout summary[id] {
+  scroll-margin-top: 16px;
+}
 .support-aside {
   border-left: 1px solid var(--line);
   padding-left: 32px;

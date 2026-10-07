@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 import Icon from "./Icon.jsx";
-import { CONTACT_EMAIL } from "../data/site.js";
 import PlatformDownloadLink from "./PlatformDownloadLink.jsx";
 
 export function Brand({ light = false }) {
@@ -125,7 +124,7 @@ function Footer() {
             <h2>Support</h2>
             <Link to="/help">Help & FAQs</Link>
             <Link to="/knowledge-base">Knowledge base</Link>
-            <a href={`mailto:${CONTACT_EMAIL}`}>Contact us</a>
+            <Link to="/help#contact">Contact us</Link>
             <Link to="/feature-request">Request a feature</Link>
             <Link to="/report-bug">Report a bug</Link>
           </div>
