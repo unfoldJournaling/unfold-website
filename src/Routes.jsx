@@ -37,7 +37,6 @@ export default function SiteRoutes({ contentError = null }) {
   return (
     <>
       {!showRecovery && <Seo />}
-      <ScrollToTop />
       <Routes>
         <Route element={<SiteLayout />}>
           {showRecovery ? <Route path="*" element={<ContentRecovery {...contentError} />} /> : <>
@@ -86,6 +85,8 @@ export default function SiteRoutes({ contentError = null }) {
           </>}
         </Route>
       </Routes>
+      {/* Reserve the page's scroll-driven layout before restoring its position. */}
+      <ScrollToTop />
     </>
   );
 }

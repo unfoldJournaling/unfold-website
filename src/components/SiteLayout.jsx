@@ -61,7 +61,6 @@ function Header() {
           aria-label="Main navigation"
         >
           <NavLink to="/features">Features</NavLink>
-          <NavLink to="/prompts">Prompts</NavLink>
           <NavLink to="/blog">The Journal</NavLink>
           <NavLink to="/about">About</NavLink>
           <NavLink to="/help">Help</NavLink>

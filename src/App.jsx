@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { useProductPlatform } from "./components/ProductPlatformPicker.jsx";
 import HeroProductStory from "./components/HeroProductStory.jsx";
@@ -7,7 +7,6 @@ import usePageMotion from "./hooks/usePageMotion.js";
 import Icon from "./components/Icon.jsx";
 import { DownloadCta } from "./components/SiteLayout.jsx";
 import { articles } from "./data/articles.js";
-import { prompts } from "./data/site.js";
 import PlatformDownloadLink from "./components/PlatformDownloadLink.jsx";
 
 const faqs = [
@@ -35,34 +34,6 @@ const faqs = [
     a: "No. Each person has a separate account. Joining or paying for Family does not turn sharing on. You choose which wellness summaries to share and can pause sharing. Journals and conversations are never included.",
   },
 ];
-
-function PromptMoment() {
-  const [index, setIndex] = useState(0);
-  return (
-    <div data-motion="prompt" aria-labelledby="prompt-title">
-      <div className="prompt-card">
-        <div className="prompt-card-top">
-          <h3 id="prompt-title">Try a prompt</h3>
-        </div>
-        <p className="prompt-question" aria-live="polite" aria-atomic="true">
-          <span key={index} className="prompt-question-text">{prompts[index]}</span>
-        </p>
-        <div className="prompt-card-bottom">
-          <button
-            className="text-link"
-            type="button"
-            onClick={() => setIndex((index + 1) % prompts.length)}
-          >
-            <Icon name="refresh" size={18} /> Another prompt
-          </button>
-          <Link className="text-link" to="/prompts">
-            More prompts <Icon name="diagonal" size={18} />
-          </Link>
-        </div>
-      </div>
-    </div>
-  );
-}
 
 export default function Home() {
   const [platform, setPlatform] = useProductPlatform();
@@ -95,30 +66,27 @@ export default function Home() {
       </section>
 
       <section className="section routine-section" id="how-it-works" aria-labelledby="routine-title">
-        <div className="container home-start-grid">
-          <div>
-            <div data-motion="reveal">
-              <div>
-                <p className="eyebrow">A moment is enough</p>
-                <h2 id="routine-title">Start where you are.</h2>
-              </div>
+        <div className="container">
+          <div data-motion="reveal">
+            <div>
+              <p className="eyebrow">How Unfold works</p>
+              <h2 id="routine-title">Start where you are.</h2>
             </div>
-            <ol className="routine-steps" data-motion="routine">
-              <li>
-                <span className="step-number">01</span>
-                <div><h3>Check in.</h3><p>Notice how you’re feeling today.</p></div>
-              </li>
-              <li>
-                <span className="step-number">02</span>
-                <div><h3>Let it out.</h3><p>Write, speak, or follow a gentle prompt.</p></div>
-              </li>
-              <li>
-                <span className="step-number">03</span>
-                <div><h3>Come back with curiosity.</h3><p>Revisit the moments you want to understand.</p></div>
-              </li>
-            </ol>
           </div>
-          <PromptMoment />
+          <ol className="routine-steps" data-motion="routine">
+            <li>
+              <span className="step-number" aria-hidden="true">01</span>
+              <div><h3>Check in with yourself.</h3><p>Open Unfold and log how you’re feeling. Start with where you are today.</p></div>
+            </li>
+            <li>
+              <span className="step-number" aria-hidden="true">02</span>
+              <div><h3>Write it. Or talk it through.</h3><p>Start a journal entry, or open a voice journal with Luma, your AI reflection companion.</p></div>
+            </li>
+            <li>
+              <span className="step-number" aria-hidden="true">03</span>
+              <div><h3>Return when you’re ready.</h3><p>Find past entries in your journal history. Revisit a thought or simply remember your day.</p></div>
+            </li>
+          </ol>
         </div>
       </section>
 
