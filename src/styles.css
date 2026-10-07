@@ -2681,6 +2681,7 @@ main:focus {
 .hero-product .app-screen-window { width: min(100%, 264px); flex-shrink: 0; }
 .hero-product .hero-caption { max-width: 340px; text-align: center; line-height: 1.5; }
 .hero-story { position: relative; min-width: 0; }
+.hero-story-viewport { position: absolute; width: 0; height: 100svh; visibility: hidden; pointer-events: none; }
 .hero-visual.hero-product.hero-story-pin { gap: 12px; padding: 24px 20px; }
 .hero-story-device-stage { width: 100%; padding-block: 16px; perspective: 1100px; }
 .hero-product .app-screen-window.hero-story-device {
@@ -2732,7 +2733,7 @@ main:focus {
 @media (max-width: 600px) {
   .hero--story.is-scroll-story > .hero-copy { position: static; }
   .hero-visual.hero-product.hero-story-pin { padding: 16px; gap: 8px; }
-  .hero-product .app-screen-window.hero-story-device { width: clamp(160px, calc((100svh - 400px) / 2.18), 230px); }
+  .hero-product .app-screen-window.hero-story-device { width: clamp(140px, calc((100svh - 400px) / 2.18), 230px); }
   .hero-story-device-stage { padding-block: 12px; }
 }
 @media (prefers-reduced-motion: no-preference) {
@@ -2741,8 +2742,9 @@ main:focus {
     to { opacity: 1; transform: translate3d(0, 0, 0); }
   }
   .hero-story-device-stage { animation: unfold-product-arrive 900ms cubic-bezier(0.16, 1, 0.3, 1) both; }
-  .hero-story-device { transition: transform 160ms ease-out; }
-  .hero-story-device img { transition: clip-path 120ms linear; }
+  /* One animation clock controls both the frame and the image reveal. CSS
+     transitions here would continue toward an old target on direction changes. */
+  .hero-story-device, .hero-story-device img { transition: none; backface-visibility: hidden; }
   .hero-story[data-scroll-ready="true"] .hero-story-device { will-change: transform; }
 }
 .scroll-showcase { width: 100%; padding-block: 16px; margin-inline: auto; }
@@ -2991,12 +2993,12 @@ main:focus {
   [data-motion="articles"][data-motion-ready="true"] > article {
     transform: translate3d(0, calc((1 - var(--motion-presence, 1)) * 32px), 0);
     opacity: calc(0.92 + var(--motion-presence, 1) * 0.08);
-    transition: transform 180ms ease-out, opacity 180ms ease-out;
+    transition: transform 320ms ease-out, opacity 320ms ease-out;
   }
   [data-motion="routine"][data-motion-ready="true"] > li:nth-child(2),
-  [data-motion="articles"][data-motion-ready="true"] > article:nth-child(2) { transition-duration: 260ms; }
+  [data-motion="articles"][data-motion-ready="true"] > article:nth-child(2) { transition-duration: 380ms; }
   [data-motion="routine"][data-motion-ready="true"] > li:nth-child(3),
-  [data-motion="articles"][data-motion-ready="true"] > article:nth-child(3) { transition-duration: 340ms; }
+  [data-motion="articles"][data-motion-ready="true"] > article:nth-child(3) { transition-duration: 440ms; }
   .feature-story-device { transition: transform 180ms ease-out; }
   .feature-story-device img { transition: clip-path 120ms linear; }
   .feature-story-track[data-scroll-ready="true"] .feature-story-panels > .is-active { animation: unfold-feature-copy 360ms cubic-bezier(.16, 1, .3, 1) both; }
@@ -3008,7 +3010,7 @@ main:focus {
     transform: translate3d(calc(20px - var(--motion-progress, 0.5) * 40px), calc(-28px + var(--motion-progress, 0.5) * 56px), 0) rotate(calc(-8deg + var(--motion-progress, 0.5) * 16deg));
   }
   [data-motion="breathing"][data-motion-ready="true"] .breathing-rings { transform: scale(calc(1 + var(--motion-breath, 0))); opacity: calc(0.4 + var(--motion-presence, 1) * 0.6); }
-  .breathing-phone, .breathing-watch, .breathing-rings, .family-phone, .family-choice { transition: transform 200ms ease-out, opacity 200ms ease-out; }
+  .breathing-phone, .breathing-watch, .breathing-rings, .family-phone, .family-choice { transition: transform 320ms ease-out, opacity 320ms ease-out; }
   [data-motion="family"][data-motion-ready="true"] .family-phone { transform: perspective(1200px) rotateY(calc(16deg - var(--motion-progress, 0.5) * 32deg)) translate3d(0, calc(24px - var(--motion-progress, 0.5) * 48px), 0); }
   [data-motion="family"][data-motion-ready="true"] .family-choice--first { transform: translate3d(calc(24px - var(--motion-progress, 0.5) * 48px), 0, 0); }
   [data-motion="family"][data-motion-ready="true"] .family-choice--last { transform: translate3d(calc(-24px + var(--motion-progress, 0.5) * 48px), 0, 0); }
@@ -3016,6 +3018,8 @@ main:focus {
   .prompt-question-text { display: block; animation: unfold-prompt-arrive 420ms cubic-bezier(.16, 1, .3, 1) both; }
   @keyframes unfold-prompt-arrive { from { opacity: 0.5; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
   [data-motion="closing"][data-motion-ready="true"] .download-inner { transform: translate3d(0, calc((1 - var(--motion-presence, 1)) * 28px), 0); transition: transform 180ms ease-out; }
+  @keyframes unfold-answer-arrive { from { opacity: 0.85; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+  .home-compact .faq-list details[open] .faq-answer { animation: unfold-answer-arrive 320ms ease-out; }
 }
 @media (prefers-reduced-motion: reduce) {
   .feature-story-device, .feature-story-device img, .prompt-question-text { animation: none; transition: none; }

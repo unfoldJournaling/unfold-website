@@ -13,6 +13,7 @@ const clamp = (value, minimum = 0, maximum = 1) => Math.max(minimum, Math.min(ma
 export default function HeroProductStory({ platform, onPlatformChange }) {
   const track = useRef(null);
   const pin = useRef(null);
+  const viewport = useRef(null);
   const phone = useRef(null);
   const layers = useRef([]);
   const controller = useRef(null);
@@ -31,33 +32,46 @@ export default function HeroProductStory({ platform, onPlatformChange }) {
     let distance = 0;
     let top = 0;
     let frame = null;
+    let progress = selected.current / (scenes.length - 1);
+    let lastTime = null;
 
     const paint = (progress, motion) => {
       const position = progress * (scenes.length - 1);
       const base = Math.floor(position);
       // Hold a readable screen, then reveal the next one without double-exposing
       // native status bars, text or controls during the transition.
-      const reveal = motion ? clamp((position - base - 0.65) / 0.35) : 0;
+      const phase = motion ? clamp((position - base - 0.35) / 0.65) : 0;
+      const reveal = phase * phase * (3 - 2 * phase);
       const index = motion ? Math.min(scenes.length - 1, base + (reveal >= 0.5 ? 1 : 0)) : Math.round(position);
       if (selected.current !== index) {
         selected.current = index;
         setScene(index);
       }
       layers.current.forEach((layer, order) => {
+        if (!layer) return;
         layer.style.opacity = order === index || (motion && (order === base || order === base + 1)) ? "1" : "0";
         layer.style.clipPath = motion && order === base + 1 ? `inset(0 0 0 ${((1 - reveal) * 100).toFixed(2)}%)` : "none";
       });
       section.style.setProperty("--hero-progress", progress.toFixed(4));
       device.style.transform = motion
-        ? `perspective(1100px) translate3d(0, ${(-Math.sin(progress * Math.PI) * 4).toFixed(2)}px, 0) rotateY(${(-10 + Math.sin(progress * Math.PI * 2) * 12).toFixed(2)}deg) rotateZ(${(-2 + progress * 4).toFixed(2)}deg) scale(${(1 + Math.sin(progress * Math.PI) * 0.01).toFixed(3)})`
+        ? `perspective(1100px) translate3d(0, ${(-Math.sin(progress * Math.PI) * 4).toFixed(2)}px, 0) rotateY(${(-6 + Math.sin(progress * Math.PI * 2) * 8).toFixed(2)}deg) rotateZ(${(-1.5 + progress * 3).toFixed(2)}deg) scale(${(1 + Math.sin(progress * Math.PI) * 0.01).toFixed(3)})`
         : "none";
     };
-    const update = () => {
+    const update = (time) => {
       frame = null;
       if (!enabled || document.hidden) return;
       const bounds = section.getBoundingClientRect();
-      if (bounds.bottom < 0 || bounds.top > window.innerHeight) return;
-      paint(clamp((top - bounds.top) / distance), true);
+      const target = clamp((top - bounds.top) / distance);
+      // Always settle the endpoints after a fast swipe, even offscreen. Otherwise
+      // returning to the hero can display an old screen from the previous visit.
+      const outside = bounds.bottom < 0 || bounds.top > window.innerHeight;
+      const elapsed = lastTime === null ? 16 : Math.min(time - lastTime, 64);
+      progress = outside ? target : progress + (target - progress) * (1 - Math.exp(-elapsed / 140));
+      const settled = Math.abs(target - progress) < 0.0001;
+      if (settled) progress = target;
+      paint(progress, true);
+      lastTime = settled ? null : time;
+      if (!settled) frame = window.requestAnimationFrame(update);
     };
     const schedule = () => {
       if (enabled && !document.hidden && frame === null) frame = window.requestAnimationFrame(update);
@@ -66,30 +80,41 @@ export default function HeroProductStory({ platform, onPlatformChange }) {
       window.removeEventListener("scroll", schedule);
       if (frame !== null) window.cancelAnimationFrame(frame);
       frame = null;
+      lastTime = null;
     };
     const synchronize = () => {
       if (!document.hidden) schedule();
       else if (frame !== null) {
         window.cancelAnimationFrame(frame);
         frame = null;
+        lastTime = null;
       }
     };
     const measure = () => {
       top = (document.querySelector(".site-header")?.offsetHeight || 90) + 16;
       const enlarged = parseFloat(getComputedStyle(document.documentElement).fontSize) > 24;
+      // Match CSS's small viewport rather than the changing space left by mobile
+      // browser toolbars. Expanding the address bar must not remove the track.
+      const height = viewport.current.offsetHeight;
       section.dataset.enlargedText = String(enlarged);
       enabled = !preference.matches
-        && !enlarged && stage.offsetHeight < window.innerHeight - top - 8
-        && (window.innerWidth <= 600 || copy.offsetHeight < window.innerHeight - top - 8);
-      distance = Math.min(window.innerHeight * 0.65, 640);
+        && !enlarged && stage.offsetHeight < height - top - 8
+        && (window.innerWidth <= 600 || copy.offsetHeight < height - top - 8);
+      distance = Math.min(height * 0.55, 480) * (scenes.length - 1);
       section.style.setProperty("--hero-stick-top", `${top}px`);
-      hero.style.setProperty("--hero-copy-top", `${Math.max(top, (window.innerHeight - copy.offsetHeight) / 2)}px`);
+      hero.style.setProperty("--hero-copy-top", `${Math.max(top, (height - copy.offsetHeight) / 2)}px`);
       section.style.setProperty("--hero-track-height", `${stage.offsetHeight + distance}px`);
       section.dataset.scrollReady = String(enabled);
       hero.classList.toggle("is-scroll-story", enabled);
       setPinned(enabled);
       if (enabled) schedule();
-      else paint(selected.current / (scenes.length - 1), false);
+      else {
+        if (frame !== null) window.cancelAnimationFrame(frame);
+        frame = null;
+        lastTime = null;
+        progress = selected.current / (scenes.length - 1);
+        paint(progress, false);
+      }
       synchronize();
     };
     controller.current = (index) => {
@@ -98,11 +123,15 @@ export default function HeroProductStory({ platform, onPlatformChange }) {
           top: window.scrollY + section.getBoundingClientRect().top - top + distance * index / (scenes.length - 1),
           behavior: "smooth",
         });
-      } else paint(index / (scenes.length - 1), false);
+      } else {
+        progress = index / (scenes.length - 1);
+        paint(progress, false);
+      }
     };
     const resize = window.ResizeObserver ? new ResizeObserver(measure) : null;
     resize?.observe(stage);
     resize?.observe(copy);
+    resize?.observe(viewport.current);
     window.addEventListener("scroll", schedule, { passive: true });
     window.addEventListener("resize", measure, { passive: true });
     document.addEventListener("visibilitychange", synchronize);
@@ -121,6 +150,7 @@ export default function HeroProductStory({ platform, onPlatformChange }) {
 
   return (
     <div className="hero-story" ref={track}>
+      <div className="hero-story-viewport" ref={viewport} aria-hidden="true" />
       <figure className="hero-visual hero-product hero-story-pin" ref={pin}>
         <ProductPlatformPicker platform={platform} onChange={onPlatformChange} />
         <div className="hero-story-device-stage">
@@ -132,7 +162,7 @@ export default function HeroProductStory({ platform, onPlatformChange }) {
                 src={`/images/product-20261005/${platform}-${item.screen}.png`}
                 width={platform === "android" ? 1080 : 1206}
                 height={platform === "android" ? 2340 : 2622}
-                loading={index === 0 ? "eager" : "lazy"}
+                loading="eager"
                 decoding="async"
                 fetchpriority={index === 0 ? "high" : "auto"}
                 style={{ opacity: index === 0 ? 1 : 0 }}

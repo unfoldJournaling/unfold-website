@@ -7,6 +7,7 @@ import usePageMotion from "./hooks/usePageMotion.js";
 import Icon from "./components/Icon.jsx";
 import { DownloadCta } from "./components/SiteLayout.jsx";
 import { articles } from "./data/articles.js";
+import { helpItems } from "./data/resources.js";
 import PlatformDownloadLink from "./components/PlatformDownloadLink.jsx";
 
 const faqs = [
@@ -33,6 +34,12 @@ const faqs = [
     q: "Can Family members read my journal?",
     a: "No. Each person has a separate account. Joining or paying for Family does not turn sharing on. You choose which wellness summaries to share and can pause sharing. Journals and conversations are never included.",
   },
+  ...helpItems.filter(({ q }) => [
+    "Can I journal by speaking?",
+    "Do I have to journal every day?",
+    "What does Luma do?",
+    "How do I cancel a subscription?",
+  ].includes(q)),
 ];
 
 export default function Home() {
@@ -129,7 +136,10 @@ export default function Home() {
             {faqs.map((faq) => (
               <details key={faq.q}>
                 <summary>{faq.q}<Icon name="plus" size={21} /></summary>
-                <div className="faq-answer">{faq.a}</div>
+                <div className="faq-answer">
+                  {faq.a}
+                  {faq.to && <Link className="text-link" to={faq.to}>{faq.label} <Icon size={18} /></Link>}
+                </div>
               </details>
             ))}
           </div>
